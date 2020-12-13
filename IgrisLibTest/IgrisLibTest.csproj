@@ -91,6 +91,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IgrisLib.MahApps.Metro\IgrisLib.MahApps.Metro.csproj">
+      <Project>{b71636fd-35b3-4748-8f39-6669eb343c31}</Project>
+      <Name>IgrisLib.MahApps.Metro</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

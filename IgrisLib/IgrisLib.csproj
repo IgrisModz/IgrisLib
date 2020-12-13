@@ -70,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ps3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
