@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="cancel">Cancelar</system:String>
+    <system:String x:Key="file">Archivo</system:String>
+    <system:String x:Key="addConsole">Agregar una consola</system:String>
+    <system:String x:Key="delete">Eliminar</system:String>
+    <system:String x:Key="connect">Conexión</system:String>
+    <system:String x:Key="refresh">Actualizar</system:String>
+    <system:String x:Key="errorSelect">Primero debes seleccionar una consola.</system:String>
+    <system:String x:Key="errorSelectTitle">Seleccione una consola.</system:String>
+    <system:String x:Key="formTitle">Seleccione una consola...</system:String>
+    <system:String x:Key="noConsole">Ninguna consola disponible, ejecute CCAPI Manager (v2.60+) y agregue una nueva consola.</system:String>
+    <system:String x:Key="noConsoleTitle">Ninguna consola disponible.</system:String>
+    <system:String x:Key="impossibleLoadCCAPI">No se puede cargar CCAPI 2.60+</system:String>
+    <system:String x:Key="impossibleLoadCCAPITitle">CCAPI.dll no se puede cargar</system:String>
+    <system:String x:Key="ccapiIsntCompatible">Este CCAPI.dll no es compatible"</system:String>
+    <system:String x:Key="invalidCCAPIFolder">Carpeta CCAPI no válida, vuelva a instalarla.</system:String>
+    <system:String x:Key="ccapiNotFound">No se encontró CCAPI.dll.</system:String>
+    <system:String x:Key="ccapiNotInstalled">Necesita instalar CCAPI 2.60+ para usar esta biblioteca.</system:String>
+    <system:String x:Key="ccapiNotInstalledTitle">CCAPI no instalado</system:String>
+    <system:String x:Key="addFormTitle">Agregar una consola a la lista...</system:String>
+    <system:String x:Key="consoleNameText">Nombre de la consola:</system:String>
+    <system:String x:Key="consoleIpText">Ip de la consola:</system:String>
+    <system:String x:Key="add">Añadir</system:String>
+</ResourceDictionary>

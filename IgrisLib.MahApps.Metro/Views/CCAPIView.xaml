@@ -1,0 +1,57 @@
+﻿<mah:MetroWindow x:Class="IgrisLib.Views.CCAPIView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False"
+        Title="{DynamicResource formTitle}" TitleCharacterCasing="Normal"
+        Height="300" Width="290"
+        Icon="pack://application:,,,/IgrisLib.MahApps.Metro;Component/Images/ps3.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.75*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Menu x:Name="mainMenu" IsMainMenu="True" Grid.ColumnSpan="2">
+            <MenuItem x:Name="itemFile" Header="{DynamicResource fileText}">
+                <MenuItem x:Name="itemAddConsole" Header="{DynamicResource addConsole}" Command="{Binding AddConsoleCommand}"/>
+            </MenuItem>
+        </Menu>
+        <ListBox x:Name="listView" SelectionMode="Single" Grid.Row="1" Grid.ColumnSpan="2" Margin="3"
+                         ItemsSource="{Binding Consoles}" SelectedItem="{Binding SelectedConsole}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Height="15" Width="15" Source="pack://application:,,,/IgrisLib.MahApps.Metro;Component/Images/ps3.png"/>
+                        <TextBlock Grid.Column="1" Margin="3" Text="{Binding Name}"/>
+                        <TextBlock Grid.Column="2" Margin="3" Text=":"/>
+                        <TextBlock Grid.Column="3" Margin="3" Text="{Binding Ip}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="itemDeleteConsole" Header="{DynamicResource delete}" Command="{Binding DeleteConsoleCommand}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <Button x:Name="btnConnect" Grid.Row="2" Margin="3"
+                Content="{DynamicResource connect}" Command="{Binding ConnectCommand}"
+                mah:ControlsHelper.ContentCharacterCasing="Normal"
+                mah:ControlsHelper.CornerRadius="0"/>
+        <Button x:Name="btnRefresh" Grid.Row="2" Grid.Column="1" Margin="3"
+                Content="{DynamicResource refresh}" Command="{Binding RefreshCommand}"
+                mah:ControlsHelper.ContentCharacterCasing="Normal"
+                mah:ControlsHelper.CornerRadius="0"/>
+    </Grid>
+</mah:MetroWindow>
