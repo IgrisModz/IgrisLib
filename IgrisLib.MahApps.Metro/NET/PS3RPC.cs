@@ -2,7 +2,7 @@
 using System.Threading;
 
 namespace IgrisLib.NET {
-    class PS3RPC {
+    public class PS3RPC {
         private static TMAPI PS3;
 
         private const uint INSTALL_ADDR = 0x10000;

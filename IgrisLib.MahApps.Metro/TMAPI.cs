@@ -674,5 +674,20 @@ namespace IgrisLib
                 return "Unknown Game";
             }
         }
+
+        public PS3TMAPI.TCPIPConnectProperties GetConnectionInfo()
+        {
+            try
+            {
+                PS3TMAPI.InitTargetComms();
+                PS3TMAPI.Connect(Target, null);
+                PS3TMAPI.GetConnectionInfo(Target, out PS3TMAPI.TCPIPConnectProperties connectProperties);
+                return connectProperties;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

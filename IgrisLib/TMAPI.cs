@@ -140,7 +140,7 @@ namespace IgrisLib
             /// <summary>Get the target status and return the string value.</summary>
             public string GetStatus()
             {
-                if (TMAPI.AssemblyLoaded)
+                if (AssemblyLoaded)
                     return "NotConnected";
                 Parameters.connectStatus = new PS3TMAPI.ConnectStatus();
                 PS3TMAPI.GetConnectStatus(Target, out Parameters.connectStatus, out Parameters.usage);
@@ -671,6 +671,21 @@ namespace IgrisLib
             catch
             {
                 return "Unknown Game";
+            }
+        }
+
+        public PS3TMAPI.TCPIPConnectProperties GetConnectionInfo()
+        {
+            try
+            {
+                PS3TMAPI.InitTargetComms();
+                PS3TMAPI.Connect(Target, null);
+                PS3TMAPI.GetConnectionInfo(Target, out PS3TMAPI.TCPIPConnectProperties connectProperties);
+                return connectProperties;
+            }
+            catch
+            {
+                return null;
             }
         }
     }
