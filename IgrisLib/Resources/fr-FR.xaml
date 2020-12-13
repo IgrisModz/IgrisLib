@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="cancel">Annuler</system:String>
+    <system:String x:Key="file">Fichier</system:String>
+    <system:String x:Key="addConsole">Ajouter une console</system:String>
+    <system:String x:Key="delete">Supprimer</system:String>
+    <system:String x:Key="connect">Connexion</system:String>
+    <system:String x:Key="refresh">Rafraîchir</system:String>
+    <system:String x:Key="errorSelect">Vous devez d'abord sélectionner une console.</system:String>
+    <system:String x:Key="errorSelectTitle">Sélectionnez une console.</system:String>
+    <system:String x:Key="formTitle">Choisissez une console...</system:String>
+    <system:String x:Key="noConsole">Aucune console disponible, démarrez CCAPI Manager (v2.60+) et ajoutez une nouvelle console.</system:String>
+    <system:String x:Key="noConsoleTitle">Aucune console disponible.</system:String>
+    <system:String x:Key="impossibleLoadCCAPI">Impossible de charger CCAPI 2.60+</system:String>
+    <system:String x:Key="impossibleLoadCCAPITitle">CCAPI.dll ne peut pas être chargé</system:String>
+    <system:String x:Key="ccapiIsntCompatible">Ce CCAPI.dll n'est pas compatible"</system:String>
+    <system:String x:Key="invalidCCAPIFolder">Dossier CCAPI invalide, veuillez le réinstaller.</system:String>
+    <system:String x:Key="ccapiNotFound">CCAPI non trouvé.</system:String>
+    <system:String x:Key="ccapiNotInstalled">Vous devez installer CCAPI 2.60+ pour utiliser cette bibliothèque.</system:String>
+    <system:String x:Key="ccapiNotInstalledTitle">CCAPI non installé</system:String>
+    <system:String x:Key="addFormTitle">Ajouter une console à la liste...</system:String>
+    <system:String x:Key="consoleNameText">Nom de la console:</system:String>
+    <system:String x:Key="consoleIpText">Ip de la console:</system:String>
+    <system:String x:Key="add">Ajouter</system:String>
+</ResourceDictionary>
