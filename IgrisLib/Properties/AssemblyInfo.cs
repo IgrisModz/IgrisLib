@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("IgrisLib")]
 [assembly: AssemblyDescription("Library for PS3 Tool WPF")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Igris Production")]
 [assembly: AssemblyProduct("IgrisLib")]
-[assembly: AssemblyCopyright("Igris Prod. Copyright © 2020")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("IgrisModz Copyright © 2020")]
+[assembly: AssemblyTrademark("Igris Prod.")]
 [assembly: AssemblyCulture("")]
 
 // L'affectation de la valeur false à ComVisible rend les types invisibles dans cet assembly
