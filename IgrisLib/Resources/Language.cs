@@ -9,6 +9,7 @@ namespace IgrisLib.Resources
         internal static ResourceDictionary SetLanguageDictionary()
         {
             ResourceDictionary dict = new ResourceDictionary();
+            ResourceDictionary dict2 = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
             {
                 case "en-US":
@@ -66,8 +67,8 @@ namespace IgrisLib.Resources
                     dict.Source = new Uri("pack://application:,,,/IgrisLib;Component/Resources/en-US.xaml", UriKind.Absolute);
                     break;
             }
-            dict.MergedDictionaries.Add(dict);
-            return dict;
+            dict2.MergedDictionaries.Add(dict);
+            return dict2;
         }
     }
 }
