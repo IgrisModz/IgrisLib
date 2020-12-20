@@ -22,6 +22,7 @@ namespace IgrisLib
     public class CCAPI : IApi, IConnectAPI
     {
         public string Name => "Control Console";
+
         public Extension Extension
         {
             get

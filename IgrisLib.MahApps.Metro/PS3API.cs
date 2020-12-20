@@ -1,5 +1,7 @@
 ﻿using IgrisLib.Mvvm;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace IgrisLib
@@ -24,6 +26,13 @@ namespace IgrisLib
         public PS3API(IApi api)
         {
             this.api = api;
+        }
+
+        public List<IApi> GetAllApi()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(x => typeof(IApi).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract) as List<IApi>;
         }
 
         public bool GetConnected()
