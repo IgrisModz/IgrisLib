@@ -28,11 +28,11 @@ namespace IgrisLib
             this.api = api;
         }
 
-        public List<IApi> GetAllApi()
+        public List<string> GetAllApi()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
-                .Where(x => typeof(IApi).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract) as List<IApi>;
+                .Where(x => typeof(IApi).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract).Select(x => x.Name).ToList();
         }
 
         public bool GetConnected()
