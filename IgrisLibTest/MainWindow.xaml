@@ -1,13 +1,26 @@
-﻿<Window x:Class="IgrisLibTest.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:IgrisLibTest"
-        mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="150" Width="300">
+﻿<mah:MetroWindow x:Class="IgrisLibTest.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:local="clr-namespace:IgrisLibTest"
+                 mc:Ignorable="d"
+                 WindowStartupLocation="CenterScreen"
+                 Title="IgrisLib Test" TitleCharacterCasing="Normal"
+                 MinHeight="100" MinWidth="230" Height="150" Width="300">
+    <mah:MetroWindow.DataContext>
+        <local:MainViewModel/>
+    </mah:MetroWindow.DataContext>
     <Grid>
-        <Button x:Name="btnConnection" Content="Connection" Click="btnConnection_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ComboBox x:Name="ApiList" Margin="3" ItemsSource="{Binding ApiList}" SelectedItem="{Binding SelectedApi}"/>
+        <Button x:Name="btnConnection" Grid.Row="1" Margin="3"
+                mah:ControlsHelper.ContentCharacterCasing="Normal"
+                mah:ControlsHelper.CornerRadius="0"
+                Content="Connection" Command="{Binding ConnectionCommand}"/>
     </Grid>
-</Window>
+</mah:MetroWindow>
