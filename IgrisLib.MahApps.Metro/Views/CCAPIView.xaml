@@ -4,7 +4,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False"
         Title="{DynamicResource formTitle}" TitleCharacterCasing="Normal"
-        Height="300" Width="290"
+        Height="340" Width="290"
         Icon="pack://application:,,,/IgrisLib.MahApps.Metro;Component/Images/ps3.png">
     <Grid>
         <Grid.RowDefinitions>
@@ -17,7 +17,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Menu x:Name="mainMenu" IsMainMenu="True" Grid.ColumnSpan="2">
-            <MenuItem x:Name="itemFile" Header="{DynamicResource fileText}">
+            <MenuItem x:Name="itemFile" Header="{DynamicResource file}">
                 <MenuItem x:Name="itemAddConsole" Header="{DynamicResource addConsole}" Command="{Binding AddConsoleCommand}"/>
             </MenuItem>
         </Menu>
