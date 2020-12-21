@@ -55,7 +55,7 @@ namespace IgrisLib.ViewModels
             add.ShowDialog();
             if (add.Result == MessageBoxResult.OK)
             {
-                ConsoleRegistry.Create(add.ConsoleName, add.ConsoleIp);
+                ConsoleRegistry.Add(add.ConsoleName, add.ConsoleIp);
                 Refresh();
             }
         }

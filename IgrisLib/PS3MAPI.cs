@@ -27,6 +27,7 @@ namespace IgrisLib
 
         public PS3MAPI()
         {
+            ConsoleRegistry.Create();
             resources = Language.SetLanguageDictionary();
             Core = new CORE_CMD();
             Server = new SERVER_CMD();
@@ -67,7 +68,7 @@ namespace IgrisLib
         {
             List<CCAPI.ConsoleInfo> consoles = new List<CCAPI.ConsoleInfo>();
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
-            key = key.OpenSubKey(ConsoleRegistry.registryName, true);
+            key = key.OpenSubKey(ConsoleRegistry.RegistryName, true);
             foreach (string subKeyName in key.GetValueNames())
             {
                 // Read Value from Registry Sub Key

@@ -7,18 +7,18 @@
         mc:Ignorable="d"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False"
         Title="{DynamicResource addFormTitle}" TitleCharacterCasing="Normal"
-        Height="186" Width="300">
+        Height="194" Width="300">
     <StackPanel>
         <Label Content="{DynamicResource consoleNameText}" Margin="3" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txtConsoleName" Margin="3"/>
         <Label Content="{DynamicResource consoleIpText}" Margin="3" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txtConsoleIp" Margin="3"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnAddConsole" Margin="3" Content="{DynamicResource addText}"
+            <Button x:Name="btnAddConsole" Margin="3" Content="{DynamicResource add}"
                     IsDefault="True" Click="btnAddConsole_Click"
                 mah:ControlsHelper.ContentCharacterCasing="Normal"
                 mah:ControlsHelper.CornerRadius="0"/>
-            <Button x:Name="btncCancel" Margin="3" Content="{DynamicResource cancelText}"
+            <Button x:Name="btncCancel" Margin="3" Content="{DynamicResource cancel}"
                     IsCancel="True" Click="btncCancel_Click"
                 mah:ControlsHelper.ContentCharacterCasing="Normal"
                 mah:ControlsHelper.CornerRadius="0"/>
