@@ -26,8 +26,8 @@ using System.Runtime.InteropServices;
 // Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de build et de révision par défaut
 // en utilisant '*', comme indiqué ci-dessous :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1.0")]
-[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyVersion("1.0.3.6")]
+[assembly: AssemblyFileVersion("1.0.3.6")]
 [assembly: AssemblyTitle("IgrisLib")]
 [assembly: AssemblyDescription("Library for tool PS3")]
 [assembly: AssemblyCompany("Igris Production")]
