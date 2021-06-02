@@ -2,6 +2,7 @@
 {
     public interface IApi
     {
+        string FullName { get; }
         string Name { get; }
         bool ConnectTarget();
         bool AttachProcess();
