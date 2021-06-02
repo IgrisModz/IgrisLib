@@ -233,5 +233,11 @@ namespace IgrisLib
         {
             get { return new CCAPI(); }
         }
+
+        /// <summary>Access to all PS3MAPI functions.</summary>
+        public PS3MAPI PS3MAPI
+        {
+            get { return new PS3MAPI(); }
+        }
     }
 }
