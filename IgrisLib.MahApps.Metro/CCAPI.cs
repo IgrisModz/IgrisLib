@@ -26,6 +26,8 @@ namespace IgrisLib
 
         public string Name => "CCAPI";
 
+        public string IPAddress { get; private set; } = "127.0.0.1";
+
         public Extension Extension
         {
             get
@@ -235,11 +237,16 @@ namespace IgrisLib
         }
         public bool ConnectTarget(string ip)
         {
-            return CCAPIConnectConsole(ip) == OK;
+            bool isConnected = CCAPIConnectConsole(ip) == OK;
+            IPAddress = isConnected ? ip : "127.0.0.1";
+            return false;
         }
         public bool ConnectTarget()
         {
-            return new CCAPIView(this, this.resources).Show();
+            CCAPIView ccapiView = new CCAPIView(this, this.resources);
+            bool isConnected = ccapiView.Show();
+            IPAddress = isConnected ? ccapiView.ViewModel.SelectedConsole.Ip : "127.0.0.1";
+            return isConnected;
         }
         public int DisconnectTarget()
         {

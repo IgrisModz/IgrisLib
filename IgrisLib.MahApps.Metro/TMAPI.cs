@@ -99,6 +99,7 @@ namespace IgrisLib
         }
         public string FullName => "Target Manager";
         public string Name => "TMAPI";
+        public string IPAddress { get; private set; } = "127.0.0.1";
         public static int Target = 0xFF;
         public bool IsConnected = false;
         public static bool AssemblyLoaded = true;
@@ -208,7 +209,9 @@ namespace IgrisLib
         /// <summary>Connect the default target and initialize the dll. Possible to put an int as arugment for determine which target to connect.</summary>
         public bool ConnectTarget()
         {
-            return ConnectTarget(0);
+            bool isConnected = ConnectTarget(0);
+            IPAddress = isConnected ? GetConnectionInfo().IPAddress : "127.0.0.1";
+            return isConnected;
         }
 
         /// <summary>Connect the default target and initialize the dll. Possible to put an int as arugment for determine which target to connect.</summary>
@@ -218,8 +221,12 @@ namespace IgrisLib
                 PS3TMAPI_NET();
             AssemblyLoaded = false;
             Target = TargetIndex;
-            PS3TMAPI.SUCCEEDED(PS3TMAPI.InitTargetComms());
-            bool result = PS3TMAPI.SUCCEEDED(PS3TMAPI.Connect(TargetIndex, null));
+            bool result = PS3TMAPI.SUCCEEDED(PS3TMAPI.InitTargetComms());
+            if (result)
+            {
+                PS3TMAPI.SUCCEEDED(PS3TMAPI.Connect(TargetIndex, null));
+                IPAddress = result ? GetConnectionInfo().IPAddress : "127.0.0.1";
+            }
             IsConnected = result;
             return result;
         }
@@ -235,6 +242,7 @@ namespace IgrisLib
             {
                 PS3TMAPI.SUCCEEDED(PS3TMAPI.GetTargetFromName(TargetName, out Target));
                 result = PS3TMAPI.SUCCEEDED(PS3TMAPI.Connect(Target, null));
+                IPAddress = result ? GetConnectionInfo().IPAddress : "127.0.0.1";
             }
             IsConnected = result;
             return result;

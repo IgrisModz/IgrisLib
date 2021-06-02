@@ -95,6 +95,7 @@ namespace IgrisLib
             IsConnected = false;
             if (api.GetType() == typeof(TMAPI))
                 IsConnected = TMAPI.ConnectTarget(target);
+            TargetIp = api.IPAddress;
             return IsConnected;
         }
 
@@ -102,6 +103,7 @@ namespace IgrisLib
         public bool ConnectTarget(int target = 0)
         {
             IsConnected = api.GetType() == typeof(TMAPI) ? TMAPI.ConnectTarget(target) : api.ConnectTarget();
+            TargetIp = api.IPAddress;
             return IsConnected;
         }
 

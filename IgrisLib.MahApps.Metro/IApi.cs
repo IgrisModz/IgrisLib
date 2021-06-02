@@ -4,6 +4,7 @@
     {
         string FullName { get; }
         string Name { get; }
+        string IPAddress { get; }
         bool ConnectTarget();
         bool AttachProcess();
         int DisconnectTarget();

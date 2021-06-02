@@ -16,6 +16,8 @@ namespace IgrisLib
     {
         public string FullName => "PS3 Manager";
         public string Name => "PS3MAPI";
+        public string IPAddress { get; private set; } = "127.0.0.1";
+
         public int PS3M_API_PC_LIB_VERSION = 0x0120;
 
         public CORE_CMD Core = new CORE_CMD();
@@ -23,8 +25,6 @@ namespace IgrisLib
         public PS3_CMD PS3 = new PS3_CMD();
         public PROCESS_CMD Process = new PROCESS_CMD();
         public VSH_PLUGINS_CMD VSH_Plugin = new VSH_PLUGINS_CMD();
-
-        public string IPAddr = "127.0.0.1";
 
         public PS3MAPI()
         {
@@ -91,11 +91,12 @@ namespace IgrisLib
             try
             {
                 PS3MAPI_Client_Server.Connect(ip, 7887);
-                IPAddr = ip;
+                IPAddress = ip;
                 return true;
             }
             catch (Exception ex)
             {
+                IPAddress = "127.0.0.1";
                 throw new Exception(ex.Message, ex);
             }
         }
@@ -107,11 +108,12 @@ namespace IgrisLib
             {
                 CCAPIView ccapiView = new CCAPIView(this, this.resources);
                 bool isConnected = ccapiView.Show();
-                IPAddr = ccapiView.ViewModel.SelectedConsole.Ip;
+                IPAddress = isConnected ? ccapiView.ViewModel.SelectedConsole.Ip : "127.0.0.1";
                 return isConnected;
             }
             catch (Exception ex)
             {
+                IPAddress = "127.0.0.1";
                 throw new Exception(ex.Message, ex);
             }
         }
