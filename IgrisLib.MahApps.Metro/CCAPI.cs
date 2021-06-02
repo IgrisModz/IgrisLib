@@ -239,7 +239,7 @@ namespace IgrisLib
         {
             bool isConnected = CCAPIConnectConsole(ip) == OK;
             IPAddress = isConnected ? ip : "127.0.0.1";
-            return false;
+            return isConnected;
         }
         public bool ConnectTarget()
         {
