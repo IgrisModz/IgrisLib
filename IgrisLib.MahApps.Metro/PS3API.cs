@@ -90,18 +90,18 @@ namespace IgrisLib
         }
 
         /// <summary>Connect your console with TargetManager.</summary>
-        public bool Connect()
+        public bool Connect(int target = 0)
         {
             IsConnected = false;
             if (api.GetType() == typeof(TMAPI))
-                IsConnected = api.ConnectTarget();
+                IsConnected = TMAPI.ConnectTarget(target);
             return IsConnected;
         }
 
         /// <summary>Connect your console with selected API.</summary>
         public bool ConnectTarget(int target = 0)
         {
-            IsConnected = api.ConnectTarget();
+            IsConnected = api.GetType() == typeof(TMAPI) ? TMAPI.ConnectTarget(target) : api.ConnectTarget();
             return IsConnected;
         }
 
