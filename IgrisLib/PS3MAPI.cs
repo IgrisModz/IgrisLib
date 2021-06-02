@@ -91,6 +91,7 @@ namespace IgrisLib
             try
             {
                 PS3MAPI_Client_Server.Connect(ip, 7887);
+                IPAddr = ip;
                 return true;
             }
             catch (Exception ex)
@@ -104,7 +105,10 @@ namespace IgrisLib
         {
             try
             {
-                return new CCAPIView(this, this.resources).Show();
+                CCAPIView ccapiView = new CCAPIView(this, this.resources);
+                bool isConnected = ccapiView.Show();
+                IPAddr = ccapiView.ViewModel.SelectedConsole.Ip;
+                return isConnected;
             }
             catch (Exception ex)
             {
