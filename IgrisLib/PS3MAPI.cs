@@ -14,7 +14,8 @@ namespace IgrisLib
 {
     public class PS3MAPI : IApi, IConnectAPI
     {
-        public string Name => "PS3 Manager";
+        public string FullName => "PS3 Manager";
+        public string Name => "PS3MAPI";
         public int PS3M_API_PC_LIB_VERSION = 0x0120;
 
         public CORE_CMD Core = new CORE_CMD();

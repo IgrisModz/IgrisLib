@@ -21,7 +21,9 @@ namespace IgrisLib
 {
     public class CCAPI : IApi, IConnectAPI
     {
-        public string Name => "Control Console";
+        public string FullName => "Control Console";
+
+        public string Name => "CCAPI";
 
         public Extension Extension
         {

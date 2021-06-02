@@ -204,7 +204,7 @@ namespace IgrisLib
             return api;
         }
 
-        /// <summary>Return Full Name selected API into string format.</summary>
+        /// <summary>Return selected API full name into string format.</summary>
         public string GetCurrentAPIFullName()
         {
             return api.FullName;

@@ -96,7 +96,8 @@ namespace IgrisLib
             SNPS3_vrsave = 0x47,
             SNPS3_msr = 0x48,
         }
-        public string Name => "Target Manager";
+        public string FullName => "Target Manager";
+        public string Name => "TMAPI";
         public static int Target = 0xFF;
         public bool IsConnected = false;
         public static bool AssemblyLoaded = true;
