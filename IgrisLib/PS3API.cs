@@ -219,27 +219,15 @@ namespace IgrisLib
         }
 
         /// <summary>Use the extension class with your selected API.</summary>
-        public Extension Extension
-        {
-            get { return new Extension(api); }
-        }
+        public Extension Extension => new Extension(api);
 
         /// <summary>Access to all TMAPI functions.</summary>
-        public TMAPI TMAPI
-        {
-            get { return new TMAPI(); }
-        }
+        public TMAPI TMAPI => api as TMAPI;
 
         /// <summary>Access to all CCAPI functions.</summary>
-        public CCAPI CCAPI
-        {
-            get { return new CCAPI(); }
-        }
+        public CCAPI CCAPI => api as CCAPI;
 
         /// <summary>Access to all PS3MAPI functions.</summary>
-        public PS3MAPI PS3MAPI
-        {
-            get { return new PS3MAPI(); }
-        }
+        public PS3MAPI PS3MAPI => api as PS3MAPI;
     }
 }
