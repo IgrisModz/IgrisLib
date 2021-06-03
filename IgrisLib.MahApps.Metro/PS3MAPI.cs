@@ -23,7 +23,6 @@ namespace IgrisLib
         public SERVER_CMD Server = new SERVER_CMD();
         public PS3_CMD PS3 = new PS3_CMD();
         public PROCESS_CMD Process = new PROCESS_CMD();
-        public VSH_PLUGINS_CMD VSH_Plugin = new VSH_PLUGINS_CMD();
 
         public PS3MAPI()
         {
@@ -494,11 +493,13 @@ namespace IgrisLib
 
             public MEMORY_CMD Memory = new MEMORY_CMD();
             public MODULES_CMD Modules = new MODULES_CMD();
+            public VSH_PLUGINS_CMD VSH_Plugins = new VSH_PLUGINS_CMD();
 
             public PROCESS_CMD()
             {
                 Memory = new MEMORY_CMD();
                 Modules = new MODULES_CMD();
+                VSH_Plugins = new VSH_PLUGINS_CMD();
             }
 
             /// <summary>
@@ -677,6 +678,7 @@ namespace IgrisLib
                     }
                 }
             }
+
             public class VSH_PLUGINS_CMD
             {
                 /// <summary>Load an vsh plugin.</summary>
@@ -721,45 +723,6 @@ namespace IgrisLib
                 }
             }
 
-        }
-
-        public class VSH_PLUGINS_CMD
-        {
-            public void Load(uint slot, string path)
-            {
-                try
-                {
-                    PS3MAPI.PS3MAPI_Client_Server.VSHPlugins_Load(slot, path);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message, ex);
-                }
-            }
-
-            public void Unload(uint slot)
-            {
-                try
-                {
-                    PS3MAPI.PS3MAPI_Client_Server.VSHPlugins_Unload(slot);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message, ex);
-                }
-            }
-
-            public void GetInfoBySlot(uint slot, out string name, out string path)
-            {
-                try
-                {
-                    PS3MAPI.PS3MAPI_Client_Server.VSHPlugins_GetInfoBySlot(slot, out name, out path);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message, ex);
-                }
-            }
         }
 
         #endregion PS3MAPI_CLient
