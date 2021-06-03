@@ -200,6 +200,34 @@ namespace IgrisLib
             return buffer;
         }
 
+        public int[] GetModules()
+        {
+            return Process.Modules.GetPrxIdModules(Process.Process_Pid);
+        }
+
+        public string GetModuleName(int prxid)
+        {
+            return Process.Modules.GetName(Process.Process_Pid, prxid);
+        }
+
+        public string GetModuleFilename(int prxid)
+        {
+            return Process.Modules.GetFilename(Process.Process_Pid, prxid);
+        }
+
+        public ulong LoadModule(string path)
+        {
+            try
+            {
+                Process.Modules.Load(Process.Process_Pid, path);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+            return 0;
+        }
+
         public class SERVER_CMD
         {
             /// <summary>
