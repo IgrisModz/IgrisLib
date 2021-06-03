@@ -228,6 +228,19 @@ namespace IgrisLib
             return 0;
         }
 
+        public ulong UnloadModule(int prxid)
+        {
+            try
+            {
+                Process.Modules.Unload(Process.Process_Pid, prxid);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+            return 0;
+        }
+
         public class SERVER_CMD
         {
             /// <summary>
