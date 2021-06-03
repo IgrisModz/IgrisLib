@@ -32,7 +32,6 @@ namespace IgrisLib
             Server = new SERVER_CMD();
             PS3 = new PS3_CMD();
             Process = new PROCESS_CMD();
-            VSH_Plugin = new VSH_PLUGINS_CMD();
         }
         internal ResourceDictionary resources = new ResourceDictionary();
 

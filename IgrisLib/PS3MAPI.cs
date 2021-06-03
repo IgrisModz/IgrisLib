@@ -7,7 +7,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows;
 
 namespace IgrisLib
@@ -33,7 +32,6 @@ namespace IgrisLib
             Server = new SERVER_CMD();
             PS3 = new PS3_CMD();
             Process = new PROCESS_CMD();
-            VSH_Plugin = new VSH_PLUGINS_CMD();
         }
         internal ResourceDictionary resources = new ResourceDictionary();
 
@@ -494,11 +492,13 @@ namespace IgrisLib
 
             public MEMORY_CMD Memory = new MEMORY_CMD();
             public MODULES_CMD Modules = new MODULES_CMD();
+            public VSH_PLUGINS_CMD VSH_Plugins = new VSH_PLUGINS_CMD();
 
             public PROCESS_CMD()
             {
                 Memory = new MEMORY_CMD();
                 Modules = new MODULES_CMD();
+                VSH_Plugins = new VSH_PLUGINS_CMD();
             }
 
             /// <summary>
