@@ -1,11 +1,10 @@
 ﻿<Window x:Class="IgrisLib.Views.CCAPIView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False"
         Title="{DynamicResource formTitle}"
         Height="300" Width="290"
-        Icon="{iconPacks:MaterialImage Kind=SonyPlaystation}">
+        Icon="pack://application:,,,/IgrisLib;Component/Images/ps3.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,14 +17,7 @@
         </Grid.ColumnDefinitions>
         <Menu x:Name="mainMenu" IsMainMenu="True" Grid.ColumnSpan="2">
             <MenuItem x:Name="itemFile" Header="{DynamicResource file}">
-                <MenuItem.Icon>
-                    <iconPacks:PackIconMaterial x:Name="iconFile" Kind="File"/>
-                </MenuItem.Icon>
-                <MenuItem x:Name="itemAddConsole" Header="{DynamicResource addConsole}" Command="{Binding AddConsoleCommand}">
-                    <MenuItem.Icon>
-                        <iconPacks:PackIconMaterial x:Name="iconAddConsole" Kind="PlusBoxMultiple"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+                <MenuItem x:Name="itemAddConsole" Header="{DynamicResource addConsole}" Command="{Binding AddConsoleCommand}"/>
             </MenuItem>
         </Menu>
         <ListBox x:Name="listView" SelectionMode="Single" Grid.Row="1" Grid.ColumnSpan="2" Margin="3"
@@ -39,7 +31,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <iconPacks:PackIconMaterial VerticalAlignment="Center" Kind="SonyPlaystation"/>
+                        <Image Height="15" Width="15" Source="pack://application:,,,/IgrisLib;Component/Images/ps3.png"/>
                         <TextBlock Grid.Column="1" Margin="3" Text="{Binding Name}"/>
                         <TextBlock Grid.Column="2" Margin="3" Text=":"/>
                         <TextBlock Grid.Column="3" Margin="3" Text="{Binding Ip}"/>
@@ -48,27 +40,13 @@
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="itemDeleteConsole" Header="{DynamicResource delete}" Command="{Binding DeleteConsoleCommand}">
-                        <MenuItem.Icon>
-                            <iconPacks:PackIconMaterial x:Name="iconDeleteConsole" Kind="Delete"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
+                    <MenuItem x:Name="itemDeleteConsole" Header="{DynamicResource delete}" Command="{Binding DeleteConsoleCommand}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
         <Button x:Name="btnConnect" Grid.Row="2" Margin="3"
-                Command="{Binding ConnectCommand}">
-            <StackPanel Orientation="Horizontal">
-                <iconPacks:PackIconMaterial x:Name="iconConnect" Kind="CastConnected"/>
-                <TextBlock x:Name="txtConnect" Text="{DynamicResource connect}"/>
-            </StackPanel>
-        </Button>
+                Content="{DynamicResource connect}" Command="{Binding ConnectCommand}"/>
         <Button x:Name="btnRefresh" Grid.Row="2" Grid.Column="1" Margin="3"
-                Command="{Binding RefreshCommand}">
-            <StackPanel Orientation="Horizontal">
-                <iconPacks:PackIconMaterial x:Name="iconRefresh" Kind="Refresh"/>
-                <TextBlock x:Name="txtRefresh" Text="{DynamicResource refresh}"/>
-            </StackPanel>
-        </Button>
+                Content="{DynamicResource refresh}" Command="{Binding RefreshCommand}"/>
     </Grid>
 </Window>
