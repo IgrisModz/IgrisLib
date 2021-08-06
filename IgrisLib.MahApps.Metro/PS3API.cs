@@ -9,32 +9,92 @@ namespace IgrisLib
     public class PS3API : ViewModelBase
     {
         private IApi api;
-        private bool isConnected, isAttached;
 
-        public bool IsConnected { get => isConnected; private set => SetProperty(ref isConnected, value); }
+        /// <summary>
+        /// Property to know if you are connected to the ps3.
+        /// </summary>
+        /// <value>Return true if you are connected to ps3.</value>
+        /// <remarks>You have to use <see cref="Connect"/> <see cref="ConnectTarget"/>, <see cref="DisconnectTarget"/> or <see cref="GetConnected"/> for update this property</remarks>
+        public bool IsConnected { get => GetValue(() => IsConnected); private set => SetValue(() => IsConnected, value); }
 
-        public bool IsAttached { get => isAttached; private set => SetProperty(ref isAttached, value); }
+        /// <summary>
+        /// Property to find out if you are attached to a process.
+        /// </summary>
+        /// <value>Return true if you are connected to ps3.</value>
+        /// <remarks>You have to use <see cref="AttachProcess"/>, <see cref="DetachProcess"/> or <see cref="GetAttached"/> for update this property</remarks>
+        public bool IsAttached { get => GetValue(() => IsAttached); private set => SetValue(() => IsAttached, value); }
 
+        /// <summary>
+        /// Property to know the name of the game currently attached.
+        /// </summary>
+        /// <value>Returns the name of the currently attached game.</value>
+        /// <remarks>You have to use <see cref="GetCurrentGame"/> for update this property</remarks>
         public string CurrentGame { get; private set; }
 
+        /// <summary>
+        /// Property to know the version of the game currently attached.
+        /// </summary>
+        /// <value>Returns the version of the currently attached game.</value>
+        /// <remarks>You have to use <see cref="GetGameRegion"/> for update this property</remarks>
         public string GameRegion { get; private set; }
 
+        /// <summary>
+        /// Property to know the name of the console currently connected.
+        /// </summary>
+        /// <value>Returns the name of the currently connected console.</value>
+        /// <remarks>You have to use <see cref="Connect"/> or <see cref="ConnectTarget"/> for update this property</remarks>
         public string TargetName { get; private set; }
 
+        /// <summary>
+        /// Property to know the ip address of the console currently connected.
+        /// </summary>
+        /// <value>Returns the ip address of the currently connected console.</value>
+        /// <remarks>You have to use <see cref="Connect"/> or <see cref="ConnectTarget"/> for update this property</remarks>
         public string TargetIp { get; private set; }
 
+        /// <summary>
+        /// Contructor for choose an API by its class.
+        /// </summary>
+        /// <param name="api">Choose an API by its class.</param>
         public PS3API(IApi api)
         {
-            this.api = api;
+            ChangeAPI(api);
         }
 
+        /// <summary>
+        /// Constructor for choose an API by an enum.
+        /// </summary>
+        /// <param name="api">Choose an API by an enum.</param>
+        public PS3API(SelectAPI api)
+        {
+            ChangeAPI(api);
+        }
+
+        /// <summary>
+        /// Constructor for choose an API by name.
+        /// </summary>
+        /// <param name="apiName">Choose an API by name</param>
+        public PS3API(string apiName)
+        {
+            ChangeAPI(apiName);
+        }
+
+        /// <summary>
+        /// Get the name of all APIs.
+        /// </summary>
+        /// <returns>Returns a list of names of all APIs.</returns>
         public List<string> GetAllApi()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
-                .Where(x => typeof(IApi).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract).Select(x => x.Name).ToList();
+                .Where(x => typeof(IApi).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+                .Select(x => x.Name).ToList();
         }
 
+        /// <summary>
+        /// Find out if you're connected.
+        /// </summary>
+        /// <returns>return true if you're connected.</returns>
         public bool GetConnected()
         {
             try
@@ -43,13 +103,17 @@ namespace IgrisLib
                     IsConnected = (api as TMAPI).GetStatus() == "Connected";
                 else if (api.GetType() == typeof(CCAPI))
                     IsConnected = (api as CCAPI).IsConnected();
-                else if (api.GetType() == typeof(CCAPI))
+                else if (api.GetType() == typeof(PS3MAPI))
                     IsConnected = (api as PS3MAPI).IsConnected;
                 return IsConnected;
             }
             catch { return false; }
         }
 
+        /// <summary>
+        /// Find out if you're attached.
+        /// </summary>
+        /// <returns>return true if you're attached.</returns>
         public bool GetAttached()
         {
             try
@@ -62,6 +126,10 @@ namespace IgrisLib
             catch { return false; }
         }
 
+        /// <summary>
+        /// Get the current game.
+        /// </summary>
+        /// <returns>Returns the name of the currently attached game.</returns>
         public string GetCurrentGame()
         {
             CurrentGame = "Unknown";
@@ -78,6 +146,10 @@ namespace IgrisLib
             return CurrentGame;
         }
 
+        /// <summary>
+        /// Get the current game version.
+        /// </summary>
+        /// <returns>returns the name of the currently attached game version.</returns>
         public string GetGameRegion()
         {
             GameRegion = "Unknown";
@@ -89,25 +161,39 @@ namespace IgrisLib
             return GameRegion;
         }
 
-        /// <summary>Connect your console with TargetManager.</summary>
+        /// <summary>
+        /// Connect your console with TargetManager.
+        /// </summary>
+        /// <param name="target">Define the target console you want to connect to.</param>
+        /// <returns>return true if you are connected.</returns>
         public bool Connect(int target = 0)
         {
             IsConnected = false;
             if (api.GetType() == typeof(TMAPI))
                 IsConnected = TMAPI.ConnectTarget(target);
             TargetIp = api.IPAddress;
+            TargetName = GetConsoleName();
             return IsConnected;
         }
 
-        /// <summary>Connect your console with selected API.</summary>
+        /// <summary>
+        /// Connect your console with selected API.
+        /// </summary>
+        /// <param name="target">Define the target console you want to connect to (only for tmapi).</param>
+        /// <returns>return true if you are connected.</returns>
         public bool ConnectTarget(int target = 0)
         {
             IsConnected = api.GetType() == typeof(TMAPI) ? TMAPI.ConnectTarget(target) : api.ConnectTarget();
             TargetIp = api.IPAddress;
+            TargetName = GetConsoleName();
             return IsConnected;
         }
 
-        /// <summary>Connect your console with CCAPI.</summary>
+        /// <summary>
+        /// Connect your console with CCAPI or PS3MAPI.
+        /// </summary>
+        /// <param name="ip">Set the ip address of the console you want to connect to.</param>
+        /// <returns>return true if you are connected.</returns>
         public bool ConnectTarget(string ip)
         {
             if (api.GetType() == typeof(CCAPI))
@@ -115,6 +201,7 @@ namespace IgrisLib
                 if ((api as CCAPI).ConnectTarget(ip))
                 {
                     TargetIp = ip;
+                    TargetName = GetConsoleName();
                     IsConnected = true;
                     return true;
                 }
@@ -124,6 +211,7 @@ namespace IgrisLib
                 if ((api as PS3MAPI).ConnectTarget(ip))
                 {
                     TargetIp = ip;
+                    TargetName = GetConsoleName();
                     IsConnected = true;
                     return true;
                 }
@@ -132,61 +220,98 @@ namespace IgrisLib
             return false;
         }
 
-        /// <summary>Disconnect Target with selected API.</summary>
+        /// <summary>
+        /// Disconnect the currently connected console.
+        /// </summary>
         public void DisconnectTarget()
         {
             api.DisconnectTarget();
+            IsConnected = false;
         }
 
-        /// <summary>Disconnect Target with selected API.</summary>
+        /// <summary>
+        /// Detach the currently attached process.
+        /// </summary>
         public void DetachProcess()
         {
             api.DetachProcess();
+            IsAttached = false;
         }
 
-        /// <summary>Attach the current process (current Game) with selected API.</summary>
+        /// <summary>
+        /// Attach the current process (current Game) with selected API.
+        /// </summary>
+        /// <returns>Return true if you're acttached to process.</returns>
         public bool AttachProcess()
         {
             IsAttached = api.AttachProcess();
             return IsAttached;
         }
 
+        /// <summary>
+        /// Get the current console name.
+        /// </summary>
+        /// <returns>return the current console name</returns>
         public string GetConsoleName()
         {
             if (api.GetType() == typeof(TMAPI))
                 return (api as TMAPI).SCE.GetTargetName();
-            else
-            {
-                if (TargetName != string.Empty)
-                    return TargetName;
 
-                if (TargetIp != string.Empty)
+            if (TargetName != string.Empty)
+                return TargetName;
+
+            if (TargetIp != string.Empty)
+            {
+                if (api.GetType() == typeof(CCAPI))
                 {
-                    List<CCAPI.ConsoleInfo> Data = (api as CCAPI).GetConsoleList();
-                    if (Data.Count > 0)
+                    foreach (var console in (api as CCAPI).GetConsoleList())
                     {
-                        for (int i = 0; i < Data.Count; i++)
-                            if (Data[i].Ip == TargetIp)
-                                return Data[i].Name;
+                        if (console.Ip == TargetIp)
+                        {
+                            return console.Name;
+                        }
                     }
                 }
-                return TargetIp;
+                else
+                {
+                    foreach (var console in (api as PS3MAPI).GetConsoleList())
+                    {
+                        if (console.Ip == TargetIp)
+                        {
+                            return console.Name;
+                        }
+                    }
+                }
             }
+            return TargetIp;
         }
 
-        /// <summary>Set memory to offset with selected API.</summary>
+        /// <summary>
+        /// Set memory to offset with selected API.
+        /// </summary>
+        /// <param name="offset">Targeted function location.</param>
+        /// <param name="buffer">Set the byte array to the offset.</param>
         public void SetMemory(uint offset, byte[] buffer)
         {
             api.SetMemory(offset, buffer);
         }
 
-        /// <summary>Get memory from offset using the Selected API.</summary>
+        /// <summary>
+        /// Get memory from offset using the Selected API.
+        /// </summary>
+        /// <param name="offset">Targeted function location.</param>
+        /// <param name="buffer">Returns the bytes obtained in this byte array.</param>
         public void GetMemory(uint offset, byte[] buffer)
         {
             api.GetMemory(offset, buffer);
         }
 
-        /// <summary>Get memory from offset with a length using the Selected API.</summary>
+        /// <summary>
+        /// Get memory from offset with a length using the Selected API.
+        /// </summary>
+        /// <param name="offset">Targeted function location.</param>
+        /// <param name="length">Length of bytes to get.</param>
+        /// <returns>Returns the byte array of the defined length.</returns>
         public byte[] GetBytes(uint offset, int length)
         {
             byte[] buffer = new byte[length];
@@ -194,40 +319,98 @@ namespace IgrisLib
             return buffer;
         }
 
-        /// <summary>Change current API.</summary>
+        /// <summary>
+        /// Change current API by its class.
+        /// </summary>
+        /// <param name="api">Choose an API by its class.</param>
         public void ChangeAPI(IApi api)
         {
             this.api = api;
         }
 
-        /// <summary>Return selected API.</summary>
+        /// <summary>
+        /// Change current API by an enum.
+        /// </summary>
+        /// <param name="api">Choose an API by an enum.</param>
+        public void ChangeAPI(SelectAPI api)
+        {
+            foreach (Type mapi in AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(x => typeof(IApi).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+                .Select(x => x).ToList())
+            {
+                if (mapi.Name == Enum.GetName(typeof(SelectAPI), api))
+                {
+                    this.api = (IApi)Activator.CreateInstance(mapi);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Change current API by name.
+        /// </summary>
+        /// <param name="apiName">Choose an API by name.</param>
+        public void ChangeAPI(string apiName)
+        {
+            foreach (Type mapi in AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(x => typeof(IApi).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+                .Select(x => x).ToList())
+            {
+                if (mapi.Name == apiName)
+                {
+                    this.api = (IApi)Activator.CreateInstance(mapi);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the current API.
+        /// </summary>
+        /// <returns>Return the current api.</returns>
         public IApi GetCurrentAPI()
         {
             return api;
         }
 
-        /// <summary>Return selected API full name into string format.</summary>
+        /// <summary>
+        /// Get the full name of the current API.
+        /// </summary>
+        /// <returns>Return the current api full name.</returns>
         public string GetCurrentAPIFullName()
         {
             return api.FullName;
         }
 
-        /// <summary>Return selected API into string format.</summary>
+        /// <summary>
+        /// Get the name of the current API.
+        /// </summary>
+        /// <returns>Return the current api name.</returns>
         public string GetCurrentAPIName()
         {
             return api.Name;
         }
 
-        /// <summary>Use the extension class with your selected API.</summary>
+        /// <summary>
+        /// Use the extension class with your selected API.
+        /// </summary>
         public Extension Extension => new Extension(api);
 
-        /// <summary>Access to all TMAPI functions.</summary>
+        /// <summary>
+        /// Access to all TMAPI functions.
+        /// </summary>
         public TMAPI TMAPI => api as TMAPI;
 
-        /// <summary>Access to all CCAPI functions.</summary>
+        /// <summary>
+        /// Access to all CCAPI functions.
+        /// </summary>
         public CCAPI CCAPI => api as CCAPI;
 
-        /// <summary>Access to all PS3MAPI functions.</summary>
+        /// <summary>
+        /// Access to all PS3MAPI functions.
+        /// </summary>
         public PS3MAPI PS3MAPI => api as PS3MAPI;
     }
 }
