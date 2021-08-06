@@ -1,9 +1,7 @@
 ﻿using IgrisLib;
 using IgrisLib.Mvvm;
 using IgrisLibTest.Properties;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 
 namespace IgrisLibTest

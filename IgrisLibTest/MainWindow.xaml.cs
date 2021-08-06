@@ -1,11 +1,9 @@
-﻿using MahApps.Metro.Controls;
-
-namespace IgrisLibTest
+﻿namespace IgrisLibTest
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow
     {
         public MainWindow()
         {
