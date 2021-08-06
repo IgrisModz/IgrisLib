@@ -1,14 +1,17 @@
 ﻿using IgrisLib.Mvvm;
 using IgrisLib.Views;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace IgrisLib.ViewModels
 {
     public class CCAPIViewModel : ViewModelBase
     {
+        private readonly IDialogCoordinator Dialog;
         private readonly ResourceDictionary Resources;
         private readonly CCAPIView Win;
 
@@ -18,19 +21,20 @@ namespace IgrisLib.ViewModels
 
         public CCAPI.ConsoleInfo SelectedConsole { get => GetValue(() => SelectedConsole); set => SetValue(() => SelectedConsole, value); }
 
-        public DelegateCommand AddConsoleCommand { get; }
+        internal ICommand AddConsoleCommand { get; }
 
-        public DelegateCommand DeleteConsoleCommand { get; }
+        internal ICommand DeleteConsoleCommand { get; }
 
-        public DelegateCommand ConnectCommand { get; }
+        internal ICommand ConnectCommand { get; }
 
-        public DelegateCommand RefreshCommand { get; }
+        internal ICommand RefreshCommand { get; }
 
-        public CCAPIViewModel(CCAPIView win, IConnectAPI api, ResourceDictionary resources)
+        internal CCAPIViewModel(CCAPIView win, IConnectAPI api, ResourceDictionary resources, IDialogCoordinator instance)
         {
             Win = win ?? throw new ArgumentNullException(nameof(win));
             Api = api ?? throw new ArgumentNullException(nameof(api));
             Resources = resources ?? throw new ArgumentNullException(nameof(resources));
+            Dialog = instance ?? throw new ArgumentNullException(nameof(instance));
             AddConsoleCommand = new DelegateCommand(AddConsole, CanExecuteRefresh);
             DeleteConsoleCommand = new DelegateCommand(DeleteConsole, CanExecuteSelected);
             ConnectCommand = new DelegateCommand(Connect, CanExecuteSelected);
@@ -65,21 +69,19 @@ namespace IgrisLib.ViewModels
             Refresh();
         }
 
-        private void Connect()
+        private async void Connect()
         {
             if (SelectedConsole != null)
             {
-                if (Api.ConnectTarget(SelectedConsole.Ip))
-                {
-                    Win.Result = true;
-                }
-                else
-                    Win.Result = false;
+                Win.Result = Api.ConnectTarget(SelectedConsole.Ip);
+
                 Win.Close();
                 return;
             }
             else
-                MessageBox.Show(Resources["errorSelect"].ToString(), Resources["errorSelectTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            {
+                await Dialog.ShowMessageAsync(this, Resources["errorSelectTitle"].ToString(), Resources["errorSelect"].ToString());
+            }
         }
 
         internal void Refresh()

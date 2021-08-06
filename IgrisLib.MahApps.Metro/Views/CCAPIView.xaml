@@ -1,11 +1,13 @@
 ﻿<mah:MetroWindow x:Class="IgrisLib.Views.CCAPIView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False"
-        Title="{DynamicResource formTitle}" TitleCharacterCasing="Normal"
-        Height="340" Width="290"
-        Icon="pack://application:,,,/IgrisLib.MahApps.Metro;Component/Images/ps3.png">
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False"
+                 Title="{DynamicResource formTitle}" TitleCharacterCasing="Normal"
+                 mah:DialogParticipation.Register="{Binding}"
+                 Height="340" Width="290"
+                 Icon="{iconPacks:MaterialImage Kind=SonyPlaystation}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,7 +20,14 @@
         </Grid.ColumnDefinitions>
         <Menu x:Name="mainMenu" IsMainMenu="True" Grid.ColumnSpan="2">
             <MenuItem x:Name="itemFile" Header="{DynamicResource file}">
-                <MenuItem x:Name="itemAddConsole" Header="{DynamicResource addConsole}" Command="{Binding AddConsoleCommand}"/>
+                <MenuItem.Icon>
+                    <iconPacks:PackIconMaterial x:Name="iconFile" Kind="File"/>
+                </MenuItem.Icon>
+                <MenuItem x:Name="itemAddConsole" Header="{DynamicResource addConsole}" Command="{Binding AddConsoleCommand}">
+                    <MenuItem.Icon>
+                        <iconPacks:PackIconMaterial x:Name="iconAddConsole" Kind="PlusBoxMultiple"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <ListBox x:Name="listView" SelectionMode="Single" Grid.Row="1" Grid.ColumnSpan="2" Margin="3"
@@ -32,7 +41,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Height="15" Width="15" Source="pack://application:,,,/IgrisLib.MahApps.Metro;Component/Images/ps3.png"/>
+                        <iconPacks:PackIconMaterial VerticalAlignment="Center" Kind="SonyPlaystation"/>
                         <TextBlock Grid.Column="1" Margin="3" Text="{Binding Name}"/>
                         <TextBlock Grid.Column="2" Margin="3" Text=":"/>
                         <TextBlock Grid.Column="3" Margin="3" Text="{Binding Ip}"/>
@@ -41,17 +50,29 @@
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="itemDeleteConsole" Header="{DynamicResource delete}" Command="{Binding DeleteConsoleCommand}"/>
+                    <MenuItem x:Name="itemDeleteConsole" Header="{DynamicResource delete}" Command="{Binding DeleteConsoleCommand}">
+                        <iconPacks:PackIconMaterial x:Name="iconDeleteConsole" Kind="Delete"/>
+                    </MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
         <Button x:Name="btnConnect" Grid.Row="2" Margin="3"
-                Content="{DynamicResource connect}" Command="{Binding ConnectCommand}"
+                Command="{Binding ConnectCommand}"
                 mah:ControlsHelper.ContentCharacterCasing="Normal"
-                mah:ControlsHelper.CornerRadius="0"/>
+                mah:ControlsHelper.CornerRadius="0">
+            <StackPanel Orientation="Horizontal">
+                <iconPacks:PackIconMaterial x:Name="iconConnect" Kind="CastConnected"/>
+                <TextBlock x:Name="txtConnect" Margin="3 0 0 0" Text="{DynamicResource connect}"/>
+            </StackPanel>
+        </Button>
         <Button x:Name="btnRefresh" Grid.Row="2" Grid.Column="1" Margin="3"
-                Content="{DynamicResource refresh}" Command="{Binding RefreshCommand}"
+                Command="{Binding RefreshCommand}"
                 mah:ControlsHelper.ContentCharacterCasing="Normal"
-                mah:ControlsHelper.CornerRadius="0"/>
+                mah:ControlsHelper.CornerRadius="0">
+            <StackPanel Orientation="Horizontal">
+                <iconPacks:PackIconMaterial x:Name="iconRefresh" Kind="Refresh"/>
+                <TextBlock x:Name="txRefresh" Margin="3 0 0 0" Text="{DynamicResource refresh}"/>
+            </StackPanel>
+        </Button>
     </Grid>
 </mah:MetroWindow>

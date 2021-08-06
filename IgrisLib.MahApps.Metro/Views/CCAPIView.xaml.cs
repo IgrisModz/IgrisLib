@@ -1,5 +1,6 @@
 ﻿using IgrisLib.ViewModels;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System.Linq;
 using System.Windows;
 
@@ -17,7 +18,7 @@ namespace IgrisLib.Views
         public CCAPIView(IConnectAPI api, ResourceDictionary resources)
         {
             Api = api;
-            ViewModel = new CCAPIViewModel(this, api, resources);
+            ViewModel = new CCAPIViewModel(this, api, resources, DialogCoordinator.Instance);
             InitializeComponent();
             Resources = resources;
             listView.Focus();
