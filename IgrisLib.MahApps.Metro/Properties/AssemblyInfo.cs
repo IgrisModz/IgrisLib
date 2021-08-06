@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -26,11 +27,12 @@ using System.Runtime.InteropServices;
 // Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de build et de révision par défaut
 // en utilisant '*', comme indiqué ci-dessous :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.5.0.0")]
+[assembly: AssemblyFileVersion("1.5.0.0")]
 [assembly: AssemblyTitle("IgrisLib")]
 [assembly: AssemblyDescription("Library for tool PS3")]
 [assembly: AssemblyCompany("Igris Production")]
 [assembly: AssemblyProduct("IgrisLib")]
 [assembly: AssemblyCopyright("Igris Modz Copyright © 2020")]
 [assembly: AssemblyTrademark("Igris Prod.")]
+[assembly: NeutralResourcesLanguage("en-US")]
