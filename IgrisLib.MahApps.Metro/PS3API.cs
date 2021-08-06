@@ -376,6 +376,15 @@ namespace IgrisLib
         }
 
         /// <summary>
+        /// Get the cueent API by enum.
+        /// </summary>
+        /// <returns>Return the current api by enum.</returns>
+        public SelectAPI GetCurrentAPIbyEnum()
+        {
+            return (SelectAPI)Enum.Parse(typeof(SelectAPI), api.Name);
+        }
+
+        /// <summary>
         /// Get the full name of the current API.
         /// </summary>
         /// <returns>Return the current api full name.</returns>
