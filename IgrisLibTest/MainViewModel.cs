@@ -19,21 +19,7 @@ namespace IgrisLibTest
             get => GetValue(() => SelectedApi);
             set
             {
-                switch (value)
-                {
-                    case "CCAPI":
-                        PS3.ChangeAPI(new CCAPI());
-                        break;
-                    case "PS3MAPI":
-                        PS3.ChangeAPI(new PS3MAPI());
-                        break;
-                    case "TMAPI":
-                        PS3.ChangeAPI(new TMAPI());
-                        break;
-                    default:
-                        PS3.ChangeAPI(new TMAPI());
-                        break;
-                }
+                PS3.ChangeAPI(value);
                 Settings.Default.API = value;
                 Settings.Default.Save();
                 SetValue(() => SelectedApi, value);
@@ -44,7 +30,7 @@ namespace IgrisLibTest
 
         public MainViewModel()
         {
-            PS3 = new PS3API(null);
+            PS3 = new PS3API(SelectAPI.CCAPI);
             ConnectionCommand = new DelegateCommand(Connection);
             ApiList = PS3.GetAllApi();
             SelectedApi = Settings.Default.API;
