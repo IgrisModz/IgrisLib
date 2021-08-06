@@ -1,5 +1,4 @@
-﻿using IgrisLib.MessageBox;
-using IgrisLib.Mvvm;
+﻿using IgrisLib.Mvvm;
 using IgrisLib.Views;
 using System;
 using System.Collections.ObjectModel;
@@ -80,7 +79,7 @@ namespace IgrisLib.ViewModels
                 return;
             }
             else
-                IgrisMessageBox.Show(Resources["errorSelect"].ToString(), Resources["errorSelectTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Resources["errorSelect"].ToString(), Resources["errorSelectTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         internal void Refresh()

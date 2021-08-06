@@ -1,5 +1,4 @@
-﻿using IgrisLib.MessageBox;
-using IgrisLib.ViewModels;
+﻿using IgrisLib.ViewModels;
 using MahApps.Metro.Controls;
 using System.Linq;
 using System.Windows;
@@ -46,7 +45,7 @@ namespace IgrisLib.Views
                 {
                     Result = false;
                     Close();
-                    IgrisMessageBox.Show(Resources["noConsole"].ToString(), Resources["noConsoleTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(Resources["noConsole"].ToString(), Resources["noConsoleTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 return Result;
             }
