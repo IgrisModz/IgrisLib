@@ -7,7 +7,6 @@
 *
 **/
 
-using IgrisLib.MessageBox;
 using IgrisLib.Resources;
 using IgrisLib.Views;
 using Microsoft.Win32;
@@ -135,7 +134,7 @@ namespace IgrisLib
                             {
 
                             }
-                            IgrisMessageBox.Show(this.resources["impossibleLoadCCAPI"].ToString(), this.resources["impossibleLoadCCAPITitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                            MessageBox.Show(this.resources["impossibleLoadCCAPI"].ToString(), this.resources["impossibleLoadCCAPITitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
                             return false;
                         }
 
@@ -179,7 +178,7 @@ namespace IgrisLib
 
                         if (!loaded)
                         {
-                            IgrisMessageBox.Show(this.resources["impossibleLoadCCAPI"].ToString(), this.resources["ccapiIsntCompatible"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                            MessageBox.Show(this.resources["impossibleLoadCCAPI"].ToString(), this.resources["ccapiIsntCompatible"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
                             return false;
                         }
 
@@ -206,17 +205,17 @@ namespace IgrisLib
                     }
                     else
                     {
-                        IgrisMessageBox.Show(this.resources["ccapiNotInstalled"].ToString(), this.resources["ccapiNotFound"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                        MessageBox.Show(this.resources["ccapiNotInstalled"].ToString(), this.resources["ccapiNotFound"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
                     }
                 }
                 else
                 {
-                    IgrisMessageBox.Show(this.resources["invalidCCAPIFolder"].ToString(), this.resources["ccapiNotInstalledTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                    MessageBox.Show(this.resources["invalidCCAPIFolder"].ToString(), this.resources["ccapiNotInstalledTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
                 }
             }
             else
             {
-                IgrisMessageBox.Show(this.resources["ccapiNotInstalled"].ToString(), this.resources["ccapiNotInstalledTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                MessageBox.Show(this.resources["ccapiNotInstalled"].ToString(), this.resources["ccapiNotInstalledTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
             }
             return false;
         }

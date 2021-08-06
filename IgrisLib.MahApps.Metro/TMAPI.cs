@@ -1,5 +1,4 @@
-﻿using IgrisLib.MessageBox;
-using IgrisLib.NET;
+﻿using IgrisLib.NET;
 using System;
 using System.Globalization;
 using System.IO;
@@ -424,7 +423,7 @@ namespace IgrisLib
                             LoadApi = Assembly.LoadFile(x86);
                         else
                         {
-                            IgrisMessageBox.Show($"Target Manager API cannot be founded to:\r\n\r\n{x86}", "Error with PS3 API!", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"Target Manager API cannot be founded to:\r\n\r\n{x86}", "Error with PS3 API!", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
