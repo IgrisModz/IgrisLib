@@ -20,7 +20,8 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
+    <DocumentationFile>bin\Debug\IgrisLib.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CCAPI.cs" />
+    <Compile Include="Enums\SelectAPI.cs" />
     <Compile Include="Extra\ArrayBuilder.cs" />
     <Compile Include="Extra\Extension.cs" />
     <Compile Include="IApi.cs" />
@@ -53,7 +55,7 @@
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="NET\PS3RPC.cs" />
-    <Compile Include="NET\TMAPI_NET.cs" />
+    <Compile Include="NET\PS3TMAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PS3API.cs" />
     <Compile Include="PS3MAPI.cs" />
@@ -99,5 +101,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
