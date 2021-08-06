@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace IgrisLib.ViewModels
 {
@@ -18,13 +19,13 @@ namespace IgrisLib.ViewModels
 
         public CCAPI.ConsoleInfo SelectedConsole { get => GetValue(() => SelectedConsole); set => SetValue(() => SelectedConsole, value); }
 
-        public DelegateCommand AddConsoleCommand { get; }
+        public ICommand AddConsoleCommand { get; }
 
-        public DelegateCommand DeleteConsoleCommand { get; }
+        public ICommand DeleteConsoleCommand { get; }
 
-        public DelegateCommand ConnectCommand { get; }
+        public ICommand ConnectCommand { get; }
 
-        public DelegateCommand RefreshCommand { get; }
+        public ICommand RefreshCommand { get; }
 
         public CCAPIViewModel(CCAPIView win, IConnectAPI api, ResourceDictionary resources)
         {

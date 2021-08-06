@@ -21,15 +21,15 @@ namespace IgrisLib.ViewModels
 
         public CCAPI.ConsoleInfo SelectedConsole { get => GetValue(() => SelectedConsole); set => SetValue(() => SelectedConsole, value); }
 
-        internal ICommand AddConsoleCommand { get; }
+        public ICommand AddConsoleCommand { get; }
 
-        internal ICommand DeleteConsoleCommand { get; }
+        public ICommand DeleteConsoleCommand { get; }
 
-        internal ICommand ConnectCommand { get; }
+        public ICommand ConnectCommand { get; }
 
-        internal ICommand RefreshCommand { get; }
+        public ICommand RefreshCommand { get; }
 
-        internal CCAPIViewModel(CCAPIView win, IConnectAPI api, ResourceDictionary resources, IDialogCoordinator instance)
+        public CCAPIViewModel(CCAPIView win, IConnectAPI api, ResourceDictionary resources, IDialogCoordinator instance)
         {
             Win = win ?? throw new ArgumentNullException(nameof(win));
             Api = api ?? throw new ArgumentNullException(nameof(api));
