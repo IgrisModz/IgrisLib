@@ -19,11 +19,11 @@
         <Menu x:Name="mainMenu" IsMainMenu="True" Grid.ColumnSpan="2">
             <MenuItem x:Name="itemFile" Header="{DynamicResource file}">
                 <MenuItem.Icon>
-                    <iconPacks:PackIconMaterial x:Name="iconFile" Kind="File"/>
+                    <iconPacks:PackIconMaterial x:Name="iconFile" HorizontalAlignment="Center" Kind="File"/>
                 </MenuItem.Icon>
                 <MenuItem x:Name="itemAddConsole" Header="{DynamicResource addConsole}" Command="{Binding AddConsoleCommand}">
                     <MenuItem.Icon>
-                        <iconPacks:PackIconMaterial x:Name="iconAddConsole" Kind="PlusBoxMultiple"/>
+                        <iconPacks:PackIconMaterial x:Name="iconAddConsole" HorizontalAlignment="Center" Kind="PlusBoxMultiple"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -60,14 +60,14 @@
                 Command="{Binding ConnectCommand}">
             <StackPanel Orientation="Horizontal">
                 <iconPacks:PackIconMaterial x:Name="iconConnect" Kind="CastConnected"/>
-                <TextBlock x:Name="txtConnect" Text="{DynamicResource connect}"/>
+                <TextBlock x:Name="txtConnect" Margin="3 0 0 0" Text="{DynamicResource connect}"/>
             </StackPanel>
         </Button>
         <Button x:Name="btnRefresh" Grid.Row="2" Grid.Column="1" Margin="3"
                 Command="{Binding RefreshCommand}">
             <StackPanel Orientation="Horizontal">
                 <iconPacks:PackIconMaterial x:Name="iconRefresh" Kind="Refresh"/>
-                <TextBlock x:Name="txtRefresh" Text="{DynamicResource refresh}"/>
+                <TextBlock x:Name="txtRefresh" Margin="3 0 0 0" Text="{DynamicResource refresh}"/>
             </StackPanel>
         </Button>
     </Grid>
