@@ -6,6 +6,9 @@ using System.Net;
 
 namespace IgrisLib
 {
+    /// <summary>
+    /// API startup class
+    /// </summary>
     public class PS3API : ViewModelBase
     {
         private IApi api;
@@ -14,7 +17,7 @@ namespace IgrisLib
         /// Property to know if you are connected to the ps3.
         /// </summary>
         /// <value>Return true if you are connected to ps3.</value>
-        /// <remarks>You have to use <see cref="Connect"/> <see cref="ConnectTarget"/>, <see cref="DisconnectTarget"/> or <see cref="GetConnected"/> for update this property</remarks>
+        /// <remarks>You have to use <see cref="Connect"/> <see cref="ConnectTarget(int)"/>, <see cref="DisconnectTarget"/> or <see cref="GetConnected"/> for update this property</remarks>
         public bool IsConnected { get => GetValue(() => IsConnected); private set => SetValue(() => IsConnected, value); }
 
         /// <summary>
@@ -42,14 +45,14 @@ namespace IgrisLib
         /// Property to know the name of the console currently connected.
         /// </summary>
         /// <value>Returns the name of the currently connected console.</value>
-        /// <remarks>You have to use <see cref="Connect"/> or <see cref="ConnectTarget"/> for update this property</remarks>
+        /// <remarks>You have to use <see cref="Connect"/> or <see cref="ConnectTarget(int)"/> for update this property</remarks>
         public string TargetName { get; private set; }
 
         /// <summary>
         /// Property to know the ip address of the console currently connected.
         /// </summary>
         /// <value>Returns the ip address of the currently connected console.</value>
-        /// <remarks>You have to use <see cref="Connect"/> or <see cref="ConnectTarget"/> for update this property</remarks>
+        /// <remarks>You have to use <see cref="Connect"/> or <see cref="ConnectTarget(int)"/> for update this property</remarks>
         public string TargetIp { get; private set; }
 
         /// <summary>
@@ -216,6 +219,7 @@ namespace IgrisLib
                     return true;
                 }
             }
+            TargetName = string.Empty;
             IsConnected = false;
             return false;
         }
