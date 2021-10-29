@@ -20,7 +20,6 @@ namespace IgrisLib.Mvvm
         {
             _execute = execute;
             _canExecute = canExecute;
-            CanExecute
         }
 
         /// <summary>
