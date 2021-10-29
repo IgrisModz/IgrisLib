@@ -29,7 +29,7 @@
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button x:Name="btnAddConsole" Margin="3"
-                    IsDefault="True" Click="btnAddConsole_Click"
+                    IsDefault="True" Click="BtnAddConsole_Click"
                     mah:ControlsHelper.ContentCharacterCasing="Normal"
                     mah:ControlsHelper.CornerRadius="0">
                 <StackPanel Orientation="Horizontal">
@@ -46,7 +46,7 @@
             <Button x:Name="btncCancel"
                     Margin="3"
                     IsCancel="True"
-                    Click="btncCancel_Click"
+                    Click="BtncCancel_Click"
                     mah:ControlsHelper.ContentCharacterCasing="Normal"
                     mah:ControlsHelper.CornerRadius="0">
                 <StackPanel Orientation="Horizontal">

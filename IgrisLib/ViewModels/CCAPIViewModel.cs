@@ -8,25 +8,52 @@ using System.Windows.Input;
 
 namespace IgrisLib.ViewModels
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CCAPIViewModel : ViewModelBase
     {
         private readonly ResourceDictionary Resources;
         private readonly CCAPIView Win;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IConnectAPI Api { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ObservableCollection<CCAPI.ConsoleInfo> Consoles { get => GetValue(() => Consoles); set => SetValue(() => Consoles, value); }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public CCAPI.ConsoleInfo SelectedConsole { get => GetValue(() => SelectedConsole); set => SetValue(() => SelectedConsole, value); }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand AddConsoleCommand { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand DeleteConsoleCommand { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand ConnectCommand { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand RefreshCommand { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public CCAPIViewModel(CCAPIView win, IConnectAPI api, ResourceDictionary resources)
         {
             Win = win ?? throw new ArgumentNullException(nameof(win));
@@ -66,21 +93,19 @@ namespace IgrisLib.ViewModels
             Refresh();
         }
 
-        private void Connect()
+        private async void Connect()
         {
             if (SelectedConsole != null)
             {
-                if (Api.ConnectTarget(SelectedConsole.Ip))
-                {
-                    Win.Result = true;
-                }
-                else
-                    Win.Result = false;
+                Win.Result = Api.ConnectTarget(SelectedConsole.Ip);
+
                 Win.Close();
                 return;
             }
             else
+            {
                 MessageBox.Show(Resources["errorSelect"].ToString(), Resources["errorSelectTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         internal void Refresh()

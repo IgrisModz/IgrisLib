@@ -10,119 +10,390 @@ using System.Windows;
 
 namespace IgrisLib
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TMAPI : IApi
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public enum GPRegisters
         {
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_0 = 0x00,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_1 = 0x01,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_2 = 0x02,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_3 = 0x03,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_4 = 0x04,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_5 = 0x05,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_6 = 0x06,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_7 = 0x07,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_8 = 0x08,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_9 = 0x09,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_10 = 0x0a,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_11 = 0x0b,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_12 = 0x0c,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_13 = 0x0d,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_14 = 0x0e,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_15 = 0x0f,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_16 = 0x10,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_17 = 0x11,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_18 = 0x12,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_19 = 0x13,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_20 = 0x14,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_21 = 0x15,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_22 = 0x16,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_23 = 0x17,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_24 = 0x18,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_25 = 0x19,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_26 = 0x1a,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_27 = 0x1b,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_28 = 0x1c,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_29 = 0x1d,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_30 = 0x1e,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_gpr_31 = 0x1f
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum FPRegisters
         {
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_0 = 0x20,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_1 = 0x21,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_2 = 0x22,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_3 = 0x23,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_4 = 0x24,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_5 = 0x25,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_6 = 0x26,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_7 = 0x27,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_8 = 0x28,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_9 = 0x29,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_10 = 0x2A,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_11 = 0x2B,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_12 = 0x2C,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_13 = 0x2D,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_14 = 0x2E,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_15 = 0x2F,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_16 = 0x30,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_17 = 0x31,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_18 = 0x32,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_19 = 0x33,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_20 = 0x34,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_21 = 0x35,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_22 = 0x36,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_23 = 0x37,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_24 = 0x38,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_25 = 0x39,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_26 = 0x3A,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_27 = 0x3B,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_28 = 0x3C,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_29 = 0x3D,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_30 = 0x3E,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpr_31 = 0x3F,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum SPRegisters
         {
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_pc = 0x40,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_cr = 0x41,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_lr = 0x42,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_ctr = 0x43,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_xer = 0x44,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_fpscr = 0x45,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_vscr = 0x46,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_vrsave = 0x47,
+            /// <summary>
+            /// 
+            /// </summary>
             SNPS3_msr = 0x48,
         }
-        public string FullName => "Target Manager";
-        public string Name => "TMAPI";
-        public string IPAddress { get; private set; } = "127.0.0.1";
-        public static int Target = 0xFF;
-        public bool IsConnected = false;
-        public static bool AssemblyLoaded = true;
-        public static PS3TMAPI.ResetParameter resetParameter;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public string FullName => "Target Manager";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name => "TMAPI";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string IPAddress { get; private set; } = "127.0.0.1";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int Target = 0xFF;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsConnected { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static bool AssemblyLoaded { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static PS3TMAPI.ResetParameter ResetParameter { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public TMAPI()
         {
 
         }
 
-        public Extension Extension
-        {
-            get { return new Extension(this); }
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Extension Extension => new Extension(this);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class SCECMD
         {
-            /// <summary>Get the target status and return the string value.</summary>
+            /// <summary>
+            /// Get the target status and return the string value.
+            /// </summary>
+            /// <returns></returns>
             public string SNRESULT()
             {
                 return Parameters.snresult;
             }
 
-            /// <summary>Get the target name.</summary>
+            /// <summary>
+            /// Get the target name.
+            /// </summary>
+            /// <returns></returns>
             public string GetTargetName()
             {
                 if (Parameters.ConsoleName == null || Parameters.ConsoleName == string.Empty)
@@ -139,7 +410,10 @@ namespace IgrisLib
                 return Parameters.ConsoleName;
             }
 
-            /// <summary>Get the target status and return the string value.</summary>
+            /// <summary>
+            /// Get the target status and return the string value.
+            /// </summary>
+            /// <returns></returns>
             public string GetStatus()
             {
                 if (AssemblyLoaded)
@@ -150,32 +424,47 @@ namespace IgrisLib
                 return Parameters.Status;
             }
 
-            /// <summary>Get the ProcessID by the current process.</summary>
+            /// <summary>
+            /// Get the ProcessID by the current process.
+            /// </summary>
+            /// <returns></returns>
             public uint ProcessID()
             {
                 return Parameters.ProcessID;
             }
 
-            /// <summary>Get an array of processID's.</summary>
+            /// <summary>
+            /// Get an array of processID's.
+            /// </summary>
+            /// <returns></returns>
             public uint[] ProcessIDs()
             {
                 return Parameters.processIDs;
             }
 
-            /// <summary>Get some details from your target.</summary>
+            /// <summary>
+            /// Get some details from your target.
+            /// </summary>
+            /// <returns></returns>
             public PS3TMAPI.ConnectStatus DetailStatus()
             {
                 return Parameters.connectStatus;
             }
         }
 
-        public SCECMD SCE
-        {
-            get { return new SCECMD(); }
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public SCECMD SCE => new SCECMD();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class Parameters
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public static string
                 usage,
                 info,
@@ -183,29 +472,73 @@ namespace IgrisLib
                 Status,
                 MemStatus,
                 ConsoleName;
-            public static uint ProcessID;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public static uint ProcessID { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public static uint[] processIDs;
-            public static byte[] Retour;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public static byte[] Retour { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public static uint[] ModuleIDs;
+
+            /// <summary>
+            /// 
+            /// </summary>
             public static PS3TMAPI.ConnectStatus connectStatus;
+
+            /// <summary>
+            /// 
+            /// </summary>
             public static PS3TMAPI.PPUThreadInfo threadInfo;
         }
 
-        /// <summary>Enum of flag reset.</summary>
+        /// <summary>
+        /// Enum of flag reset.
+        /// </summary>
         public enum ResetTarget
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Hard,
+            /// <summary>
+            /// 
+            /// </summary>
             Quick,
+            /// <summary>
+            /// 
+            /// </summary>
             ResetEx,
+            /// <summary>
+            /// 
+            /// </summary>
             Soft
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void InitComms()
         {
             PS3TMAPI.InitTargetComms();
         }
 
-        /// <summary>Connect the default target and initialize the dll. Possible to put an int as arugment for determine which target to connect.</summary>
+        /// <summary>
+        /// Connect the default target and initialize the dll. Possible to put an int as arugment for determine which target to connect.
+        /// </summary>
+        /// <returns></returns>
         public bool ConnectTarget()
         {
             bool isConnected = ConnectTarget(0);
@@ -213,7 +546,11 @@ namespace IgrisLib
             return isConnected;
         }
 
-        /// <summary>Connect the default target and initialize the dll. Possible to put an int as arugment for determine which target to connect.</summary>
+        /// <summary>
+        /// Connect the default target and initialize the dll. Possible to put an int as arugment for determine which target to connect.
+        /// </summary>
+        /// <param name="TargetIndex"></param>
+        /// <returns></returns>
         public bool ConnectTarget(int TargetIndex = 0)
         {
             if (AssemblyLoaded)
@@ -230,7 +567,11 @@ namespace IgrisLib
             return result;
         }
 
-        /// <summary>Connect the target by is name.</summary>
+        /// <summary>
+        /// Connect the target by is name.
+        /// </summary>
+        /// <param name="TargetName"></param>
+        /// <returns></returns>
         public bool ConnectTarget(string TargetName)
         {
             if (AssemblyLoaded)
@@ -247,7 +588,10 @@ namespace IgrisLib
             return result;
         }
 
-        /// <summary>Disconnect the target.</summary>
+        /// <summary>
+        /// Disconnect the target.
+        /// </summary>
+        /// <returns></returns>
         public int DisconnectTarget()
         {
             PS3TMAPI.SNRESULT sNRESULT = PS3TMAPI.Disconnect(Target);
@@ -255,14 +599,19 @@ namespace IgrisLib
             return (int)sNRESULT;
         }
 
-        /// <summary>Detach the process.</summary>
+        /// <summary>
+        /// Detach the process.
+        /// </summary>
         public void DetachProcess()
         {
             PS3TMAPI.ProcessStop(Target, Parameters.ProcessID);
             IsConnected = false;
         }
 
-        /// <summary>Power on selected target.</summary>
+        /// <summary>
+        /// Power on selected target.
+        /// </summary>
+        /// <param name="numTarget"></param>
         public void PowerOn(int numTarget = 0)
         {
             if (Target != 0xFF)
@@ -270,12 +619,19 @@ namespace IgrisLib
             PS3TMAPI.PowerOn(numTarget);
         }
 
-        /// <summary>Power off selected target.</summary>
+        /// <summary>
+        /// Power off selected target.
+        /// </summary>
+        /// <param name="Force"></param>
         public void PowerOff(bool Force)
         {
             PS3TMAPI.PowerOff(Target, Force);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool AttachProcess()
         {
             try
@@ -301,13 +657,21 @@ namespace IgrisLib
             return false;
         }
 
-        /// <summary>Set memory to the target (byte[]).</summary>
+        /// <summary>
+        /// Set memory to the target (byte[]).
+        /// </summary>
+        /// <param name="Address"></param>
+        /// <param name="Bytes"></param>
         public void SetMemory(uint Address, byte[] Bytes)
         {
             PS3TMAPI.ProcessSetMemory(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, 0, Address, Bytes);
         }
 
-        /// <summary>Set memory to the address (byte[]).</summary>
+        /// <summary>
+        /// Set memory to the address (byte[]).
+        /// </summary>
+        /// <param name="Address"></param>
+        /// <param name="value"></param>
         public void SetMemory(uint Address, ulong value)
         {
             byte[] b = BitConverter.GetBytes(value);
@@ -315,7 +679,12 @@ namespace IgrisLib
             PS3TMAPI.ProcessSetMemory(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, 0, Address, b);
         }
 
-        /// <summary>Set memory with value as string hexadecimal to the address (string).</summary>
+        /// <summary>
+        /// Set memory with value as string hexadecimal to the address (string).
+        /// </summary>
+        /// <param name="Address"></param>
+        /// <param name="hexadecimal"></param>
+        /// <param name="Type"></param>
         public void SetMemory(uint Address, string hexadecimal, EndianType Type = EndianType.BigEndian)
         {
             byte[] Entry = StringToByteArray(hexadecimal);
@@ -324,13 +693,22 @@ namespace IgrisLib
             PS3TMAPI.ProcessSetMemory(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, 0, Address, Entry);
         }
 
-        /// <summary>Get memory from the address.</summary>
+        /// <summary>
+        /// Get memory from the address.
+        /// </summary>
+        /// <param name="Address"></param>
+        /// <param name="Bytes"></param>
         public void GetMemory(uint Address, byte[] Bytes)
         {
             PS3TMAPI.ProcessGetMemory(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, 0, Address, ref Bytes);
         }
 
-        /// <summary>Get a bytes array with the length input.</summary>
+        /// <summary>
+        /// Get a bytes array with the length input.
+        /// </summary>
+        /// <param name="Address"></param>
+        /// <param name="lengthByte"></param>
+        /// <returns></returns>
         public byte[] GetBytes(uint Address, uint lengthByte)
         {
             byte[] Longueur = new byte[lengthByte];
@@ -338,7 +716,12 @@ namespace IgrisLib
             return Longueur;
         }
 
-        /// <summary>Get a string with the length input.</summary>
+        /// <summary>
+        /// Get a string with the length input.
+        /// </summary>
+        /// <param name="Address"></param>
+        /// <param name="lengthString"></param>
+        /// <returns></returns>
         public string GetString(uint Address, uint lengthString)
         {
             byte[] Longueur = new byte[lengthString];
@@ -386,25 +769,32 @@ namespace IgrisLib
             return PSNString;
         }
 
-        /// <summary>Reset target to XMB , Sometimes the target restart quickly.</summary>
+        /// <summary>
+        /// Reset target to XMB , Sometimes the target restart quickly.
+        /// </summary>
+        /// <param name="flag"></param>
         public void ResetToXMB(ResetTarget flag)
         {
             if (flag == ResetTarget.Hard)
-                resetParameter = PS3TMAPI.ResetParameter.Hard;
+                ResetParameter = PS3TMAPI.ResetParameter.Hard;
             else if (flag == ResetTarget.Quick)
-                resetParameter = PS3TMAPI.ResetParameter.Quick;
+                ResetParameter = PS3TMAPI.ResetParameter.Quick;
             else if (flag == ResetTarget.ResetEx)
-                resetParameter = PS3TMAPI.ResetParameter.ResetEx;
+                ResetParameter = PS3TMAPI.ResetParameter.ResetEx;
             else if (flag == ResetTarget.Soft)
-                resetParameter = PS3TMAPI.ResetParameter.Soft;
-            PS3TMAPI.Reset(Target, resetParameter);
+                ResetParameter = PS3TMAPI.ResetParameter.Soft;
+            PS3TMAPI.Reset(Target, ResetParameter);
         }
 
         internal static Assembly LoadApi;
-        ///<summary>Load the PS3 API for use with your Application .NET.</summary>
+
+        /// <summary>
+        /// Load the PS3 API for use with your Application .NET.
+        /// </summary>
+        /// <returns></returns>
         public Assembly PS3TMAPI_NET()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += (s, e) =>
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
             {
                 var filename = new AssemblyName(e.Name).Name;
                 var x = string.Format(@"C:\Program Files\SN Systems\PS3\bin\ps3tmapi_net.dll", filename);
@@ -432,6 +822,9 @@ namespace IgrisLib
             return LoadApi;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static void GetThreadInfo()
         {
             PS3TMAPI.GetProcessInfo(Target, Parameters.ProcessID, out PS3TMAPI.ProcessInfo processInfo);
@@ -450,6 +843,12 @@ namespace IgrisLib
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="LocalthreadInfo"></param>
+        /// <returns></returns>
         public bool GetThreadByName(string name, ref PS3TMAPI.PPUThreadInfo LocalthreadInfo)
         {
             PS3TMAPI.GetProcessInfo(Target, Parameters.ProcessID, out PS3TMAPI.ProcessInfo processInfo);
@@ -469,36 +868,62 @@ namespace IgrisLib
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Force"></param>
         public void Shutdown(bool Force)
         {
             PS3TMAPI.PowerOff(Target, Force);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ResetToXMB()
         {
             PS3TMAPI.Reset(Target, PS3TMAPI.ResetParameter.Hard);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void MainThreadStop()
         {
             PS3TMAPI.ThreadStop(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, Parameters.threadInfo.ThreadID);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void MainThreadContinue()
         {
             PS3TMAPI.ThreadContinue(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, Parameters.threadInfo.ThreadID);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
         public void StopThreadyID(ulong ID)
         {
             PS3TMAPI.ThreadStop(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, ID);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
         public void ContinueThreadByID(ulong ID)
         {
             PS3TMAPI.ThreadContinue(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, ID);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static ulong ULongReverse(ulong value)
         {
             return (value & 0x00000000000000FFUL) << 56 | (value & 0x000000000000FF00UL) << 40 |
@@ -507,6 +932,11 @@ namespace IgrisLib
                    (value & 0x00FF000000000000UL) >> 40 | (value & 0xFF00000000000000UL) >> 56;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Register"></param>
+        /// <returns></returns>
         public ulong GetSingleRegister(uint Register)
         {
             uint[] Registers = new uint[1];
@@ -517,6 +947,11 @@ namespace IgrisLib
             return ULongReverse(Return[0]);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Register"></param>
+        /// <param name="Value"></param>
         public void SetSingleRegister(uint Register, ulong Value)
         {
             ulong[] Return = new ulong[1];
@@ -527,6 +962,12 @@ namespace IgrisLib
             _ = PS3TMAPI.ThreadSetRegisters(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, Parameters.threadInfo.ThreadID, Registers, Return);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="Register"></param>
+        /// <returns></returns>
         public ulong GetSingleRegisterByThreadID(ulong ID, uint Register)
         {
             uint[] Registers = new uint[1];
@@ -537,6 +978,12 @@ namespace IgrisLib
             return ULongReverse(Return[0]);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="Register"></param>
+        /// <param name="Value"></param>
         public void SetSingleRegisterByThreadID(ulong ID, uint Register, ulong Value)
         {
             ulong[] Return = new ulong[1];
@@ -547,6 +994,10 @@ namespace IgrisLib
             _ = PS3TMAPI.ThreadSetRegisters(Target, PS3TMAPI.UnitType.PPU, Parameters.ProcessID, ID, Registers, Return);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetTargetName()
         {
             if (Parameters.ConsoleName == null || Parameters.ConsoleName == string.Empty)
@@ -563,6 +1014,10 @@ namespace IgrisLib
             return Parameters.ConsoleName;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetStatus()
         {
             Parameters.connectStatus = new PS3TMAPI.ConnectStatus();
@@ -571,6 +1026,10 @@ namespace IgrisLib
             return Parameters.Status;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public uint ProcessID()
         {
             PS3TMAPI.GetProcessList(Target, out Parameters.processIDs);
@@ -578,12 +1037,21 @@ namespace IgrisLib
             return Parameters.ProcessID;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public uint[] ProcessIDs()
         {
             PS3TMAPI.GetProcessList(Target, out Parameters.processIDs);
             return Parameters.processIDs;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="processId"></param>
+        /// <returns></returns>
         public string GetProcessName(uint processId)
         {
             if (processId != 0)
@@ -594,6 +1062,11 @@ namespace IgrisLib
             return "";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="processId"></param>
+        /// <returns></returns>
         public uint GetProcessParent(uint processId)
         {
             if (processId != 0)
@@ -604,6 +1077,11 @@ namespace IgrisLib
             return 0x0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="processId"></param>
+        /// <returns></returns>
         public ulong GetProcessSize(uint processId)
         {
             if (processId != 0)
@@ -614,6 +1092,10 @@ namespace IgrisLib
             return 0x0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public uint[] ModuleIds()
         {
             PS3TMAPI.GetModuleList(Target, Parameters.ProcessID, out Parameters.ModuleIDs);
@@ -621,6 +1103,11 @@ namespace IgrisLib
             return Parameters.ModuleIDs;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public string GetModuleName(uint moduleId)
         {
             if (Parameters.processIDs.Length > 0)
@@ -631,6 +1118,11 @@ namespace IgrisLib
             return "";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public uint GetModuleStartAddress(uint moduleId)
         {
             if (Parameters.processIDs.Length > 0)
@@ -641,6 +1133,11 @@ namespace IgrisLib
             return 0x0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public uint GetModuleStopAddress(uint moduleId)
         {
             if (Parameters.processIDs.Length > 0)
@@ -651,6 +1148,11 @@ namespace IgrisLib
             return 0x0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public ulong GetModuleSize(uint moduleId)
         {
             if (Parameters.processIDs.Length > 0)
@@ -664,6 +1166,10 @@ namespace IgrisLib
             return 0x0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetCurrentGame()
         {
             PS3TMAPI.ProcessInfo processInfo = new PS3TMAPI.ProcessInfo();
@@ -683,6 +1189,10 @@ namespace IgrisLib
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public PS3TMAPI.TCPIPConnectProperties GetConnectionInfo()
         {
             try

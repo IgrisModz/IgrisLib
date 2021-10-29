@@ -19,14 +19,29 @@ using System.Windows;
 
 namespace IgrisLib
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CCAPI : IApi, IConnectAPI
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string FullName => "Control Console";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name => "CCAPI";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string IPAddress { get; private set; } = "127.0.0.1";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Extension Extension
         {
             get
@@ -35,77 +50,240 @@ namespace IgrisLib
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ProcessInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint pid;
+            /// <summary>
+            /// 
+            /// </summary>
             public string name;
         };
+
+        /// <summary>
+        /// 
+        /// </summary>
         public class ConsoleInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Name { get; set; }
 
+            /// <summary>
+            /// 
+            /// </summary>
             public string Ip { get; set; }
         };
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ConsoleIdType
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Idps = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             Psid = 1,
         };
+
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ShutdownMode
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Shutdown = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             SoftReboot = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             HardReboot = 3,
         };
+
+        /// <summary>
+        /// 
+        /// </summary>
         public enum BuzzerType
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Continuous = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             Single = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Double = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             Triple = 3,
         };
+
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ColorLed
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Green = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Red = 2,
         };
+
+        /// <summary>
+        /// 
+        /// </summary>
         public enum StatusLed
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Off = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             On = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Blink = 2,
         };
+
+        /// <summary>
+        /// 
+        /// </summary>
         public enum NotifyIcon
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Info = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             Caution = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Friend = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             Slider = 3,
+            /// <summary>
+            /// 
+            /// </summary>
             WrongWay = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             Dialog = 5,
+            /// <summary>
+            /// 
+            /// </summary>
             DalogShadow = 6,
+            /// <summary>
+            /// 
+            /// </summary>
             Text = 7,
+            /// <summary>
+            /// 
+            /// </summary>
             Pointer = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             Grab = 9,
+            /// <summary>
+            /// 
+            /// </summary>
             Hand = 10,
+            /// <summary>
+            /// 
+            /// </summary>
             Pen = 11,
+            /// <summary>
+            /// 
+            /// </summary>
             Finger = 12,
+            /// <summary>
+            /// 
+            /// </summary>
             Arrow = 13,
+            /// <summary>
+            /// 
+            /// </summary>
             ArrowRight = 14,
+            /// <summary>
+            /// 
+            /// </summary>
             Progress = 15,
+            /// <summary>
+            /// 
+            /// </summary>
             Trophy1 = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             Trophy2 = 17,
+            /// <summary>
+            /// 
+            /// </summary>
             Trophy3 = 18,
+            /// <summary>
+            /// 
+            /// </summary>
             Trophy4 = 19
         };
+
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ConsoleType
         {
+            /// <summary>
+            /// 
+            /// </summary>
             UNK = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             CEX = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             DEX = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             TOOL = 3,
         };
 
+        /// <summary>
+        /// 
+        /// </summary>
         public CCAPI()
         {
             resources = Language.Get;
@@ -134,7 +312,7 @@ namespace IgrisLib
                             {
 
                             }
-                            MessageBox.Show(this.resources["impossibleLoadCCAPI"].ToString(), this.resources["impossibleLoadCCAPITitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                            MessageBox.Show(resources["impossibleLoadCCAPI"].ToString(), resources["impossibleLoadCCAPITitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
                             return false;
                         }
 
@@ -178,7 +356,7 @@ namespace IgrisLib
 
                         if (!loaded)
                         {
-                            MessageBox.Show(this.resources["impossibleLoadCCAPI"].ToString(), this.resources["ccapiIsntCompatible"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                            MessageBox.Show(resources["impossibleLoadCCAPI"].ToString(), resources["ccapiIsntCompatible"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
                             return false;
                         }
 
@@ -205,41 +383,65 @@ namespace IgrisLib
                     }
                     else
                     {
-                        MessageBox.Show(this.resources["ccapiNotInstalled"].ToString(), this.resources["ccapiNotFound"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                        MessageBox.Show(resources["ccapiNotInstalled"].ToString(), resources["ccapiNotFound"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
                     }
                 }
                 else
                 {
-                    MessageBox.Show(this.resources["invalidCCAPIFolder"].ToString(), this.resources["ccapiNotInstalledTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                    MessageBox.Show(resources["invalidCCAPIFolder"].ToString(), resources["ccapiNotInstalledTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
                 }
             }
             else
             {
-                MessageBox.Show(this.resources["ccapiNotInstalled"].ToString(), this.resources["ccapiNotInstalledTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                MessageBox.Show(resources["ccapiNotInstalled"].ToString(), resources["ccapiNotInstalledTitle"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
             }
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         ~CCAPI()
         {
             LibLoaded = false;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool GetLibraryState()
         {
             return LibLoaded;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool IsConnected()
         {
             int state = 0;
             int res = CCAPIGetConnectionStatus(ref state);
             return (res == OK) && (state != 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
         public bool ConnectTarget(string ip)
         {
             bool isConnected = CCAPIConnectConsole(ip) == OK;
             IPAddress = isConnected ? ip : "127.0.0.1";
             return isConnected;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool ConnectTarget()
         {
             CCAPIView ccapiView = new CCAPIView(this, this.resources);
@@ -247,64 +449,88 @@ namespace IgrisLib
             IPAddress = isConnected ? ccapiView.ViewModel.SelectedConsole.Ip : "127.0.0.1";
             return isConnected;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int DisconnectTarget()
         {
             return CCAPIDisconnectConsole();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void DetachProcess()
         {
             this.ProcessId = default;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int GetDllVersion()
         {
             return CCAPIGetDllVersion();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<ConsoleInfo> GetConsoleList()
         {
             List<ConsoleInfo> list = new List<ConsoleInfo>();
 
-            IntPtr name = malloc(512 * sizeof(char));
-            IntPtr ip = malloc(512 * sizeof(char));
+            IntPtr name = Malloc(512 * sizeof(char));
+            IntPtr ip = Malloc(512 * sizeof(char));
 
             for (int i = 0; i < CCAPIGetNumberOfConsoles(); i++)
             {
                 ConsoleInfo c = new ConsoleInfo();
                 CCAPIGetConsoleInfo(i, name, ip);
-                c.Name = ptr2String(name);
-                c.Ip = ptr2String(ip);
+                c.Name = Ptr2String(name);
+                c.Ip = Ptr2String(ip);
                 list.Add(c);
             }
 
-            free(name);
-            free(ip);
+            Free(name);
+            Free(ip);
 
             return list;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<ProcessInfo> GetProcessList()
         {
             List<ProcessInfo> list = new List<ProcessInfo>();
 
-            IntPtr ProcessIds = malloc(sizeof(uint) * 32);
+            IntPtr ProcessIds = Malloc(sizeof(uint) * 32);
             uint NProcessIds = 32;
             int ret = CCAPIGetProcessList(ref NProcessIds, ProcessIds);
             if (ret != OK)
             {
-                free(ProcessIds);
+                Free(ProcessIds);
                 return list;
             }
             else
             {
-                IntPtr pName = malloc(512 * sizeof(char));
+                IntPtr pName = Malloc(512 * sizeof(char));
 
                 for (uint i = 0; i < NProcessIds; i++)
                 {
-                    uint pid = readFromBuffer<uint>(ProcessIds, i * sizeof(uint));
+                    uint pid = ReadFromBuffer<uint>(ProcessIds, i * sizeof(uint));
 
                     ret = CCAPIGetProcessName(pid, pName);
                     if (ret != OK)
                     {
-                        free(ProcessIds);
-                        free(pName);
+                        Free(ProcessIds);
+                        Free(pName);
                         return list;
                     }
                     else
@@ -312,24 +538,39 @@ namespace IgrisLib
                         ProcessInfo info = new ProcessInfo
                         {
                             pid = pid,
-                            name = ptr2String(pName)
+                            name = Ptr2String(pName)
                         };
                         list.Add(info);
                     }
                 }
-                free(pName);
-                free(ProcessIds);
+                Free(pName);
+                Free(ProcessIds);
                 return list;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public uint GetAttachedProcess()
         {
             return ProcessId;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ProcessId"></param>
         public void AttachProcess(uint ProcessId)
         {
             this.ProcessId = ProcessId;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool AttachProcess()
         {
             List<ProcessInfo> list = GetProcessList();
@@ -343,7 +584,13 @@ namespace IgrisLib
             }
             return false;
         }
-        /// <summary>Like Get memory but this function return directly the buffer from the offset (uint).</summary>
+
+        /// <summary>
+        /// Like Get memory but this function return directly the buffer from the offset (uint).
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public byte[] GetBytes(uint offset, uint length)
         {
             byte[] buffer = new byte[length];
@@ -351,89 +598,223 @@ namespace IgrisLib
             return buffer;
         }
 
-        /// <summary>Like Get memory but this function return directly the buffer from the offset (ulong).</summary>
+        /// <summary>
+        /// Like Get memory but this function return directly the buffer from the offset (ulong).
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public byte[] GetBytes(ulong offset, uint length)
         {
             byte[] buffer = new byte[length];
             GetMemory(offset, buffer);
             return buffer;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="data"></param>
         public void GetMemory(ulong addr, byte[] data)
         {
             CCAPIGetMemory(ProcessId, (ulong)addr, (uint)data.Length, data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="data"></param>
         public void GetMemory(uint addr, byte[] data)
         {
             CCAPIGetMemory(ProcessId, (ulong)addr, (uint)data.Length, data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="size"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public int ReadMemory(ulong addr, uint size, byte[] data)
         {
             return CCAPIGetMemory(ProcessId, addr, size, data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="size"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public int ReadMemory(uint addr, uint size, byte[] data)
         {
             return CCAPIGetMemory(ProcessId, (ulong)addr, size, data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetMemory(ulong addr, byte[] data)
         {
             CCAPISetMemory(ProcessId, addr, (uint)data.Length, data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="data"></param>
         public void SetMemory(uint addr, byte[] data)
         {
             CCAPISetMemory(ProcessId, addr, (uint)data.Length, data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="size"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public int WriteMemory(ulong addr, uint size, byte[] data)
         {
             return CCAPISetMemory(ProcessId, addr, size, data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="size"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public int WriteMemory(uint addr, uint size, byte[] data)
         {
             return CCAPISetMemory(ProcessId, (ulong)addr, size, data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="rsx"></param>
+        /// <returns></returns>
         public int GetTemperature(ref int cell, ref int rsx)
         {
             return CCAPIGetTemperature(ref cell, ref rsx);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
         public int Shutdown(ShutdownMode m)
         {
             return CCAPIShutdown((int)m);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public int RingBuzzer(BuzzerType t)
         {
             return CCAPIRingBuzzer((int)t);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="st"></param>
+        /// <returns></returns>
         public int SetConsoleLed(ColorLed color, StatusLed st)
         {
             return CCAPISetConsoleLed((int)color, (int)st);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int SetConsoleIds(ConsoleIdType t, string id)
         {
             if (id.Length != 32)
                 return ERROR;
             return SetConsoleIds(t, StringToArray(id));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int SetConsoleIds(ConsoleIdType t, byte[] id)
         {
             return CCAPISetConsoleIds((int)t, id);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int SetBootConsoleIds(ConsoleIdType t, string id)
         {
             if (id.Length != 32)
                 return ERROR;
             return SetBootConsoleIds(t, StringToArray(id));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int SetBootConsoleIds(ConsoleIdType t, byte[] id)
         {
             return CCAPISetBootConsoleIds((int)t, 1, id);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public int ResetBootConsoleIds(ConsoleIdType t)
         {
             return CCAPISetBootConsoleIds((int)t, 0, null);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="icon"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
         public int VshNotify(NotifyIcon icon, string msg)
         {
             return CCAPIVshNotify((int)icon, msg);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="firmware"></param>
+        /// <param name="ccapiVersion"></param>
+        /// <param name="consoleType"></param>
+        /// <returns></returns>
         public int GetFirmwareInfo(ref int firmware, ref int ccapiVersion, ref ConsoleType consoleType)
         {
             int cType = 0;
@@ -442,30 +823,63 @@ namespace IgrisLib
             return ret;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
         public sbyte ReadMemoryI8(uint addr, out int ret)
         {
             byte[] data = new byte[sizeof(sbyte)];
             ret = ReadMemory(addr, sizeof(sbyte), data);
             return (sbyte)data[0];
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <returns></returns>
         public sbyte ReadMemoryI8(uint addr)
         {
             byte[] data = new byte[sizeof(sbyte)];
             ReadMemory(addr, sizeof(sbyte), data);
             return (sbyte)data[0];
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
         public byte ReadMemoryU8(uint addr, out int ret)
         {
             byte[] data = new byte[sizeof(byte)];
             ret = ReadMemory(addr, sizeof(byte), data);
             return data[0];
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <returns></returns>
         public byte ReadMemoryU8(uint addr)
         {
             byte[] data = new byte[sizeof(byte)];
             ReadMemory(addr, sizeof(byte), data);
             return data[0];
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
         public int ReadMemoryI32(uint addr, out int ret)
         {
             byte[] data = new byte[sizeof(int)];
@@ -473,6 +887,12 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToInt32(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <returns></returns>
         public int ReadMemoryI32(uint addr)
         {
             byte[] data = new byte[sizeof(int)];
@@ -480,6 +900,13 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToInt32(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
         public uint ReadMemoryU32(uint addr, out int ret)
         {
             byte[] data = new byte[sizeof(uint)];
@@ -487,6 +914,12 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToUInt32(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <returns></returns>
         public uint ReadMemoryU32(uint addr)
         {
             byte[] data = new byte[sizeof(uint)];
@@ -494,6 +927,13 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToUInt32(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
         public float ReadMemoryF32(uint addr, out int ret)
         {
             byte[] data = new byte[sizeof(float)];
@@ -501,6 +941,12 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToSingle(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <returns></returns>
         public float ReadMemoryF32(uint addr)
         {
             byte[] data = new byte[sizeof(float)];
@@ -508,6 +954,13 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToSingle(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
         public long ReadMemoryI64(uint addr, out int ret)
         {
             byte[] data = new byte[sizeof(long)];
@@ -515,6 +968,12 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToInt64(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <returns></returns>
         public long ReadMemoryI64(uint addr)
         {
             byte[] data = new byte[sizeof(long)];
@@ -522,6 +981,13 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToInt64(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
         public ulong ReadMemoryU64(uint addr, out int ret)
         {
             byte[] data = new byte[sizeof(ulong)];
@@ -529,6 +995,12 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToUInt64(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <returns></returns>
         public ulong ReadMemoryU64(uint addr)
         {
             byte[] data = new byte[sizeof(ulong)];
@@ -536,6 +1008,13 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToUInt64(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
         public double ReadMemoryF64(uint addr, out int ret)
         {
             byte[] data = new byte[sizeof(double)];
@@ -543,6 +1022,12 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToDouble(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <returns></returns>
         public double ReadMemoryF64(uint addr)
         {
             byte[] data = new byte[sizeof(double)];
@@ -550,6 +1035,12 @@ namespace IgrisLib
             Array.Reverse(data);
             return BitConverter.ToDouble(data, 0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <returns></returns>
         public string ReadMemoryString(uint addr)
         {
             string s = "";
@@ -584,71 +1075,153 @@ namespace IgrisLib
         }
 
         //write
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public int WriteMemoryI8(uint addr, sbyte i)
         {
             byte[] data = new byte[sizeof(sbyte)];
             data[0] = (byte)i;
             return WriteMemory(addr, sizeof(sbyte), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public int WriteMemoryU8(uint addr, byte i)
         {
             byte[] data = new byte[sizeof(byte)];
             data[0] = i;
             return WriteMemory(addr, sizeof(byte), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public int WriteMemoryI16(uint addr, short i)
         {
             byte[] data = BitConverter.GetBytes(i);
             Array.Reverse(data);
             return WriteMemory(addr, sizeof(short), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public int WriteMemoryU16(uint addr, ushort i)
         {
             byte[] data = BitConverter.GetBytes(i);
             Array.Reverse(data);
             return WriteMemory(addr, sizeof(ushort), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public int WriteMemoryI32(uint addr, int i)
         {
             byte[] data = BitConverter.GetBytes(i);
             Array.Reverse(data);
             return WriteMemory(addr, sizeof(int), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public int WriteMemoryU32(uint addr, uint i)
         {
             byte[] data = BitConverter.GetBytes(i);
             Array.Reverse(data);
             return WriteMemory(addr, sizeof(uint), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
         public int WriteMemoryF32(uint addr, float f)
         {
             byte[] data = BitConverter.GetBytes(f);
             Array.Reverse(data);
             return WriteMemory(addr, sizeof(float), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public int WriteMemoryI64(uint addr, long i)
         {
             byte[] data = BitConverter.GetBytes(i);
             Array.Reverse(data);
             return WriteMemory(addr, sizeof(long), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public int WriteMemoryU64(uint addr, ulong i)
         {
             byte[] data = BitConverter.GetBytes(i);
             Array.Reverse(data);
             return WriteMemory(addr, sizeof(long), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public int WriteMemoryF64(uint addr, double d)
         {
             byte[] data = BitConverter.GetBytes(d);
             Array.Reverse(data);
             return WriteMemory(addr, sizeof(double), data);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addr"></param>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public int WriteMemoryString(uint addr, string s)
         {
-            byte[] b = System.Text.Encoding.ASCII.GetBytes(s + "\0");
+            byte[] b = Encoding.ASCII.GetBytes(s + "\0");
             return WriteMemory(addr, (uint)b.Length, b);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="firmware"></param>
+        /// <returns></returns>
         public static string FirmwareToString(int firmware)
         {
             int l = (firmware >> 12) & 0xFF;
@@ -656,6 +1229,12 @@ namespace IgrisLib
 
             return String.Format("{0:X}.{1:X}", h, l);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cType"></param>
+        /// <returns></returns>
         public static string ConsoleTypeToString(ConsoleType cType)
         {
             string s = "UNK";
@@ -680,6 +1259,12 @@ namespace IgrisLib
 
             return s;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static byte[] StringToArray(string s)
         {
             if (s.Length == 0)
@@ -700,26 +1285,39 @@ namespace IgrisLib
 
             return b;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const int OK = 0;
+        /// <summary>
+        /// 
+        /// </summary>
         public const int ERROR = -1;
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected uint ProcessId;
         private IntPtr LibHandle;
         private bool LibLoaded;
 
-        private IntPtr malloc(int n)
+        private IntPtr Malloc(int n)
         {
             return Marshal.AllocHGlobal(n);
         }
-        private void free(IntPtr p)
+
+        private void Free(IntPtr p)
         {
             Marshal.FreeHGlobal(p);
         }
-        private string ptr2String(IntPtr p)
+
+        private string Ptr2String(IntPtr p)
         {
             return Marshal.PtrToStringAnsi(p);
         }
-        private T readFromBuffer<T>(IntPtr ptr, uint off)
+
+        private T ReadFromBuffer<T>(IntPtr ptr, uint off)
         {
             return (T)Marshal.PtrToStructure(new IntPtr(ptr.ToInt64() + off), typeof(T));
         }

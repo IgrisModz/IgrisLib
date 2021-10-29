@@ -11,33 +11,73 @@ using System.Windows;
 
 namespace IgrisLib
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class PS3MAPI : IApi, IConnectAPI
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string FullName => "PS3 Manager";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name => "PS3MAPI";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string IPAddress { get; private set; } = "127.0.0.1";
 
-        public int PS3M_API_PC_LIB_VERSION = 0x0120;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int PS3M_API_PC_LIB_VERSION { get; set; } = 0x0120;
 
-        public CORE_CMD Core = new CORE_CMD();
-        public SERVER_CMD Server = new SERVER_CMD();
-        public PS3_CMD PS3 = new PS3_CMD();
-        public PROCESS_CMD Process = new PROCESS_CMD();
+        /// <summary>
+        /// 
+        /// </summary>
+        public CORE_CMD Core { get; set; } = new CORE_CMD();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public SERVER_CMD Server { get; set; } = new SERVER_CMD();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public PS3_CMD PS3 { get; set; } = new PS3_CMD();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public PROCESS_CMD Process { get; set; } = new PROCESS_CMD();
+
+
+        internal ResourceDictionary Resources { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public PS3MAPI()
         {
             ConsoleRegistry.Create();
-            resources = Language.Get;
+            Resources = Language.Get;
             Core = new CORE_CMD();
             Server = new SERVER_CMD();
             PS3 = new PS3_CMD();
             Process = new PROCESS_CMD();
         }
-        internal ResourceDictionary resources = new ResourceDictionary();
 
         #region PS3MAPI_CLient
 
-        /// <summary>Get PS3 Manager PC Lib Version.</summary>
+        /// <summary>
+        /// Get PS3 Manager PC Lib Version.
+        /// </summary>
+        /// <returns></returns>
         public string GetLibVersion_Str()
         {
             string ver = PS3M_API_PC_LIB_VERSION.ToString("X4");
@@ -50,18 +90,17 @@ namespace IgrisLib
         /// <summary>
         /// Indicates if PS3MAPI is connected
         /// </summary>
-        public bool IsConnected
-        {
-            get { return PS3MAPI_Client_Server.IsConnected; }
-        }
+        public bool IsConnected => PS3MAPI_Client_Server.IsConnected;
+
         /// <summary>
         /// Indicates if PS3MAPI is attached
         /// </summary>
-        public bool IsAttached
-        {
-            get { return PS3MAPI_Client_Server.IsAttached; }
-        }
+        public bool IsAttached => PS3MAPI_Client_Server.IsAttached;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<CCAPI.ConsoleInfo> GetConsoleList()
         {
             List<CCAPI.ConsoleInfo> consoles = new List<CCAPI.ConsoleInfo>();
@@ -80,9 +119,11 @@ namespace IgrisLib
             return consoles;
         }
 
-        /// <summary>Connect the target with "ConnectDialog".</summary>
+        /// <summary>
+        /// Connect the target with ip.
+        /// </summary>
         /// <param name="ip">Ip</param>
-        /// <param name="port">Port</param>
+        /// <returns></returns>
         public bool ConnectTarget(string ip)
         {
             try
@@ -98,12 +139,15 @@ namespace IgrisLib
             }
         }
 
-        /// <summary>Connect the target with "ConnectDialog".</summary>
+        /// <summary>
+        /// Connect the target with "ConnectView".
+        /// </summary>
+        /// <returns></returns>
         public bool ConnectTarget()
         {
             try
             {
-                CCAPIView ccapiView = new CCAPIView(this, this.resources);
+                CCAPIView ccapiView = new CCAPIView(this, this.Resources);
                 bool isConnected = ccapiView.Show();
                 IPAddress = isConnected ? ccapiView.ViewModel.SelectedConsole.Ip : "127.0.0.1";
                 return isConnected;
@@ -115,8 +159,11 @@ namespace IgrisLib
             }
         }
 
-        /// <summary>Attach to process by pid.</summary>
+        /// <summary>
+        /// Attach to process by pid.
+        /// </summary>
         /// <param name="pid">Process PID</param>
+        /// <returns></returns>
         public bool AttachProcess(uint pid)
         {
             try
@@ -130,7 +177,10 @@ namespace IgrisLib
             }
         }
 
-        /// <summary>Attach to process with "AttachDialog".</summary>
+        /// <summary>
+        /// Attach to process.
+        /// </summary>
+        /// <returns></returns>
         public bool AttachProcess()
         {
             try
@@ -157,7 +207,10 @@ namespace IgrisLib
             }
         }
 
-        /// <summary>Disconnect the target.</summary>
+        /// <summary>
+        /// Disconnect the target.
+        /// </summary>
+        /// <returns></returns>
         public int DisconnectTarget()
         {
             try
@@ -171,28 +224,45 @@ namespace IgrisLib
             return 0;
         }
 
-        /// <summary>Detach the process.</summary>
+        /// <summary>
+        /// Detach the process.
+        /// </summary>
         public void DetachProcess()
         {
             Process.Process_Pid = default;
         }
 
-        /// <summary>Show log with "LogDialog".</summary>
-        public string Log
-        {
-            get { return PS3MAPI_Client_Server.Log; }
-        }
+        /// <summary>
+        /// Return log.
+        /// </summary>
+        public string Log => PS3MAPI_Client_Server.Log;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="buffer"></param>
         public void SetMemory(uint address, byte[] buffer)
         {
             Process.Memory.Set(Process.Process_Pid, address, buffer);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="buffer"></param>
         public void GetMemory(uint address, byte[] buffer)
         {
             Process.Memory.Get(Process.Process_Pid, address, buffer);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public byte[] GetBytes(uint address, uint length)
         {
             byte[] buffer = new byte[length];
@@ -200,21 +270,41 @@ namespace IgrisLib
             return buffer;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int[] GetModules()
         {
             return Process.Modules.GetPrxIdModules(Process.Process_Pid);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="prxid"></param>
+        /// <returns></returns>
         public string GetModuleName(int prxid)
         {
             return Process.Modules.GetName(Process.Process_Pid, prxid);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="prxid"></param>
+        /// <returns></returns>
         public string GetModuleFilename(int prxid)
         {
             return Process.Modules.GetFilename(Process.Process_Pid, prxid);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public ulong LoadModule(string path)
         {
             try
@@ -228,6 +318,12 @@ namespace IgrisLib
             return 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="prxid"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public ulong UnloadModule(int prxid)
         {
             try
@@ -241,6 +337,9 @@ namespace IgrisLib
             return 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class SERVER_CMD
         {
             /// <summary>
@@ -248,11 +347,14 @@ namespace IgrisLib
             /// </summary>
             public int Timeout
             {
-                get { return PS3MAPI_Client_Server.Timeout; }
-                set { PS3MAPI_Client_Server.Timeout = value; }
+                get => PS3MAPI_Client_Server.Timeout;
+                set => PS3MAPI_Client_Server.Timeout = value;
             }
 
-            /// <summary>Get PS3 Manager API Server Version.</summary>
+            /// <summary>
+            /// Get PS3 Manager API Server Version.
+            /// </summary>
+            /// <returns></returns>
             public uint GetVersion()
             {
                 try
@@ -264,7 +366,10 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>Get PS3 Manager API Server Version.</summary>
+            /// <summary>
+            /// Get PS3 Manager API Server Version.
+            /// </summary>
+            /// <returns></returns>
             public string GetVersion_Str()
             {
                 string ver = PS3MAPI_Client_Server.Server_Get_Version().ToString("X4");
@@ -275,9 +380,15 @@ namespace IgrisLib
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class CORE_CMD
         {
-            /// <summary>Get PS3 Manager API Core Version.</summary>
+            /// <summary>
+            /// Get PS3 Manager API Core Version.
+            /// </summary>
+            /// <returns></returns>
             public uint GetVersion()
             {
                 try
@@ -289,7 +400,11 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>Get PS3 Manager API Core Version.</summary>
+
+            /// <summary>
+            /// Get PS3 Manager API Core Version.
+            /// </summary>
+            /// <returns></returns>
             public string GetVersion_Str()
             {
                 string ver = PS3MAPI_Client_Server.Core_Get_Version().ToString("X4");
@@ -300,9 +415,15 @@ namespace IgrisLib
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class PS3_CMD
         {
-            /// <summary>Get PS3 Firmware Version.</summary>
+            /// <summary>
+            /// Get PS3 Firmware Version.
+            /// </summary>
+            /// <returns></returns>
             public uint GetFirmwareVersion()
             {
                 try
@@ -314,7 +435,11 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>Get PS3 Firmware Version.</summary>
+
+            /// <summary>
+            /// Get PS3 Firmware Version.
+            /// </summary>
+            /// <returns></returns>
             public string GetFirmwareVersion_Str()
             {
                 string ver = PS3MAPI_Client_Server.PS3_GetFwVersion().ToString("X4");
@@ -324,7 +449,10 @@ namespace IgrisLib
                 return char1 + char2 + char3;
             }
 
-            /// <summary>Get PS3 Firmware Type.</summary>
+            /// <summary>
+            /// Get PS3 Firmware Type.
+            /// </summary>
+            /// <returns></returns>
             public string GetFirmwareType()
             {
                 try
@@ -336,14 +464,33 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public enum PowerFlags
             {
+                /// <summary>
+                /// 
+                /// </summary>
                 ShutDown,
+                /// <summary>
+                /// 
+                /// </summary>
                 QuickReboot,
+                /// <summary>
+                /// 
+                /// </summary>
                 SoftReboot,
+                /// <summary>
+                /// 
+                /// </summary>
                 HardReboot
             }
-            /// <summary>Shutdown Or Reboot PS3.</summary>
+
+            /// <summary>
+            /// Shutdown Or Reboot PS3.
+            /// </summary>
             /// <param name="flag">Shutdown, QuickReboot, SoftReboot, HardReboot</param>
             public void Power(PowerFlags flag)
             {
@@ -359,7 +506,10 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>PS3 VSH Notify.</summary>
+
+            /// <summary>
+            /// PS3 VSH Notify.
+            /// </summary>
             /// <param name="msg)">Your message</param>
             public void Notify(string msg)
             {
@@ -372,13 +522,29 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public enum BuzzerMode
             {
+                /// <summary>
+                /// 
+                /// </summary>
                 Single,
+                /// <summary>
+                /// 
+                /// </summary>
                 Double,
+                /// <summary>
+                /// 
+                /// </summary>
                 Triple
             }
-            /// <summary>Ring PS3 Buzzer.</summary>
+
+            /// <summary>
+            /// Ring PS3 Buzzer.
+            /// </summary>
             /// <param name="mode">Simple, Double, Continuous</param>
             public void RingBuzzer(BuzzerMode mode)
             {
@@ -393,20 +559,52 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public enum LedColor
             {
+                /// <summary>
+                /// 
+                /// </summary>
                 Red = 0,
+                /// <summary>
+                /// 
+                /// </summary>
                 Green = 1,
+                /// <summary>
+                /// 
+                /// </summary>
                 Yellow = 2
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public enum LedMode
             {
+                /// <summary>
+                /// 
+                /// </summary>
                 Off = 0,
+                /// <summary>
+                /// 
+                /// </summary>
                 On = 1,
+                /// <summary>
+                /// 
+                /// </summary>
                 BlinkFast = 2,
+                /// <summary>
+                /// 
+                /// </summary>
                 BlinkSlow = 3
             }
-            /// <summary>PS3 Led.</summary>
+
+            /// <summary>
+            /// PS3 Led.
+            /// </summary>
             /// <param name="color">Red, Green, Yellow</param>
             /// <param name="mode">Off, On, BlinkFast, BlinkSlow</param>
             public void Led(LedColor color, LedMode mode)
@@ -420,7 +618,10 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>Get PS3 Temperature.</summary>
+
+            /// <summary>
+            /// Get PS3 Temperature.
+            /// </summary>
             /// <param name="cpu">Return value for the cpu temperature in Celsius.</param>
             /// <param name="rsx">Return value for the rsx temperature in Celsius.</param>
             public void GetTemperature(out uint cpu, out uint rsx)
@@ -435,7 +636,10 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>Disable PS3 Syscall.</summary>
+
+            /// <summary>
+            /// Disable PS3 Syscall.
+            /// </summary>
             /// <param name="num">Syscall number</param>
             public void DisableSyscall(int num)
             {
@@ -448,8 +652,12 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>Return true if this syscall is enbaled</summary>
+
+            /// <summary>
+            /// Return true if this syscall is enabled
+            /// </summary>
             /// <param name="num">Syscall number</param>
+            /// <returns></returns>
             public bool CheckSyscall(int num)
             {
                 try
@@ -461,15 +669,37 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public enum Syscall8Mode
             {
+                /// <summary>
+                /// 
+                /// </summary>
                 Enabled = 0,
+                /// <summary>
+                /// 
+                /// </summary>
                 Only_CobraMambaAndPS3MAPI_Enabled = 1,
+                /// <summary>
+                /// 
+                /// </summary>
                 Only_PS3MAPI_Enabled = 2,
+                /// <summary>
+                /// 
+                /// </summary>
                 FakeDisabled = 3,
+                /// <summary>
+                /// 
+                /// </summary>
                 Disabled = 4
             }
-            /// <summary>Partial Disable PS3 Syscall 8.</summary>
+
+            /// <summary>
+            /// Partial Disable PS3 Syscall 8.
+            /// </summary>
             /// <param name="mode">Enabled, Only Cobra and PS3M_API features enabled, Only PS3M_API features enabled, Fake Disable</param>
             public void PartialDisableSyscall8(Syscall8Mode mode)
             {
@@ -485,7 +715,11 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>Check Partial Syscall8 disable</summary>
+
+            /// <summary>
+            /// Check Partial Syscall8 disable
+            /// </summary>
+            /// <returns></returns>
             public Syscall8Mode PartialCheckSyscall8()
             {
                 try
@@ -500,7 +734,10 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>Remove COBRA/MAMBA Hook.</summary>
+
+            /// <summary>
+            /// Remove COBRA/MAMBA Hook.
+            /// </summary>
             public void RemoveHook()
             {
                 try
@@ -512,7 +749,10 @@ namespace IgrisLib
                     throw new Exception(ex.Message, ex);
                 }
             }
-            /// <summary>Clear PS3 History.</summary>
+
+            /// <summary>
+            /// Clear PS3 History.
+            /// </summary>
             /// <param name="include_directory">If set to true, "unsafe" directory will be also deleted.</param>
             public void ClearHistory(bool include_directory = true)
             {
@@ -528,13 +768,29 @@ namespace IgrisLib
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class PROCESS_CMD
         {
+            /// <summary>
+            /// 
+            /// </summary>
+            public MEMORY_CMD Memory { get; set; } = new MEMORY_CMD();
 
-            public MEMORY_CMD Memory = new MEMORY_CMD();
-            public MODULES_CMD Modules = new MODULES_CMD();
-            public VSH_PLUGINS_CMD VSH_Plugins = new VSH_PLUGINS_CMD();
+            /// <summary>
+            /// 
+            /// </summary>
+            public MODULES_CMD Modules { get; set; } = new MODULES_CMD();
 
+            /// <summary>
+            /// 
+            /// </summary>
+            public VSH_PLUGINS_CMD VSH_Plugins { get; set; } = new VSH_PLUGINS_CMD();
+
+            /// <summary>
+            /// 
+            /// </summary>
             public PROCESS_CMD()
             {
                 Memory = new MEMORY_CMD();
@@ -545,21 +801,21 @@ namespace IgrisLib
             /// <summary>
             /// Return all process_pid
             /// </summary>
-            public uint[] Processes_Pid
-            {
-                get { return PS3MAPI_Client_Server.Processes_Pid; }
-            }
+            public uint[] Processes_Pid => PS3MAPI_Client_Server.Processes_Pid;
 
             /// <summary>
             /// Return current attached process_pid
-            /// </summary>)
+            /// </summary>
             public uint Process_Pid
             {
-                get { return PS3MAPI_Client_Server.Process_Pid; }
-                set { PS3MAPI_Client_Server.Process_Pid = value; }
+                get => PS3MAPI_Client_Server.Process_Pid;
+                set => PS3MAPI_Client_Server.Process_Pid = value;
             }
 
-            /// <summary>Get a pid list of all runing processes.</summary>
+            /// <summary>
+            /// Get a pid list of all runing processes.
+            /// </summary>
+            /// <returns></returns>
             public uint[] GetPidProcesses()
             {
                 try
@@ -572,8 +828,11 @@ namespace IgrisLib
                 }
             }
 
-            /// <summary>Get name of this process.</summary>
+            /// <summary>
+            /// Get name of this process.
+            /// </summary>
             /// <param name="pid">Process Pid</param>
+            /// <returns></returns>
             public string GetName(uint pid)
             {
                 try
@@ -586,10 +845,15 @@ namespace IgrisLib
                 }
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
             public class MEMORY_CMD
             {
-                /// <summary>Set memory to the attached process.</summary>
-                /// <param name="pid">Process Pid</param>
+                /// <summary>
+                /// Set memory to the attached process.
+                /// </summary>
+                /// <param name="Pid">Process Pid</param>
                 /// <param name="Address">Address</param>
                 /// <param name="Bytes">Bytes</param>
                 public void Set(uint Pid, ulong Address, byte[] Bytes)
@@ -603,8 +867,11 @@ namespace IgrisLib
                         throw new Exception(ex.Message, ex);
                     }
                 }
-                /// <summary>Get memory from the attached process.</summary>
-                /// <param name="pid">Process Pid</param>
+
+                /// <summary>
+                /// Get memory from the attached process.
+                /// </summary>
+                /// <param name="Pid">Process Pid</param>
                 /// <param name="Address">Address</param>
                 /// <param name="Bytes">Bytes</param>
                 public void Get(uint Pid, ulong Address, byte[] Bytes)
@@ -618,10 +885,14 @@ namespace IgrisLib
                         throw new Exception(ex.Message, ex);
                     }
                 }
-                /// <summary>Get memory from the attached process.</summary>
-                /// <param name="pid">Process Pid</param>
+
+                /// <summary>
+                /// Get memory from the attached process.
+                /// </summary>
+                /// <param name="Pid">Process Pid</param>
                 /// <param name="Address">Address</param>
                 /// <param name="Length">Length</param>
+                /// <returns></returns>
                 public byte[] Get(uint Pid, ulong Address, uint Length)
                 {
                     try
@@ -637,19 +908,22 @@ namespace IgrisLib
                 }
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
             public class MODULES_CMD
             {
                 /// <summary>
                 /// Return all modules_prx_id
                 /// </summary>
-                public int[] Modules_Prx_Id
-                {
-                    get { return PS3MAPI_Client_Server.Modules_Prx_Id; }
-                }
+                public int[] Modules_Prx_Id => PS3MAPI_Client_Server.Modules_Prx_Id;
 
 
-                /// <summary>Get a prx_id list of all modules for this process.</summary>
+                /// <summary>
+                /// Get a prx_id list of all modules for this process.
+                /// </summary>
                 /// <param name="pid">Process Pid</param>
+                /// <returns></returns>
                 public int[] GetPrxIdModules(uint pid)
                 {
                     try
@@ -661,9 +935,13 @@ namespace IgrisLib
                         throw new Exception(ex.Message, ex);
                     }
                 }
-                /// <summary>Get name of this module</summary>
+
+                /// <summary>
+                /// Get name of this module
+                /// </summary>
                 /// <param name="pid">Process Pid</param>
                 /// <param name="prxid">Module Prx_id</param>
+                /// <returns></returns>
                 public string GetName(uint pid, int prxid)
                 {
                     try
@@ -675,9 +953,13 @@ namespace IgrisLib
                         throw new Exception(ex.Message, ex);
                     }
                 }
-                /// <summary>Get filename of this module</summary>
+
+                /// <summary>
+                /// Get filename of this module
+                /// </summary>
                 /// <param name="pid">Process Pid</param>
                 /// <param name="prxid">Module Prx_id</param>
+                /// <returns></returns>
                 public string GetFilename(uint pid, int prxid)
                 {
                     try
@@ -689,9 +971,13 @@ namespace IgrisLib
                         throw new Exception(ex.Message, ex);
                     }
                 }
-                /// <summary>Load a module.</summary>
+
+                /// <summary>
+                /// Load a module.
+                /// </summary>
                 /// <param name="pid">Process Pid</param>
                 /// <param name="path">Path of the plugin to load.</param>
+                /// <returns></returns>
                 public void Load(uint pid, string path)
                 {
                     try
@@ -703,7 +989,9 @@ namespace IgrisLib
                         throw new Exception(ex.Message, ex);
                     }
                 }
-                /// <summary>Unload a module.</summary>
+                /// <summary>
+                /// Unload a module.
+                /// </summary>
                 /// <param name="pid">Process Pid</param>
                 /// <param name="prxid">Module Prx_id</param>
                 public void Unload(uint pid, int prxid)
@@ -719,9 +1007,14 @@ namespace IgrisLib
                 }
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
             public class VSH_PLUGINS_CMD
             {
-                /// <summary>Load an vsh plugin.</summary>
+                /// <summary>
+                /// Load an vsh plugin.
+                /// </summary>
                 /// <param name="slot">Slot id</param>
                 /// <param name="path">Path of the plugin to load.</param>
                 public void Load(uint slot, string path)
@@ -735,8 +1028,11 @@ namespace IgrisLib
                         throw new Exception(ex.Message, ex);
                     }
                 }
-                /// <summary>Unload an vsh plugin.</summary>
-                /// <param name="pid">Slot id</param>
+
+                /// <summary>
+                /// Unload an vsh plugin.
+                /// </summary>
+                /// <param name="slot">Slot id</param>
                 public void Unload(uint slot)
                 {
                     try
@@ -748,8 +1044,13 @@ namespace IgrisLib
                         throw new Exception(ex.Message, ex);
                     }
                 }
-                /// <summary>Unload an vsh plugin.</summary>
-                /// <param name="pid">Slot id</param>
+
+                /// <summary>
+                /// Get info of an vsh plugin.
+                /// </summary>
+                /// <param name="slot">Slot id</param>
+                /// <param name="name">Vsh name</param>
+                /// <param name="path">Vsh path</param>
                 public void GetInfoBySlot(uint slot, out string name, out string path)
                 {
                     try
@@ -779,27 +1080,29 @@ namespace IgrisLib
         {
             #region Private Members
 
-            static private int ps3m_api_server_minversion = 0x0120;
-            static private PS3MAPI_ResponseCode eResponseCode;
-            static private string sResponse;
-            static private string sMessages = "";
-            static private string sServerIP = "";
-            static private int iPort = 7887;
-            static private string sBucket = "";
-            static private int iTimeout = 5000;	// 5 Second
-            static private uint iPid = 0;
-            static private uint[] iprocesses_pid = new uint[16];
-            static private int[] imodules_prx_id = new int[64];
-            static private string sLog = "";
+            private static int ps3m_api_server_minversion = 0x0120;
+            private static PS3MAPI_ResponseCode eResponseCode;
+            private static string sResponse;
+            private static string sMessages = "";
+            private static string sServerIP = "";
+            private static int iPort = 7887;
+            private static string sBucket = "";
+            private static int iTimeout = 5000;	// 5 Second
+            private static uint iPid = 0;
+            private static uint[] iprocesses_pid = new uint[16];
+            private static int[] imodules_prx_id = new int[64];
+            private static string sLog = "";
+
             #endregion Private Members
 
             #region Internal Members
 
-            static internal Socket main_sock;
-            static internal Socket listening_sock;
-            static internal Socket data_sock;
-            static internal IPEndPoint main_ipEndPoint;
-            static internal IPEndPoint data_ipEndPoint;
+            internal static Socket main_sock;
+            internal static Socket listening_sock;
+            internal static Socket data_sock;
+            internal static IPEndPoint main_ipEndPoint;
+            internal static IPEndPoint data_ipEndPoint;
+
             internal enum PS3MAPI_ResponseCode
             {
                 DataConnectionAlreadyOpen = 125,
@@ -820,60 +1123,45 @@ namespace IgrisLib
             /// <summary>
             /// Return all process_pid
             /// </summary>
-            static public string Log
-            {
-                get { return sLog; }
-            }
+            public static string Log => sLog;
 
             /// <summary>
             /// Return all process_pid
             /// </summary>
-            static public uint[] Processes_Pid
-            {
-                get { return iprocesses_pid; }
-            }
+            public static uint[] Processes_Pid => iprocesses_pid;
 
             /// <summary>
             /// Attached process_pid
             /// </summary>
-            static public uint Process_Pid
+            public static uint Process_Pid
             {
-                get { return iPid; }
-                set { iPid = value; }
+                get => iPid;
+                set => iPid = value;
             }
 
             /// <summary>
             /// Return all modules_prx_id
             /// </summary>
-            static public int[] Modules_Prx_Id
-            {
-                get { return imodules_prx_id; }
-            }
+            public static int[] Modules_Prx_Id => imodules_prx_id;
 
             /// <summary>
             /// User Specified Timeout: Defaults to 5000 (5 seconds)
             /// </summary>
-            static public int Timeout
+            public static int Timeout
             {
-                get { return iTimeout; }
-                set { iTimeout = value; }
+                get => iTimeout;
+                set => iTimeout = value;
             }
 
             /// <summary>
             /// Indicates if PS3MAPI is connected
             /// </summary>
-            static public bool IsConnected
-            {
-                get { return ((main_sock != null) ? main_sock.Connected : false); }
-            }
+            public static bool IsConnected => main_sock != null && main_sock.Connected;
 
             /// <summary>
             /// Indicates if PS3MAPI is attached
             /// </summary>
-            static public bool IsAttached
-            {
-                get { return ((iPid != 0) ? true : false); }
-            }
+            public static bool IsAttached => iPid != 0;
 
             #endregion Public Properties
 
@@ -882,6 +1170,7 @@ namespace IgrisLib
             {
                 Connect(sServerIP, iPort);
             }
+
             internal static void Connect(string sServer, int Port)
             {
                 sServerIP = sServer;
@@ -933,6 +1222,7 @@ namespace IgrisLib
                 }
                 return;
             }
+
             internal static void Disconnect()
             {
                 CloseDataSocket();
@@ -948,6 +1238,7 @@ namespace IgrisLib
                 }
                 main_ipEndPoint = null;
             }
+
             internal static uint Server_Get_Version()
             {
                 if (IsConnected)
@@ -969,6 +1260,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static uint Server_GetMinVersion()
             {
                 if (IsConnected)
@@ -990,6 +1282,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             //CORE-----------------------------------------------------------------------------------
             internal static uint Core_Get_Version()
             {
@@ -1033,6 +1326,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             //PS3------------------------------------------------------------------------------------
             internal static uint PS3_GetFwVersion()
             {
@@ -1055,6 +1349,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static string PS3_GetFirmwareType()
             {
                 if (IsConnected)
@@ -1076,6 +1371,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_Shutdown()
             {
                 if (IsConnected)
@@ -1098,6 +1394,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_Reboot()
             {
                 if (IsConnected)
@@ -1119,6 +1416,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_SoftReboot()
             {
                 if (IsConnected)
@@ -1140,6 +1438,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_HardReboot()
             {
                 if (IsConnected)
@@ -1161,6 +1460,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_Notify(string msg)
             {
                 if (IsConnected)
@@ -1181,6 +1481,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_Buzzer(int mode)
             {
                 if (IsConnected)
@@ -1201,6 +1502,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_Led(int color, int mode)
             {
                 if (IsConnected)
@@ -1221,6 +1523,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_GetTemp(out uint cpu, out uint rsx)
             {
                 cpu = 0; rsx = 0;
@@ -1245,6 +1548,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_DisableSyscall(int num)
             {
                 if (IsConnected)
@@ -1265,6 +1569,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_ClearHistory(bool include_directory)
             {
                 if (IsConnected)
@@ -1286,6 +1591,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static bool PS3_CheckSyscall(int num)
             {
                 if (IsConnected)
@@ -1308,6 +1614,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_PartialDisableSyscall8(int mode)
             {
                 if (IsConnected)
@@ -1328,6 +1635,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static int PS3_PartialCheckSyscall8()
             {
                 if (IsConnected)
@@ -1349,6 +1657,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_RemoveHook()
             {
                 if (IsConnected)
@@ -1369,6 +1678,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static string PS3_GetIDPS()
             {
                 if (IsConnected)
@@ -1390,6 +1700,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_SetIDPS(string IDPS)
             {
                 if (IsConnected)
@@ -1410,6 +1721,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static string PS3_GetPSID()
             {
                 if (IsConnected)
@@ -1431,6 +1743,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void PS3_SetPSID(string PSID)
             {
                 if (IsConnected)
@@ -1451,6 +1764,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             //PROCESS--------------------------------------------------------------------------------
             internal static string Process_GetName(uint pid)
             {
@@ -1473,6 +1787,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static uint[] Process_GetPidList()
             {
                 if (IsConnected)
@@ -1500,6 +1815,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             //MEMORY--------------------------------------------------------------------------------
             internal static void Memory_Get(uint Pid, ulong Address, byte[] Bytes)
             {
@@ -1508,7 +1824,7 @@ namespace IgrisLib
                     SetBinaryMode(true);
                     int BytesLength = Bytes.Length;
                     long TotalBytes = 0;
-                    long lBytesReceived = 0;
+                    long lBytesReceived;
                     bool bComplete = false;
                     OpenDataSocket();
                     SendCommand("MEMORY GET " + string.Format("{0}", Pid) + " " + string.Format("{0:X16}", Address) + " " + string.Format("{0}", Bytes.Length));
@@ -1566,6 +1882,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void Memory_Set(uint Pid, ulong Address, byte[] Bytes)
             {
                 if (IsConnected)
@@ -1632,6 +1949,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             //MODULES--------------------------------------------------------------------------------
             internal static int[] Module_GetPrxIdList(uint pid)
             {
@@ -1660,6 +1978,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static string Module_GetName(uint pid, int prxid)
             {
                 if (IsConnected)
@@ -1681,6 +2000,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static string Module_GetFilename(uint pid, int prxid)
             {
                 if (IsConnected)
@@ -1702,6 +2022,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void Module_Load(uint pid, string path)
             {
                 if (IsConnected)
@@ -1742,6 +2063,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             //VSH PLUGINS (MODULES)-------------------------------------------------------------------
             internal static void VSHPlugins_GetInfoBySlot(uint slot, out string name, out string path)
             {
@@ -1767,6 +2089,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void VSHPlugins_Load(uint slot, string path)
             {
                 if (IsConnected)
@@ -1787,6 +2110,7 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             internal static void VSHPlugins_Unload(uint slot)
             {
                 if (IsConnected)
@@ -1807,16 +2131,19 @@ namespace IgrisLib
                     throw new Exception("PS3MAPI not connected!");
                 }
             }
+
             //----------------------------------------------------------------------------------------
             internal static void Fail()
             {
                 Fail(new Exception("[" + eResponseCode.ToString() + "] " + sResponse));
             }
+
             internal static void Fail(Exception e)
             {
                 Disconnect();
                 throw e;
             }
+
             internal static void SetBinaryMode(bool bMode)
             {
                 SendCommand("TYPE" + ((bMode) ? " I" : " A"));
@@ -1830,6 +2157,7 @@ namespace IgrisLib
                         break;
                 }
             }
+
             internal static void OpenDataSocket()
             {
                 string[] pasv;
@@ -1859,7 +2187,7 @@ namespace IgrisLib
                     Fail(new Exception("Malformed PASV response: " + sResponse));
                 }
 
-                sServer = String.Format("{0}.{1}.{2}.{3}", pasv[0], pasv[1], pasv[2], pasv[3]);
+                sServer = string.Format("{0}.{1}.{2}.{3}", pasv[0], pasv[1], pasv[2], pasv[3]);
                 iPort = (int.Parse(pasv[4]) << 8) + int.Parse(pasv[5]);
                 try
                 {
@@ -1873,6 +2201,7 @@ namespace IgrisLib
                     throw new Exception("Failed to connect for data transfer: " + e.Message);
                 }
             }
+
             internal static void ConnectDataSocket()
             {
                 if (data_sock != null)		// already connected (always so if passive mode)
@@ -1893,6 +2222,7 @@ namespace IgrisLib
                     throw new Exception("Failed to connect for data transfer: " + ex.Message);
                 }
             }
+
             internal static void CloseDataSocket()
             {
                 if (data_sock != null)
@@ -1905,6 +2235,7 @@ namespace IgrisLib
                 }
                 data_ipEndPoint = null;
             }
+
             internal static void ReadResponse()
             {
                 string sBuffer;
@@ -1930,13 +2261,14 @@ namespace IgrisLib
             {
                 sLog = sLog + "COMMAND: " + sCommand + Environment.NewLine;
                 Connect();
-                Byte[] byCommand = Encoding.ASCII.GetBytes((sCommand + "\r\n").ToCharArray());
+                byte[] byCommand = Encoding.ASCII.GetBytes((sCommand + "\r\n").ToCharArray());
                 main_sock.Send(byCommand, byCommand.Length, 0);
                 ReadResponse();
             }
+
             internal static void FillBucket()
             {
-                Byte[] bytes = new Byte[512];
+                byte[] bytes = new byte[512];
                 long lBytesRecieved;
                 int iMilliSecondsPassed = 0;
                 while (main_sock.Available < 1)
@@ -1957,9 +2289,9 @@ namespace IgrisLib
                     System.Threading.Thread.Sleep(50);
                 }
             }
+
             internal static string GetLineFromBucket()
             {
-                string sBuffer = "";
                 int i = sBucket.IndexOf('\n');
 
                 while (i < 0)
@@ -1968,7 +2300,7 @@ namespace IgrisLib
                     i = sBucket.IndexOf('\n');
                 }
 
-                sBuffer = sBucket.Substring(0, i);
+                string sBuffer = sBucket.Substring(0, i);
                 sBucket = sBucket.Substring(i + 1);
 
                 return sBuffer;

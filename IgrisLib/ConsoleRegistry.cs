@@ -3,10 +3,19 @@ using System;
 
 namespace IgrisLib
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ConsoleRegistry
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public static string RegistryName => @"FrenchModdingTeam\CCAPI\Consoles";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static void Create()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
@@ -19,6 +28,11 @@ namespace IgrisLib
             key.Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="ip"></param>
         public static void Add(string name, string ip)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
@@ -31,6 +45,11 @@ namespace IgrisLib
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static string Read(string name)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
@@ -39,6 +58,11 @@ namespace IgrisLib
             return cleaning.Contains("|") ? cleaning.Remove(cleaning.IndexOf("|")) : cleaning;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="ip"></param>
         public static void Write(string name, string ip)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
@@ -46,6 +70,10 @@ namespace IgrisLib
             key.SetValue(name, ip);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
         public static void Delete(string name)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);

@@ -9,26 +9,53 @@ using System.Windows.Input;
 
 namespace IgrisLib.ViewModels
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CCAPIViewModel : ViewModelBase
     {
         private readonly IDialogCoordinator Dialog;
         private readonly ResourceDictionary Resources;
         private readonly CCAPIView Win;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IConnectAPI Api { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ObservableCollection<CCAPI.ConsoleInfo> Consoles { get => GetValue(() => Consoles); set => SetValue(() => Consoles, value); }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public CCAPI.ConsoleInfo SelectedConsole { get => GetValue(() => SelectedConsole); set => SetValue(() => SelectedConsole, value); }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand AddConsoleCommand { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand DeleteConsoleCommand { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand ConnectCommand { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand RefreshCommand { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public CCAPIViewModel(CCAPIView win, IConnectAPI api, ResourceDictionary resources, IDialogCoordinator instance)
         {
             Win = win ?? throw new ArgumentNullException(nameof(win));
