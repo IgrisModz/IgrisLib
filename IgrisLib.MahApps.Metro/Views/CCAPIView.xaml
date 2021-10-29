@@ -62,16 +62,28 @@
                 mah:ControlsHelper.CornerRadius="0">
             <StackPanel Orientation="Horizontal">
                 <iconPacks:PackIconMaterial x:Name="iconConnect" Kind="CastConnected"/>
-                <TextBlock x:Name="txtConnect" Margin="3 0 0 0" Text="{DynamicResource connect}"/>
+                <TextBlock x:Name="txtConnect"
+                           Margin="3 0 0 0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource connect}"/>
             </StackPanel>
         </Button>
-        <Button x:Name="btnRefresh" Grid.Row="2" Grid.Column="1" Margin="3"
+        <Button x:Name="btnRefresh"
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="3"
                 Command="{Binding RefreshCommand}"
                 mah:ControlsHelper.ContentCharacterCasing="Normal"
                 mah:ControlsHelper.CornerRadius="0">
             <StackPanel Orientation="Horizontal">
-                <iconPacks:PackIconMaterial x:Name="iconRefresh" Kind="Refresh"/>
-                <TextBlock x:Name="txRefresh" Margin="3 0 0 0" Text="{DynamicResource refresh}"/>
+                <iconPacks:PackIconMaterial x:Name="iconRefresh"
+                                            VerticalContentAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Kind="Refresh"/>
+                <TextBlock x:Name="txRefresh"
+                           Margin="3 0 0 0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource refresh}"/>
             </StackPanel>
         </Button>
     </Grid>

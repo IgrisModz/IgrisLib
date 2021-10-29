@@ -5,26 +5,55 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True"
+        ShowInTaskbar="False"
         Title="{DynamicResource addFormTitle}"
-        Height="186" Width="300">
-    <StackPanel>
-        <Label Content="{DynamicResource consoleNameText}" Margin="3" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="txtConsoleName" Margin="3"/>
-        <Label Content="{DynamicResource consoleIpText}" Margin="3" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="txtConsoleIp" Margin="3"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnAddConsole" Margin="3"
-                    IsDefault="True" Click="btnAddConsole_Click">
+        SizeToContent="WidthAndHeight"
+        Icon="{iconPacks:MaterialImage Kind=SonyPlaystation}">
+    <StackPanel Width="300">
+        <Label Content="{DynamicResource consoleNameText}"
+               Margin="3"
+               VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtConsoleName"
+                 Margin="3"
+                 VerticalContentAlignment="Center"/>
+        <Label Content="{DynamicResource consoleIpText}"
+               Margin="3"
+               VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtConsoleIp"
+                 Margin="3"/>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button x:Name="btnAddConsole"
+                    Margin="3"
+                    IsDefault="True"
+                    Click="btnAddConsole_Click">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconMaterial x:Name="iconAddConsole" Kind="PlusBoxMultiple"/>
-                    <TextBlock x:Name="txtAddConsole" Margin="3 0 0 0" Text="{DynamicResource add}"/>
+                    <iconPacks:PackIconMaterial x:Name="iconAddConsole"
+                                                VerticalContentAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Kind="PlusBoxMultiple"/>
+                    <TextBlock x:Name="txtAddConsole"
+                               Margin="3 0 0 0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource add}"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="btncCancel" Margin="3" IsCancel="True" Click="btncCancel_Click">
+            <Button x:Name="btncCancel"
+                    Margin="3"
+                    IsCancel="True"
+                    Click="btncCancel_Click">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconMaterial x:Name="iconCancel" Kind="Cancel"/>
-                    <TextBlock x:Name="txtCancel" Margin="3 0 0 0" Text="{DynamicResource cancel}"/>
+                    <iconPacks:PackIconMaterial x:Name="iconCancel"
+                                                VerticalContentAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Kind="Cancel"/>
+                    <TextBlock x:Name="txtCancel"
+                               Margin="3 0 0 0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource cancel}"/>
                 </StackPanel>
             </Button>
         </StackPanel>
