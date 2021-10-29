@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Threading;
 
-namespace IgrisLib.NET {
-    public class PS3RPC {
+namespace IgrisLib.NET
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class PS3RPC
+    {
         private static TMAPI PS3;
 
         private const uint INSTALL_ADDR = 0x10000;
@@ -36,7 +41,8 @@ namespace IgrisLib.NET {
         private const uint PRX_MODULE_PATH = 0x10051000;
         private const uint PRX_FLAGS = 0x100510A0;
 
-        private static byte[] RPC_INSTRUCTIONS = new byte[] {
+        private static byte[] RPC_INSTRUCTIONS = new byte[]
+        {
             0x3C, 0x60, 0x00, 0x01, //lis %r3, 0x1
             0x60, 0x63, 0x00, 0x68, //ori %r3, %r3, 0x68
             0x3C, 0x80, 0x10, 0x05, //lis %r4, 0x1005
@@ -126,18 +132,36 @@ namespace IgrisLib.NET {
             0x4B, 0xFF, 0xFF, 0x10  //b -0xF0
         };
 
-        public PS3RPC(TMAPI PS3) {
-            PS3RPC.PS3 = PS3;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ps3"></param>
+        public PS3RPC(TMAPI ps3)
+        {
+            PS3 = ps3;
         }
 
-        public static uint[] GetModules() {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static uint[] GetModules()
+        {
             return PS3.ModuleIds();
         }
 
-        public static bool Install() {
-            try {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static bool Install()
+        {
+            try
+            {
                 if (PS3.Extension.ReadUInt64(INSTALL_ADDR) == 0x3C60000160630068)
+                {
                     return true;
+                }
 
                 ulong PC = 0;
                 ulong[] Registers = new ulong[0x49];
@@ -147,7 +171,8 @@ namespace IgrisLib.NET {
 
                 PS3.MainThreadStop();
 
-                for (uint i = 0; i < 0x49; i++) {
+                for (uint i = 0; i < 0x49; i++)
+                {
                     Registers[i] = PS3.GetSingleRegister(i);
                 }
 
@@ -157,11 +182,14 @@ namespace IgrisLib.NET {
                 PS3.MainThreadContinue();
 
                 while (PS3.Extension.ReadUInt64(RPC_CREATION) == 0)
+                {
                     Thread.Sleep(1);
+                }
 
                 PS3.MainThreadStop();
 
-                for (uint i = 0; i < 0x49; i++) {
+                for (uint i = 0; i < 0x49; i++)
+                {
                     PS3.SetSingleRegister(i, Registers[i]);
                 }
 
@@ -170,7 +198,8 @@ namespace IgrisLib.NET {
 
                 PS3TMAPI.PPUThreadInfo ThreadInfo = new PS3TMAPI.PPUThreadInfo();
 
-                if (PS3.GetThreadByName(RPC_THREAD_NAME, ref ThreadInfo)) {
+                if (PS3.GetThreadByName(RPC_THREAD_NAME, ref ThreadInfo))
+                {
                     PS3.StopThreadyID(ThreadInfo.ThreadID);
                     PS3.SetSingleRegisterByThreadID(ThreadInfo.ThreadID, (uint)TMAPI.GPRegisters.SNPS3_gpr_13, Registers[13]);
                     PS3.ContinueThreadByID(ThreadInfo.ThreadID);
@@ -178,20 +207,36 @@ namespace IgrisLib.NET {
 
                 return true;
             }
-            catch {
+            catch
+            {
                 return false;
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="r3"></param>
+        /// <param name="r4"></param>
+        /// <param name="r5"></param>
+        /// <param name="r6"></param>
+        /// <param name="r7"></param>
+        /// <param name="r8"></param>
+        /// <param name="r9"></param>
+        /// <param name="r10"></param>
+        /// <returns></returns>
         public static ulong SystemCall(uint ID, ulong r3 = 0, ulong r4 = 0, ulong r5 = 0, ulong r6 = 0, ulong r7 = 0, ulong r8 = 0, ulong r9 = 0, ulong r10 = 0)
         {
             if (!Install())
+            {
                 return 0;
+            }
 
             ulong ret;
 
             PS3.Extension.WriteUInt64(SYS_CALL_RET, 0xDEADC0DE);
-                   
+
             PS3.Extension.WriteUInt64(SYS_CALL_R3, r3);
             PS3.Extension.WriteUInt64(SYS_CALL_R4, r4);
             PS3.Extension.WriteUInt64(SYS_CALL_R5, r5);
@@ -200,18 +245,31 @@ namespace IgrisLib.NET {
             PS3.Extension.WriteUInt64(SYS_CALL_R8, r8);
             PS3.Extension.WriteUInt64(SYS_CALL_R9, r9);
             PS3.Extension.WriteUInt64(SYS_CALL_R10, r10);
-                   
+
             PS3.Extension.WriteUInt32(SYS_CALL_ID, ID);
 
             while ((ret = PS3.Extension.ReadUInt64(SYS_CALL_RET)) == 0xDEADC0DE)
+            {
                 Thread.Sleep(1);
+            }
 
             return ret;
         }
 
-        public static T CallTOC<T>(uint address, uint toc, params object[] parameters) {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="address"></param>
+        /// <param name="toc"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public static T CallTOC<T>(uint address, uint toc, params object[] parameters)
+        {
             if (!Install())
+            {
                 return (T)Convert.ChangeType(0, typeof(int));
+            }
 
             PS3.Extension.WriteUInt64(FUNC_CALL_RX_RET, 0xDEADC0DE);
             PS3.Extension.WriteUInt64(FUNC_CALL_FX_RET, 0xDEADC0DE);
@@ -221,31 +279,31 @@ namespace IgrisLib.NET {
             uint floatCount = 0;
             uint stringOffset = 0;
 
-            while (index < parameters.Length) {
+            while (index < parameters.Length)
+            {
                 if (parameters[index] is int || parameters[index] is uint || parameters[index] is long || parameters[index] is ulong)
                 {
                     PS3.Extension.WriteUInt64(FUNC_CALL_RX + (intCount++ * 0x8), Convert.ToUInt64(parameters[index]));
                 }
-                else if (parameters[index] is float)
+                else if (parameters[index] is float @float)
                 {
-                    PS3.Extension.WriteFloat(FUNC_CALL_FX + (floatCount++ * 0x8), (float)parameters[index]);
+                    PS3.Extension.WriteFloat(FUNC_CALL_FX + (floatCount++ * 0x8), @float);
                 }
-                else if (parameters[index] is double)
+                else if (parameters[index] is double @double)
                 {
-                    PS3.Extension.WriteDouble(FUNC_CALL_FX + (floatCount++ * 0x8), (double)parameters[index]);
+                    PS3.Extension.WriteDouble(FUNC_CALL_FX + (floatCount++ * 0x8), @double);
                 }
-                else if (parameters[index] is float[])
+                else if (parameters[index] is float[] @floatArray)
                 {
                     PS3.Extension.WriteUInt64(FUNC_CALL_RX + (intCount++ * 0x8), FUNC_CALL_FX + (floatCount * 0x8));
-                    PS3.Extension.WriteFloats(FUNC_CALL_FX + (floatCount * 0x8), (float[])parameters[index]);
-                    floatCount += (uint)(((float[])parameters[index]).Length * 0x8);
+                    PS3.Extension.WriteFloats(FUNC_CALL_FX + (floatCount * 0x8), @floatArray);
+                    floatCount += (uint)(@floatArray.Length * 0x8);
                 }
-                else if (parameters[index] is string)
+                else if (parameters[index] is string @string)
                 {
-                    string value = (string)parameters[index];
-                    PS3.Extension.WriteString(FUNC_CALL_STR + stringOffset, value);
+                    PS3.Extension.WriteString(FUNC_CALL_STR + stringOffset, @string);
                     PS3.Extension.WriteUInt64(FUNC_CALL_RX + (intCount++ * 0x8), FUNC_CALL_STR + stringOffset);
-                    stringOffset += (uint)value.Length + 0x4;
+                    stringOffset += (uint)@string.Length + 0x4;
                 }
                 index++;
             }
@@ -255,45 +313,72 @@ namespace IgrisLib.NET {
 
             Type type = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
 
-            if(type == typeof(float)) {
+            if (type == typeof(float))
+            {
                 float ret;
                 while ((ret = PS3.Extension.ReadFloat(FUNC_CALL_FX_RET)) == 0xDEADC0DE)
+                {
                     Thread.Sleep(10);
+                }
 
                 return (T)Convert.ChangeType(ret, typeof(T));
             }
-            else if(type == typeof(string)) {
+            else if (type == typeof(string))
+            {
                 ulong ret;
                 while ((ret = PS3.Extension.ReadUInt64(FUNC_CALL_RX_RET)) == 0xDEADC0DE)
+                {
                     Thread.Sleep(10);
+                }
+
                 string value = PS3.Extension.ReadString((uint)ret);
 
                 return (T)Convert.ChangeType(value, typeof(T));
             }
-            else {
+            else
+            {
                 ulong ret;
                 while ((ret = PS3.Extension.ReadUInt64(FUNC_CALL_RX_RET)) == 0xDEADC0DE)
+                {
                     Thread.Sleep(10);
+                }
 
                 return (T)Convert.ChangeType(ret, typeof(T));
             }
         }
 
-        public static T Call<T>(uint address, params object[] parameters) {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="address"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public static T Call<T>(uint address, params object[] parameters)
+        {
             return CallTOC<T>(address, 0x0, parameters);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static ulong LoadModule(string path)
         {
             if (!Install())
+            {
                 return 0;
+            }
 
             ulong ret;
             PS3.Extension.WriteString(PRX_MODULE_PATH, path);
 
             ulong prxId = SystemCall(0x1E0, PRX_MODULE_PATH, 0, 0);
             if ((long)prxId < 0)
+            {
                 return prxId;
+            }
 
             PS3.Extension.WriteUInt64(PRX_FLAGS, 0x28);
             PS3.Extension.WriteUInt64(PRX_FLAGS + 0x8, 0x1);
@@ -302,7 +387,9 @@ namespace IgrisLib.NET {
             PS3.Extension.WriteUInt64(PRX_FLAGS + 0x20, ulong.MaxValue);
             ret = SystemCall(0x1E1, prxId, 0x0, PRX_FLAGS);
             if ((long)ret < 0)
+            {
                 return ret;
+            }
 
             ulong OPD = PS3.Extension.ReadUInt64(PRX_FLAGS + 0x10);
             uint address = PS3.Extension.ReadUInt32((uint)OPD);
@@ -315,16 +402,20 @@ namespace IgrisLib.NET {
             PS3.Extension.WriteUInt64(PRX_FLAGS + 0x18, 0x0);
             PS3.Extension.WriteUInt64(PRX_FLAGS + 0x20, ulong.MaxValue);
             ret = SystemCall(0x1E1, prxId, 0x0, PRX_FLAGS);
-            if ((long)ret < 0)
-                return ret;
-
-            return 0x0;
+            return (long)ret < 0 ? ret : 0x0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="prxId"></param>
+        /// <returns></returns>
         public static ulong UnloadModule(uint prxId)
         {
             if (!Install())
+            {
                 return 0;
+            }
 
             ulong ret;
 
@@ -336,7 +427,9 @@ namespace IgrisLib.NET {
             ret = SystemCall(0x1E2, prxId, 0x0, PRX_FLAGS);
 
             if ((long)ret < 0)
+            {
                 return ret;
+            }
 
             ulong OPD = PS3.Extension.ReadUInt64(PRX_FLAGS + 0x10);
             uint address = PS3.Extension.ReadUInt32((uint)OPD);
@@ -350,13 +443,12 @@ namespace IgrisLib.NET {
             PS3.Extension.WriteUInt64(PRX_FLAGS + 0x20, ulong.MaxValue);
             ret = SystemCall(0x1E2, prxId, 0x0, PRX_FLAGS);
             if ((long)ret < 0)
+            {
                 return ret;
+            }
 
             ret = SystemCall(0x1E3, prxId, 0, 0, 0);
-            if ((long)ret < 0)
-                return ret;
-
-            return 0x0;
+            return (long)ret < 0 ? ret : 0x0;
         }
     }
 }
