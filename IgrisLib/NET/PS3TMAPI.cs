@@ -5,6 +5,9 @@ using System.Text;
 
 namespace IgrisLib.NET
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class PS3TMAPI
     {
         private static readonly EnumerateTargetsExCallbackPriv ms_enumTargetsExCallbackPriv = new EnumerateTargetsExCallbackPriv(EnumTargetsExPriv);
@@ -32,17 +35,42 @@ namespace IgrisLib.NET
         [ThreadStatic]
         private static Dictionary<int, TargetCallbackAndUserData> ms_userTargetCallbacks = null;
         private static readonly HandleEventCallbackPriv ms_eventHandlerWrapper = new HandleEventCallbackPriv(EventHandlerWrapper);
+        /// <summary>
+        /// 
+        /// </summary>
         public const int InvalidTarget = -1;
+        /// <summary>
+        /// 
+        /// </summary>
         public const int DefaultTarget = -2;
+        /// <summary>
+        /// 
+        /// </summary>
         public const uint AllTTYStreams = 4294967295;
+        /// <summary>
+        /// 
+        /// </summary>
         public const uint DefaultProcessPriority = 999;
+        /// <summary>
+        /// 
+        /// </summary>
         public const uint DefaultProtocolPriority = 128;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="res"></param>
+        /// <returns></returns>
         public static bool FAILED(SNRESULT res)
         {
             return !SUCCEEDED(res);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="res"></param>
+        /// <returns></returns>
         public static bool SUCCEEDED(SNRESULT res)
         {
             return res >= SNRESULT.SN_S_OK;
@@ -75,21 +103,43 @@ namespace IgrisLib.NET
             fix = VersionFix(version);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sdkVersion"></param>
+        /// <returns></returns>
         public static byte SDKVersionMajor(ulong sdkVersion)
         {
             return VersionMajor(sdkVersion);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sdkVersion"></param>
+        /// <returns></returns>
         public static byte SDKVersionMinor(ulong sdkVersion)
         {
             return VersionMinor(sdkVersion);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sdkVersion"></param>
+        /// <returns></returns>
         public static byte SDKVersionFix(ulong sdkVersion)
         {
             return VersionFix(sdkVersion);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sdkVersion"></param>
+        /// <param name="major"></param>
+        /// <param name="minor"></param>
+        /// <param name="fix"></param>
         public static void SDKVersionComponents(ulong sdkVersion, out byte major, out byte minor, out byte fix)
         {
             major = SDKVersionMajor(sdkVersion);
@@ -97,21 +147,43 @@ namespace IgrisLib.NET
             fix = SDKVersionFix(sdkVersion);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cpVersion"></param>
+        /// <returns></returns>
         public static byte CPVersionMajor(ulong cpVersion)
         {
             return VersionMajor(cpVersion);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cpVersion"></param>
+        /// <returns></returns>
         public static byte CPVersionMinor(ulong cpVersion)
         {
             return VersionMinor(cpVersion);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cpVersion"></param>
+        /// <returns></returns>
         public static byte CPVersionFix(ulong cpVersion)
         {
             return VersionFix(cpVersion);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cpVersion"></param>
+        /// <param name="major"></param>
+        /// <param name="minor"></param>
+        /// <param name="fix"></param>
         public static void CPVersionComponents(ulong cpVersion, out byte major, out byte minor, out byte fix)
         {
             major = CPVersionMajor(cpVersion);
@@ -125,6 +197,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetTMVersion", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetTMVersionX64(out IntPtr version);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
         public static SNRESULT GetTMVersion(out string version)
         {
             SNRESULT snresult = Is32Bit() ? GetTMVersionX86(out IntPtr version1) : GetTMVersionX64(out version1);
@@ -138,6 +215,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetAPIVersion", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetAPIVersionX64(out IntPtr version);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
         public static SNRESULT GetAPIVersion(out string version)
         {
             SNRESULT snresult = Is32Bit() ? GetAPIVersionX86(out IntPtr version1) : GetAPIVersionX64(out version1);
@@ -151,6 +233,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3TranslateError", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT TranslateErrorX64(SNRESULT res, out IntPtr message);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="errorCode"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public static SNRESULT TranslateError(SNRESULT errorCode, out string message)
         {
             SNRESULT snresult = Is32Bit() ? TranslateErrorX86(errorCode, out IntPtr message1) : TranslateErrorX64(errorCode, out message1);
@@ -164,6 +252,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetErrorQualifier", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetErrorQualifierX64(out uint qualifier, out IntPtr message);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="qualifier"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public static SNRESULT GetErrorQualifier(out uint qualifier, out string message)
         {
             SNRESULT snresult = Is32Bit() ? GetErrorQualifierX86(out qualifier, out IntPtr message1) : GetErrorQualifierX64(out qualifier, out message1);
@@ -177,6 +271,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetConnectStatus", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetConnectStatusX64(int target, out uint status, out IntPtr usage);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="status"></param>
+        /// <param name="usage"></param>
+        /// <returns></returns>
         public static SNRESULT GetConnectStatus(int target, out ConnectStatus status, out string usage)
         {
             SNRESULT snresult = Is32Bit() ? GetConnectStatusX86(target, out uint status1, out IntPtr usage1) : GetConnectStatusX64(target, out status1, out usage1);
@@ -191,6 +292,10 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3InitTargetComms", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT InitTargetCommsX64();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SNRESULT InitTargetComms()
         {
             if (!Is32Bit())
@@ -204,6 +309,10 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3CloseTargetComms", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT CloseTargetCommsX64();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SNRESULT CloseTargetComms()
         {
             if (!Is32Bit())
@@ -217,6 +326,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3EnumerateTargets", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT EnumerateTargetsX64(EnumerateTargetsCallback callback);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <returns></returns>
         public static SNRESULT EnumerateTargets(EnumerateTargetsCallback callback)
         {
             if (!Is32Bit())
@@ -237,6 +351,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3EnumerateTargetsEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT EnumerateTargetsExX64(EnumerateTargetsExCallbackPriv callback, IntPtr unused);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT EnumerateTargetsEx(EnumerateTargetsExCallback callback, ref object userData)
         {
             if (callback == null)
@@ -254,6 +374,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetNumTargets", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetNumTargetsX64(out uint numTargets);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numTargets"></param>
+        /// <returns></returns>
         public static SNRESULT GetNumTargets(out uint numTargets)
         {
             if (!Is32Bit())
@@ -267,6 +392,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetTargetFromName", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetTargetFromNameX64(IntPtr name, out int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT GetTargetFromName(string name, out int target)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(name));
@@ -281,6 +412,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3Reset", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ResetX64(int target, ulong resetParameter);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="resetParameter"></param>
+        /// <returns></returns>
         public static SNRESULT Reset(int target, ResetParameter resetParameter)
         {
             if (!Is32Bit())
@@ -294,6 +431,17 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ResetEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ResetExX64(int target, ulong boot, ulong bootMask, ulong reset, ulong resetMask, ulong system, ulong systemMask);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="bootParameter"></param>
+        /// <param name="bootMask"></param>
+        /// <param name="resetParameter"></param>
+        /// <param name="resetMask"></param>
+        /// <param name="systemParameter"></param>
+        /// <param name="systemMask"></param>
+        /// <returns></returns>
         public static SNRESULT ResetEx(int target, BootParameter bootParameter, BootParameterMask bootMask, ResetParameter resetParameter, ResetParameterMask resetMask, SystemParameter systemParameter, SystemParameterMask systemMask)
         {
             if (!Is32Bit())
@@ -307,6 +455,17 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetResetParameters", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetResetParametersX64(int target, out ulong boot, out ulong bootMask, out ulong reset, out ulong resetMask, out ulong system, out ulong systemMask);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="bootParameter"></param>
+        /// <param name="bootMask"></param>
+        /// <param name="resetParameter"></param>
+        /// <param name="resetMask"></param>
+        /// <param name="systemParameter"></param>
+        /// <param name="systemMask"></param>
+        /// <returns></returns>
         public static SNRESULT GetResetParameters(int target, out BootParameter bootParameter, out BootParameterMask bootMask, out ResetParameter resetParameter, out ResetParameterMask resetMask, out SystemParameter systemParameter, out SystemParameterMask systemMask)
         {
             SNRESULT snresult = Is32Bit() ? GetResetParametersX86(target, out ulong boot, out ulong bootMask1, out ulong reset, out ulong resetMask1, out ulong system, out ulong systemMask1) : GetResetParametersX64(target, out boot, out bootMask1, out reset, out resetMask1, out system, out systemMask1);
@@ -325,6 +484,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetBootParameter", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetBootParameterX64(int target, ulong boot, ulong bootMask);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="bootParameter"></param>
+        /// <param name="bootMask"></param>
+        /// <returns></returns>
         public static SNRESULT SetBootParameter(int target, BootParameter bootParameter, BootParameterMask bootMask)
         {
             if (!Is32Bit())
@@ -338,6 +504,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetCurrentBootParameter", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetCurrentBootParameterX64(int target, out ulong boot);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="bootParameter"></param>
+        /// <returns></returns>
         public static SNRESULT GetCurrentBootParameter(int target, out BootParameter bootParameter)
         {
             SNRESULT snresult = Is32Bit() ? GetCurrentBootParameterX86(target, out ulong boot) : GetCurrentBootParameterX64(target, out boot);
@@ -351,6 +523,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetSystemParameter", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetSystemParameterX64(int target, ulong system, ulong systemMask);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="systemParameter"></param>
+        /// <param name="systemMask"></param>
+        /// <returns></returns>
         public static SNRESULT SetSystemParameter(int target, SystemParameter systemParameter, SystemParameterMask systemMask)
         {
             if (!Is32Bit())
@@ -364,6 +543,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetTargetInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetTargetInfoX64(ref TargetInfoPriv targetInfoPriv);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetTargetInfo(ref TargetInfo targetInfo)
         {
             TargetInfoPriv targetInfoPriv = new TargetInfoPriv
@@ -391,6 +575,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetTargetInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetTargetInfoX64(ref TargetInfoPriv info);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetInfo"></param>
+        /// <returns></returns>
         public static SNRESULT SetTargetInfo(TargetInfo targetInfo)
         {
             TargetInfoPriv info = new TargetInfoPriv
@@ -427,6 +616,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ListTargetTypes", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ListTargetTypesX64(ref uint size, IntPtr targetTypes);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetTypes"></param>
+        /// <returns></returns>
         public static SNRESULT ListTargetTypes(out TargetType[] targetTypes)
         {
             targetTypes = null;
@@ -456,6 +650,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3AddTarget", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT AddTargetX64(IntPtr name, IntPtr type, int connParamsSize, IntPtr connectParams, out int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="targetType"></param>
+        /// <param name="connectProperties"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT AddTarget(string name, string targetType, TCPIPConnectProperties connectProperties, out int target)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr1 = new ScopedGlobalHeapPtr(IntPtr.Zero);
@@ -477,6 +679,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetDefaultTarget", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetDefaultTargetX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT SetDefaultTarget(int target)
         {
             if (!Is32Bit())
@@ -490,6 +697,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetDefaultTarget", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetDefaultTargetX64(out int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT GetDefaultTarget(out int target)
         {
             if (!Is32Bit())
@@ -503,6 +715,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RegisterServerEventHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RegisterServerEventHandlerX64(HandleEventCallbackPriv callback, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT RegisterServerEventHandler(ServerEventCallback callback, ref object userData)
         {
             if (callback == null)
@@ -522,6 +740,10 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UnRegisterServerEventHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT UnregisterServerEventHandlerX64();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SNRESULT UnregisterServerEventHandler()
         {
             SNRESULT res = Is32Bit() ? UnregisterServerEventHandlerX86() : UnregisterServerEventHandlerX64();
@@ -548,6 +770,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetConnectionInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetConnectionInfoX64(int target, IntPtr connectProperties);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="connectProperties"></param>
+        /// <returns></returns>
         public static SNRESULT GetConnectionInfo(int target, out TCPIPConnectProperties connectProperties)
         {
             connectProperties = null;
@@ -567,6 +795,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetConnectionInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetConnectionInfoX64(int target, IntPtr connectProperties);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="connectProperties"></param>
+        /// <returns></returns>
         public static SNRESULT SetConnectionInfo(int target, TCPIPConnectProperties connectProperties)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(Marshal.AllocHGlobal(Marshal.SizeOf((object)connectProperties)));
@@ -582,6 +816,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3DeleteTarget", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT DeleteTargetX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT DeleteTarget(int target)
         {
             if (!Is32Bit())
@@ -595,6 +834,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3Connect", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ConnectX64(int target, string application);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="application"></param>
+        /// <returns></returns>
         public static SNRESULT Connect(int target, string application)
         {
             if (!Is32Bit())
@@ -608,6 +853,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ConnectEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ConnectExX64(int target, string application, bool bForceFlag);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="application"></param>
+        /// <param name="bForceFlag"></param>
+        /// <returns></returns>
         public static SNRESULT ConnectEx(int target, string application, bool bForceFlag)
         {
             if (!Is32Bit())
@@ -621,6 +873,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3Disconnect", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT DisconnectX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT Disconnect(int target)
         {
             if (!Is32Bit())
@@ -634,6 +891,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ForceDisconnect", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ForceDisconnectX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT ForceDisconnect(int target)
         {
             if (!Is32Bit())
@@ -647,6 +909,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetSystemInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetSystemInfoX64(int target, uint reserved, out uint mask, out SystemInfo info);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="mask"></param>
+        /// <param name="systemInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetSystemInfo(int target, out SystemInfoFlag mask, out SystemInfo systemInfo)
         {
             SNRESULT snresult = Is32Bit() ? GetSystemInfoX86(target, 0U, out uint mask1, out systemInfo) : GetSystemInfoX64(target, 0U, out mask1, out systemInfo);
@@ -660,6 +929,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetExtraLoadFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetExtraLoadFlagsX64(int target, out ulong extraLoadFlags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="extraLoadFlags"></param>
+        /// <returns></returns>
         public static SNRESULT GetExtraLoadFlags(int target, out ExtraLoadFlag extraLoadFlags)
         {
             SNRESULT snresult = Is32Bit() ? GetExtraLoadFlagsX86(target, out ulong extraLoadFlags1) : GetExtraLoadFlagsX64(target, out extraLoadFlags1);
@@ -673,6 +948,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetExtraLoadFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetExtraLoadFlagsX64(int target, ulong extraLoadFlags, ulong mask);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="extraLoadFlags"></param>
+        /// <param name="mask"></param>
+        /// <returns></returns>
         public static SNRESULT SetExtraLoadFlags(int target, ExtraLoadFlag extraLoadFlags, ExtraLoadFlagMask mask)
         {
             if (!Is32Bit())
@@ -686,6 +968,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetSDKVersion", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetSDKVersionX64(int target, out ulong sdkVersion);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="sdkVersion"></param>
+        /// <returns></returns>
         public static SNRESULT GetSDKVersion(int target, out ulong sdkVersion)
         {
             if (!Is32Bit())
@@ -699,6 +987,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetCPVersion", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetCPVersionX64(int target, out ulong cpVersion);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="cpVersion"></param>
+        /// <returns></returns>
         public static SNRESULT GetCPVersion(int target, out ulong cpVersion)
         {
             if (!Is32Bit())
@@ -712,6 +1006,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetTimeouts", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetTimeoutsX64(int target, uint numTimeouts, TimeoutType[] timeoutIds, uint[] timeoutValues);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="timeoutTypes"></param>
+        /// <param name="timeoutValues"></param>
+        /// <returns></returns>
         public static SNRESULT SetTimeouts(int target, TimeoutType[] timeoutTypes, uint[] timeoutValues)
         {
             if (timeoutTypes == null || timeoutTypes.Length < 1 || (timeoutValues == null || timeoutValues.Length != timeoutTypes.Length))
@@ -727,6 +1028,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetTimeouts", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetTimeoutsX64(int target, out uint numTimeouts, TimeoutType[] timeoutIds, uint[] timeoutValues);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="timeoutTypes"></param>
+        /// <param name="timeoutValues"></param>
+        /// <returns></returns>
         public static SNRESULT GetTimeouts(int target, out TimeoutType[] timeoutTypes, out uint[] timeoutValues)
         {
             timeoutTypes = null;
@@ -747,6 +1055,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ListTTYStreams", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ListTtyStreamsX64(int target, ref uint size, IntPtr streamArray);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="streamArray"></param>
+        /// <returns></returns>
         public static SNRESULT ListTTYStreams(int target, out TTYStream[] streamArray)
         {
             streamArray = null;
@@ -771,11 +1085,27 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RegisterTTYEventHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RegisterTtyEventHandlerX64(int target, uint streamIndex, HandleEventCallbackPriv callback, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="streamID"></param>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT RegisterTTYEventHandler(int target, uint streamID, TTYCallback callback, ref object userData)
         {
             return RegisterTTYEventHandlerHelper(target, streamID, callback, ref userData);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="streamID"></param>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT RegisterTTYEventHandlerRaw(int target, uint streamID, TTYCallbackRaw callback, ref object userData)
         {
             return RegisterTTYEventHandlerHelper(target, streamID, callback, ref userData);
@@ -800,11 +1130,10 @@ namespace IgrisLib.NET
             else
                 ttyChannelList.Add(new TTYChannel(target, streamID));
             if (ms_userTtyCallbacks == null)
-                ms_userTtyCallbacks = new Dictionary< TTYChannel, TTYCallbackAndUserData>(1);
+                ms_userTtyCallbacks = new Dictionary<TTYChannel, TTYCallbackAndUserData>(1);
             foreach (TTYChannel key in ttyChannelList)
             {
-                TTYCallbackAndUserData callbackAndUserData;
-                if (!ms_userTtyCallbacks.TryGetValue(key, out callbackAndUserData))
+                if (!ms_userTtyCallbacks.TryGetValue(key, out TTYCallbackAndUserData callbackAndUserData))
                     callbackAndUserData = new TTYCallbackAndUserData();
                 if (callback is TTYCallback)
                 {
@@ -827,6 +1156,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3CancelTTYEvents", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT CancelTtyEventsX64(int target, uint index);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="streamID"></param>
+        /// <returns></returns>
         public static SNRESULT CancelTTYEvents(int target, uint streamID)
         {
             SNRESULT res = Is32Bit() ? CancelTtyEventsX86(target, streamID) : CancelTtyEventsX64(target, streamID);
@@ -855,6 +1190,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SendTTY", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SendTTYX64(int target, uint index, string text);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="streamID"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static SNRESULT SendTTY(int target, uint streamID, string text)
         {
             if (!Is32Bit())
@@ -868,6 +1210,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SendTTY", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SendTTYRawX64(int target, uint index, byte[] text);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="streamID"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static SNRESULT SendTTYRaw(int target, uint streamID, byte[] text)
         {
             return Is32Bit() ? SendTTYRawX86(target, streamID, text) : SendTTYRawX64(target, streamID, text);
@@ -878,8 +1227,7 @@ namespace IgrisLib.NET
             if (ms_userTtyCallbacks == null)
                 return;
             TTYChannel key = new TTYChannel(target, param);
-            TTYCallbackAndUserData callbackAndUserData;
-            if (!ms_userTtyCallbacks.TryGetValue(key, out callbackAndUserData))
+            if (!ms_userTtyCallbacks.TryGetValue(key, out TTYCallbackAndUserData callbackAndUserData))
                 return;
             if (callbackAndUserData.m_callback != null)
             {
@@ -899,6 +1247,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ClearTTYCache", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ClearTTYCacheX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT ClearTTYCache(int target)
         {
             return Is32Bit() ? ClearTTYCacheX86(target) : ClearTTYCacheX64(target);
@@ -910,6 +1263,10 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3Kick", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT KickX64();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SNRESULT Kick()
         {
             if (!Is32Bit())
@@ -923,6 +1280,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetStatus", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetStatusX64(int target, UnitType unit, out long status, IntPtr reasonCode);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="unitStatus"></param>
+        /// <returns></returns>
         public static SNRESULT GetStatus(int target, UnitType unit, out UnitStatus unitStatus)
         {
             SNRESULT snresult = Is32Bit() ? GetStatusX86(target, unit, out long status, IntPtr.Zero) : GetStatusX64(target, unit, out status, IntPtr.Zero);
@@ -936,6 +1300,18 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessLoad", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ProcessLoadX64(int target, uint priority, IntPtr fileName, int argCount, string[] args, int envCount, string[] env, out uint processId, out ulong threadId, uint flags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="priority"></param>
+        /// <param name="fileName"></param>
+        /// <param name="argv"></param>
+        /// <param name="envv"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="loadFlags"></param>
+        /// <returns></returns>
         public static SNRESULT ProcessLoad(int target, uint priority, string fileName, string[] argv, string[] envv, out uint processID, out ulong threadID, LoadFlag loadFlags)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(fileName));
@@ -956,6 +1332,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetProcessListX64(int target, ref uint count, IntPtr processIdArray);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetProcessList(int target, out uint[] processIDs)
         {
             processIDs = null;
@@ -980,6 +1362,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UserProcessList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetUserProcessListX64(int target, ref uint count, IntPtr processIdArray);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetUserProcessList(int target, out uint[] processIDs)
         {
             uint count = 0;
@@ -1004,6 +1392,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessStop", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ProcessStopX64(int target, uint processId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <returns></returns>
         public static SNRESULT ProcessStop(int target, uint processID)
         {
             if (!Is32Bit())
@@ -1017,6 +1411,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessContinue", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ProcessContinueX64(int target, uint processId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <returns></returns>
         public static SNRESULT ProcessContinue(int target, uint processID)
         {
             if (!Is32Bit())
@@ -1030,6 +1430,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessKill", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ProcessKillX64(int target, uint processId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <returns></returns>
         public static SNRESULT ProcessKill(int target, uint processID)
         {
             if (!Is32Bit())
@@ -1043,6 +1449,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3TerminateGameProcess", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT TerminateGameProcessX64(int target, uint processId, uint timeout);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
         public static SNRESULT TerminateGameProcess(int target, uint processID, uint timeout)
         {
             if (!Is32Bit())
@@ -1056,6 +1469,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ThreadList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetThreadListX64(int target, uint processId, ref uint numPPUThreads, ulong[] ppuThreadIds, ref uint numSPUThreadGroups, ulong[] spuThreadGroupIds);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="ppuThreadIDs"></param>
+        /// <param name="spuThreadGroupIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetThreadList(int target, uint processID, out ulong[] ppuThreadIDs, out ulong[] spuThreadGroupIDs)
         {
             ppuThreadIDs = null;
@@ -1076,6 +1497,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ThreadStop", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ThreadStopX64(int target, UnitType unit, uint processId, ulong threadId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <returns></returns>
         public static SNRESULT ThreadStop(int target, UnitType unit, uint processID, ulong threadID)
         {
             if (!Is32Bit())
@@ -1089,6 +1518,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ThreadContinue", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ThreadContinueX64(int target, UnitType unit, uint processId, ulong threadId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <returns></returns>
         public static SNRESULT ThreadContinue(int target, UnitType unit, uint processID, ulong threadID)
         {
             if (!Is32Bit())
@@ -1102,6 +1539,16 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ThreadGetRegisters", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ThreadGetRegistersX64(int target, UnitType unit, uint processId, ulong threadId, uint numRegisters, uint[] registerNums, ulong[] registerValues);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="registerNums"></param>
+        /// <param name="registerValues"></param>
+        /// <returns></returns>
         public static SNRESULT ThreadGetRegisters(int target, UnitType unit, uint processID, ulong threadID, uint[] registerNums, out ulong[] registerValues)
         {
             registerValues = null;
@@ -1119,6 +1566,16 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ThreadSetRegisters", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ThreadSetRegistersX64(int target, UnitType unit, uint processId, ulong threadId, uint numRegisters, uint[] registerNums, ulong[] registerValues);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="registerNums"></param>
+        /// <param name="registerValues"></param>
+        /// <returns></returns>
         public static SNRESULT ThreadSetRegisters(int target, UnitType unit, uint processID, ulong threadID, uint[] registerNums, ulong[] registerValues)
         {
             if (registerNums == null || registerValues == null || registerNums.Length != registerValues.Length)
@@ -1151,6 +1608,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetProcessInfoX64(int target, uint processId, ref uint bufferSize, IntPtr processInfo);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="processInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetProcessInfo(int target, uint processID, out ProcessInfo processInfo)
         {
             processInfo = new ProcessInfo();
@@ -1171,10 +1635,17 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessInfoEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetProcessInfoExX64(int target, uint processId, ref uint bufferSize, IntPtr processInfo, out ExtraProcessInfo extraProcessInfo);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="processInfo"></param>
+        /// <param name="extraProcessInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetProcessInfoEx(int target, uint processID, out ProcessInfo processInfo, out ExtraProcessInfo extraProcessInfo)
         {
             processInfo = new ProcessInfo();
-            extraProcessInfo = new ExtraProcessInfo();
             uint bufferSize = 0;
             SNRESULT res1 = Is32Bit() ? GetProcessInfoExX86(target, processID, ref bufferSize, IntPtr.Zero, out extraProcessInfo) : GetProcessInfoExX64(target, processID, ref bufferSize, IntPtr.Zero, out extraProcessInfo);
             if (FAILED(res1))
@@ -1192,12 +1663,19 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessInfoEx2", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetProcessInfoEx2X64(int target, uint processId, ref uint bufferSize, IntPtr processInfo, out ExtraProcessInfo extraProcessInfo, out ProcessLoadInfo processLoadInfo);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="processInfo"></param>
+        /// <param name="extraProcessInfo"></param>
+        /// <param name="processLoadInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetProcessInfoEx2(int target, uint processID, out ProcessInfo processInfo, out ExtraProcessInfo extraProcessInfo, out ProcessLoadInfo processLoadInfo)
         {
             uint bufferSize = 0;
             processInfo = new ProcessInfo();
-            extraProcessInfo = new ExtraProcessInfo();
-            processLoadInfo = new ProcessLoadInfo();
             SNRESULT res1 = Is32Bit() ? GetProcessInfoEx2X86(target, processID, ref bufferSize, IntPtr.Zero, out extraProcessInfo, out processLoadInfo) : GetProcessInfoEx2X64(target, processID, ref bufferSize, IntPtr.Zero, out extraProcessInfo, out processLoadInfo);
             if (FAILED(res1))
                 return res1;
@@ -1214,6 +1692,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetModuleList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetModuleListX64(int target, uint processId, ref uint numModules, uint[] moduleList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="modules"></param>
+        /// <returns></returns>
         public static SNRESULT GetModuleList(int target, uint processID, out uint[] modules)
         {
             modules = null;
@@ -1245,6 +1730,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetModuleInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetModuleInfoX64(int target, uint processId, uint moduleId, ref ulong bufferSize, IntPtr moduleInfo);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="moduleID"></param>
+        /// <param name="moduleInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetModuleInfo(int target, uint processID, uint moduleID, out ModuleInfo moduleInfo)
         {
             moduleInfo = new ModuleInfo();
@@ -1271,14 +1764,22 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetModuleInfoEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetModuleInfoExX64(int target, uint processId, uint moduleId, ref ulong bufferSize, IntPtr moduleInfoEx, out IntPtr mselfInfo, out ExtraModuleInfo extraModuleInfo);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="moduleID"></param>
+        /// <param name="moduleInfoEx"></param>
+        /// <param name="mselfInfo"></param>
+        /// <param name="extraModuleInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetModuleInfoEx(int target, uint processID, uint moduleID, out ModuleInfoEx moduleInfoEx, out MSELFInfo mselfInfo, out ExtraModuleInfo extraModuleInfo)
         {
             moduleInfoEx = new ModuleInfoEx();
             mselfInfo = new MSELFInfo();
-            extraModuleInfo = new ExtraModuleInfo();
             ulong bufferSize = 0;
-            IntPtr mselfInfo1 = IntPtr.Zero;
-            SNRESULT res1 = Is32Bit() ? GetModuleInfoExX86(target, processID, moduleID, ref bufferSize, IntPtr.Zero, out mselfInfo1, out extraModuleInfo) : GetModuleInfoExX64(target, processID, moduleID, ref bufferSize, IntPtr.Zero, out mselfInfo1, out extraModuleInfo);
+            SNRESULT res1 = Is32Bit() ? GetModuleInfoExX86(target, processID, moduleID, ref bufferSize, IntPtr.Zero, out IntPtr mselfInfo1, out extraModuleInfo) : GetModuleInfoExX64(target, processID, moduleID, ref bufferSize, IntPtr.Zero, out mselfInfo1, out extraModuleInfo);
             if (FAILED(res1))
                 return res1;
             if (bufferSize > int.MaxValue)
@@ -1301,6 +1802,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ThreadInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetThreadInfoX64(int target, UnitType unit, uint processId, ulong threadId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="threadInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetPPUThreadInfo(int target, uint processID, ulong threadID, out PPUThreadInfo threadInfo)
         {
             threadInfo = new PPUThreadInfo();
@@ -1330,6 +1839,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3PPUThreadInfoEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetPPUThreadInfoExX64(int target, uint processId, ulong threadId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="threadInfoEx"></param>
+        /// <returns></returns>
         public static SNRESULT GetPPUThreadInfoEx(int target, uint processID, ulong threadID, out PPUThreadInfoEx threadInfoEx)
         {
             threadInfoEx = new PPUThreadInfoEx();
@@ -1354,6 +1871,14 @@ namespace IgrisLib.NET
             return res2;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="threadInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetSPUThreadInfo(int target, uint processID, ulong threadID, out SPUThreadInfo threadInfo)
         {
             threadInfo = new SPUThreadInfo();
@@ -1362,7 +1887,7 @@ namespace IgrisLib.NET
             if (FAILED(res1))
                 return res1;
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(Marshal.AllocHGlobal((int)bufferSize));
-            SNRESULT res2 =  Is32Bit() ? GetThreadInfoX86(target, UnitType.SPU, processID, threadID, ref bufferSize, scopedGlobalHeapPtr.Get()) : GetThreadInfoX64(target, UnitType.SPU, processID, threadID, ref bufferSize, scopedGlobalHeapPtr.Get());
+            SNRESULT res2 = Is32Bit() ? GetThreadInfoX86(target, UnitType.SPU, processID, threadID, ref bufferSize, scopedGlobalHeapPtr.Get()) : GetThreadInfoX64(target, UnitType.SPU, processID, threadID, ref bufferSize, scopedGlobalHeapPtr.Get());
             if (FAILED(res2))
                 return res2;
             SpuThreadInfoPriv storage = new SpuThreadInfoPriv();
@@ -1385,6 +1910,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetDefaultPPUThreadStackSize", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetDefaultPPUThreadStackSizeX64(int target, ELFStackSize size);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="stackSize"></param>
+        /// <returns></returns>
         public static SNRESULT SetDefaultPPUThreadStackSize(int target, ELFStackSize stackSize)
         {
             if (!Is32Bit())
@@ -1398,6 +1929,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetDefaultPPUThreadStackSize", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetDefaultPPUThreadStackSizeX64(int target, out ELFStackSize size);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="stackSize"></param>
+        /// <returns></returns>
         public static SNRESULT GetDefaultPPUThreadStackSize(int target, out ELFStackSize stackSize)
         {
             if (!Is32Bit())
@@ -1410,7 +1947,16 @@ namespace IgrisLib.NET
 
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetSPULoopPoint", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetSPULoopPointX64(int target, uint processId, ulong threadId, uint address, int bCurrentPc);
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="address"></param>
+        /// <param name="bCurrentPC"></param>
+        /// <returns></returns>
         public static SNRESULT SetSPULoopPoint(int target, uint processID, ulong threadID, uint address, bool bCurrentPC)
         {
             int bCurrentPc = bCurrentPC ? 1 : 0;
@@ -1425,6 +1971,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ClearSPULoopPoint", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ClearSPULoopPointX64(int target, uint processId, ulong threadId, uint address, bool bCurrentPc);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="address"></param>
+        /// <param name="bCurrentPC"></param>
+        /// <returns></returns>
         public static SNRESULT ClearSPULoopPoint(int target, uint processID, ulong threadID, uint address, bool bCurrentPC)
         {
             if (!Is32Bit())
@@ -1438,6 +1993,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetBreakPoint", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetBreakPointX64(int target, uint unit, uint processId, ulong threadId, ulong address);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public static SNRESULT SetBreakPoint(int target, UnitType unit, uint processID, ulong threadID, ulong address)
         {
             if (!Is32Bit())
@@ -1451,6 +2015,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ClearBreakPoint", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ClearBreakPointX64(int target, uint unit, uint processId, ulong threadId, ulong address);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public static SNRESULT ClearBreakPoint(int target, UnitType unit, uint processID, ulong threadID, ulong address)
         {
             if (!Is32Bit())
@@ -1464,11 +2037,19 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetBreakPoints", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetBreakPointsX64(int target, uint unit, uint processId, ulong threadId, out uint numBreakpoints, ulong[] addresses);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="bpAddresses"></param>
+        /// <returns></returns>
         public static SNRESULT GetBreakPoints(int target, UnitType unit, uint processID, ulong threadID, out ulong[] bpAddresses)
         {
             bpAddresses = null;
-            uint numBreakpoints;
-            SNRESULT res = Is32Bit() ? GetBreakPointsX86(target, (uint)unit, processID, threadID, out numBreakpoints, null) : GetBreakPointsX64(target, (uint)unit, processID, threadID, out numBreakpoints, null);
+            SNRESULT res = Is32Bit() ? GetBreakPointsX86(target, (uint)unit, processID, threadID, out uint numBreakpoints, null) : GetBreakPointsX64(target, (uint)unit, processID, threadID, out numBreakpoints, null);
             if (FAILED(res))
                 return res;
             bpAddresses = new ulong[(int)numBreakpoints];
@@ -1483,6 +2064,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetDebugThreadControlInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetDebugThreadControlInfoX64(int target, uint processId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadCtrlInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetDebugThreadControlInfo(int target, uint processID, out DebugThreadControlInfo threadCtrlInfo)
         {
             threadCtrlInfo = new DebugThreadControlInfo();
@@ -1514,6 +2102,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetDebugThreadControlInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetDebugThreadControlInfoX64(int target, uint processId, IntPtr threadCtrlInfo, out uint maxEntries);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadCtrlInfo"></param>
+        /// <param name="maxEntries"></param>
+        /// <returns></returns>
         public static SNRESULT SetDebugThreadControlInfo(int target, uint processID, DebugThreadControlInfo threadCtrlInfo, out uint maxEntries)
         {
             DebugThreadControlInfoPriv storage = new DebugThreadControlInfoPriv();
@@ -1535,6 +2131,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ThreadExceptionClean", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ThreadExceptionCleanX64(int target, uint processId, ulong threadId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <returns></returns>
         public static SNRESULT ThreadExceptionClean(int target, uint processID, ulong threadID)
         {
             return Is32Bit() ? ThreadExceptionCleanX86(target, processID, threadID) : ThreadExceptionCleanX64(target, processID, threadID);
@@ -1546,6 +2149,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetRawSPULogicalIDs", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetRawSPULogicalIdsX64(int target, uint processId, ulong[] logicalIds);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="logicalIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetRawSPULogicalIDs(int target, uint processID, out ulong[] logicalIDs)
         {
             logicalIDs = new ulong[8];
@@ -1560,6 +2170,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SPUThreadGroupStop", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SPUThreadGroupStopX64(int target, uint processId, ulong threadGroupId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadGroupID"></param>
+        /// <returns></returns>
         public static SNRESULT SPUThreadGroupStop(int target, uint processID, ulong threadGroupID)
         {
             if (!Is32Bit())
@@ -1573,6 +2190,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SPUThreadGroupContinue", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SPUThreadGroupContinueX64(int target, uint processId, ulong threadGroupId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadGroupID"></param>
+        /// <returns></returns>
         public static SNRESULT SPUThreadGroupContinue(int target, uint processID, ulong threadGroupID)
         {
             if (!Is32Bit())
@@ -1586,6 +2210,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetProcessTree", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetProcessTreeX64(int target, ref uint numProcesses, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processTree"></param>
+        /// <returns></returns>
         public static SNRESULT GetProcessTree(int target, out ProcessTreeBranch[] processTree)
         {
             processTree = null;
@@ -1621,6 +2251,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetSPUThreadGroupInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetSPUThreadGroupInfoX64(int target, uint processId, ulong threadGroupId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadGroupID"></param>
+        /// <param name="threadGroupInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetSPUThreadGroupInfo(int target, uint processID, ulong threadGroupID, out SPUThreadGroupInfo threadGroupInfo)
         {
             threadGroupInfo = new SPUThreadGroupInfo();
@@ -1651,6 +2289,16 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessGetMemory", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ProcessGetMemoryX64(int target, UnitType unit, uint processId, ulong threadId, ulong address, int count, byte[] buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="address"></param>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
         public static SNRESULT ProcessGetMemory(int target, UnitType unit, uint processID, ulong threadID, ulong address, ref byte[] buffer)
         {
             if (!Is32Bit())
@@ -1664,6 +2312,16 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessSetMemory", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ProcessSetMemoryX64(int target, UnitType unit, uint processId, ulong threadId, ulong address, int count, byte[] buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <param name="threadID"></param>
+        /// <param name="address"></param>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
         public static SNRESULT ProcessSetMemory(int target, UnitType unit, uint processID, ulong threadID, ulong address, byte[] buffer)
         {
             if (!Is32Bit())
@@ -1677,6 +2335,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetMemoryCompressed", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetMemoryCompressedX64(int target, uint processId, uint compressionLevel, uint address, uint size, byte[] buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="compressionLevel"></param>
+        /// <param name="address"></param>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
         public static SNRESULT GetMemoryCompressed(int target, uint processID, MemoryCompressionLevel compressionLevel, uint address, ref byte[] buffer)
         {
             if (!Is32Bit())
@@ -1690,6 +2357,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetMemory64Compressed", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetMemory64CompressedX64(int target, uint processId, uint compressionLevel, ulong address, uint size, byte[] buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="compressionLevel"></param>
+        /// <param name="address"></param>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
         public static SNRESULT GetMemory64Compressed(int target, uint processID, MemoryCompressionLevel compressionLevel, ulong address, ref byte[] buffer)
         {
             if (!Is32Bit())
@@ -1703,12 +2379,18 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetVirtualMemoryInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetVirtualMemoryInfoX64(int target, uint processId, bool bStatsOnly, out uint areaCount, out uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="bStatsOnly"></param>
+        /// <param name="vmAreas"></param>
+        /// <returns></returns>
         public static SNRESULT GetVirtualMemoryInfo(int target, uint processID, bool bStatsOnly, out VirtualMemoryArea[] vmAreas)
         {
             vmAreas = null;
-            uint areaCount;
-            uint bufferSize;
-            SNRESULT res1 = Is32Bit() ? GetVirtualMemoryInfoX86(target, processID, bStatsOnly, out areaCount, out bufferSize, IntPtr.Zero) : GetVirtualMemoryInfoX64(target, processID, bStatsOnly, out areaCount, out bufferSize, IntPtr.Zero);
+            SNRESULT res1 = Is32Bit() ? GetVirtualMemoryInfoX86(target, processID, bStatsOnly, out uint areaCount, out uint bufferSize, IntPtr.Zero) : GetVirtualMemoryInfoX64(target, processID, bStatsOnly, out areaCount, out bufferSize, IntPtr.Zero);
             if (FAILED(res1))
                 return res1;
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(Marshal.AllocHGlobal((int)bufferSize));
@@ -1741,6 +2423,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetSyncPrimitiveCountsEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetSyncPrimitiveCountsExX64(int target, uint processId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="primitiveCounts"></param>
+        /// <returns></returns>
         public static SNRESULT GetSyncPrimitiveCounts(int target, uint processID, out SyncPrimitiveCounts primitiveCounts)
         {
             primitiveCounts = new SyncPrimitiveCounts();
@@ -1759,6 +2448,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetMutexList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetMutexListX64(int target, uint processId, ref uint numMutexes, uint[] mutexList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="mutexIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetMutexList(int target, uint processID, out uint[] mutexIDs)
         {
             mutexIDs = null;
@@ -1776,6 +2472,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetMutexInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetMutexInfoX64(int target, uint processId, uint mutexId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="mutexID"></param>
+        /// <param name="mutexInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetMutexInfo(int target, uint processID, uint mutexID, out MutexInfo mutexInfo)
         {
             mutexInfo = new MutexInfo();
@@ -1809,6 +2513,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetLightWeightMutexList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetLightWeightMutexListX64(int target, uint processId, ref uint numLWMutexes, uint[] lwMutexList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="lwMutexIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetLightWeightMutexList(int target, uint processID, out uint[] lwMutexIDs)
         {
             lwMutexIDs = null;
@@ -1826,6 +2537,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetLightWeightMutexInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetLightWeightMutexInfoX64(int target, uint processId, uint lwMutexId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="lwMutexID"></param>
+        /// <param name="lwMutexInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetLightWeightMutexInfo(int target, uint processID, uint lwMutexID, out LWMutexInfo lwMutexInfo)
         {
             lwMutexInfo = new LWMutexInfo();
@@ -1856,6 +2575,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetConditionalVariableList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetConditionalVariableListX64(int target, uint processId, ref uint numConditionVars, uint[] conditionVarList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="conditionVarIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetConditionalVariableList(int target, uint processID, out uint[] conditionVarIDs)
         {
             conditionVarIDs = null;
@@ -1873,6 +2599,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetConditionalVariableInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetConditionalVariableInfoX64(int target, uint processId, uint conditionVarId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="conditionVarID"></param>
+        /// <param name="conditionVarInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetConditionalVariableInfo(int target, uint processID, uint conditionVarID, out ConditionVarInfo conditionVarInfo)
         {
             conditionVarInfo = new ConditionVarInfo();
@@ -1902,6 +2636,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetLightWeightConditionalList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetLightWeightConditionalListX64(int target, uint processId, ref uint numLWConditionVars, uint[] lwConditionVarList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="lwConditionVarIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetLightWeightConditionalList(int target, uint processID, out uint[] lwConditionVarIDs)
         {
             lwConditionVarIDs = null;
@@ -1919,6 +2660,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetLightWeightConditionalInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetLightWeightConditionalInfoX64(int target, uint processId, uint lwCondVarId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="lwCondVarID"></param>
+        /// <param name="lwConditonVarInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetLightWeightConditionalInfo(int target, uint processID, uint lwCondVarID, out LWConditionVarInfo lwConditonVarInfo)
         {
             lwConditonVarInfo = new LWConditionVarInfo();
@@ -1932,12 +2681,14 @@ namespace IgrisLib.NET
                 return res2;
             LwConditionVarInfoPriv storage = new LwConditionVarInfoPriv();
             IntPtr unmanagedBuf = ReadDataFromUnmanagedIncPtr(scopedGlobalHeapPtr.Get(), ref storage);
-            lwConditonVarInfo = new LWConditionVarInfo();
-            lwConditonVarInfo.ID = storage.Id;
-            lwConditonVarInfo.Attribute = storage.Attribute;
-            lwConditonVarInfo.LWMutexID = storage.LwMutexId;
-            lwConditonVarInfo.NumWaitAllThreads = storage.NumWaitAllThreads;
-            lwConditonVarInfo.WaitingThreads = new ulong[(int)storage.NumWaitingThreads];
+            lwConditonVarInfo = new LWConditionVarInfo
+            {
+                ID = storage.Id,
+                Attribute = storage.Attribute,
+                LWMutexID = storage.LwMutexId,
+                NumWaitAllThreads = storage.NumWaitAllThreads,
+                WaitingThreads = new ulong[(int)storage.NumWaitingThreads]
+            };
             for (int index = 0; index < storage.NumWaitingThreads; ++index)
                 unmanagedBuf = ReadDataFromUnmanagedIncPtr(unmanagedBuf, ref lwConditonVarInfo.WaitingThreads[index]);
             return res2;
@@ -1949,6 +2700,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetReadWriteLockList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetReadWriteLockListX64(int target, uint processId, ref uint numRWLocks, uint[] rwLockList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="rwLockList"></param>
+        /// <returns></returns>
         public static SNRESULT GetReadWriteLockList(int target, uint processID, out uint[] rwLockList)
         {
             rwLockList = null;
@@ -1966,6 +2724,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetReadWriteLockInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetReadWriteLockInfoX64(int target, uint processId, uint rwLockId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="rwLockID"></param>
+        /// <param name="rwLockInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetReadWriteLockInfo(int target, uint processID, uint rwLockID, out RWLockInfo rwLockInfo)
         {
             rwLockInfo = new RWLockInfo();
@@ -1998,6 +2764,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetSemaphoreList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetSemaphoreListX64(int target, uint processId, ref uint numSemaphores, uint[] semaphoreList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="semaphoreIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetSemaphoreList(int target, uint processID, out uint[] semaphoreIDs)
         {
             semaphoreIDs = null;
@@ -2015,6 +2788,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetSemaphoreInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetSemaphoreInfoX64(int target, uint processId, uint semaphoreId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="semaphoreID"></param>
+        /// <param name="semaphoreInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetSemaphoreInfo(int target, uint processID, uint semaphoreID, out SemaphoreInfo semaphoreInfo)
         {
             semaphoreInfo = new SemaphoreInfo();
@@ -2045,6 +2826,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetEventQueueList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetEventQueueListX64(int target, uint processId, ref uint numEventQueues, uint[] eventQueueList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="eventQueueIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetEventQueueList(int target, uint processID, out uint[] eventQueueIDs)
         {
             eventQueueIDs = null;
@@ -2062,6 +2850,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetEventQueueInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetEventQueueInfoX64(int target, uint processId, uint eventQueueId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="eventQueueID"></param>
+        /// <param name="eventQueueInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetEventQueueInfo(int target, uint processID, uint eventQueueID, out EventQueueInfo eventQueueInfo)
         {
             eventQueueInfo = new EventQueueInfo();
@@ -2097,6 +2893,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetEventFlagList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetEventFlagListX64(int target, uint processId, ref uint numEventFlags, uint[] eventFlagList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="eventFlagIDs"></param>
+        /// <returns></returns>
         public static SNRESULT GetEventFlagList(int target, uint processID, out uint[] eventFlagIDs)
         {
             eventFlagIDs = null;
@@ -2114,6 +2917,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetEventFlagInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetEventFlagInfoX64(int target, uint processId, uint eventFlagId, ref uint bufferSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="eventFlagID"></param>
+        /// <param name="eventFlagInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetEventFlagInfo(int target, uint processID, uint eventFlagID, out EventFlagInfo eventFlagInfo)
         {
             eventFlagInfo = new EventFlagInfo();
@@ -2140,6 +2951,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3PickTarget", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT PickTargetX64(IntPtr hWndOwner, out int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hWndOwner"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT PickTarget(IntPtr hWndOwner, out int target)
         {
             if (!Is32Bit())
@@ -2153,11 +2970,17 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3EnableAutoStatusUpdate", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT EnableAutoStatusUpdateX64(int target, uint enabled, out uint previousState);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="bEnabled"></param>
+        /// <param name="bPreviousState"></param>
+        /// <returns></returns>
         public static SNRESULT EnableAutoStatusUpdate(int target, bool bEnabled, out bool bPreviousState)
         {
             uint enabled = bEnabled ? 1U : 0U;
-            uint previousState;
-            SNRESULT snresult = Is32Bit() ? EnableAutoStatusUpdateX86(target, enabled, out previousState) : EnableAutoStatusUpdateX64(target, enabled, out previousState);
+            SNRESULT snresult = Is32Bit() ? EnableAutoStatusUpdateX86(target, enabled, out uint previousState) : EnableAutoStatusUpdateX64(target, enabled, out previousState);
             bPreviousState = (int)previousState != 0;
             return snresult;
         }
@@ -2168,6 +2991,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetPowerStatus", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetPowerStatusX64(int target, out PowerStatus status);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         public static SNRESULT GetPowerStatus(int target, out PowerStatus status)
         {
             if (!Is32Bit())
@@ -2181,6 +3010,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3PowerOn", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT PowerOnX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT PowerOn(int target)
         {
             if (!Is32Bit())
@@ -2194,6 +3028,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3PowerOff", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT PowerOffX64(int target, uint force);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="bForce"></param>
+        /// <returns></returns>
         public static SNRESULT PowerOff(int target, bool bForce)
         {
             uint force = bForce ? 1U : 0U;
@@ -2208,9 +3048,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetUserMemoryStats", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetUserMemoryStatsX64(int target, uint processId, out UserMemoryStats memoryStats);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="memoryStats"></param>
+        /// <returns></returns>
         public static SNRESULT GetUserMemoryStats(int target, uint processID, out UserMemoryStats memoryStats)
         {
-            memoryStats = new UserMemoryStats();
             if (!Is32Bit())
                 return GetUserMemoryStatsX64(target, processID, out memoryStats);
             return GetUserMemoryStatsX86(target, processID, out memoryStats);
@@ -2222,6 +3068,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetDefaultLoadPriority", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetDefaultLoadPriorityX64(int target, uint priority);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="priority"></param>
+        /// <returns></returns>
         public static SNRESULT SetDefaultLoadPriority(int target, uint priority)
         {
             if (!Is32Bit())
@@ -2235,6 +3087,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetDefaultLoadPriority", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetDefaultLoadPriorityX64(int target, out uint priority);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="priority"></param>
+        /// <returns></returns>
         public static SNRESULT GetDefaultLoadPriority(int target, out uint priority)
         {
             if (!Is32Bit())
@@ -2248,9 +3106,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetGamePortIPAddrData", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetGamePortIPAddrDataX64(int target, string deviceName, out GamePortIPAddressData ipAddressData);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="deviceName"></param>
+        /// <param name="ipAddressData"></param>
+        /// <returns></returns>
         public static SNRESULT GetGamePortIPAddrData(int target, string deviceName, out GamePortIPAddressData ipAddressData)
         {
-            ipAddressData = new GamePortIPAddressData();
             if (!Is32Bit())
                 return GetGamePortIPAddrDataX64(target, deviceName, out ipAddressData);
             return GetGamePortIPAddrDataX86(target, deviceName, out ipAddressData);
@@ -2262,9 +3126,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetGamePortDebugIPAddrData", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetGamePortDebugIPAddrDataX64(int target, string deviceName, out GamePortIPAddressData data);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="deviceName"></param>
+        /// <param name="ipAddressData"></param>
+        /// <returns></returns>
         public static SNRESULT GetGamePortDebugIPAddrData(int target, string deviceName, out GamePortIPAddressData ipAddressData)
         {
-            ipAddressData = new GamePortIPAddressData();
             if (!Is32Bit())
                 return GetGamePortDebugIPAddrDataX64(target, deviceName, out ipAddressData);
             return GetGamePortDebugIPAddrDataX86(target, deviceName, out ipAddressData);
@@ -2276,6 +3146,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetDABR", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetDABRX64(int target, uint processId, ulong address);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public static SNRESULT SetDABR(int target, uint processID, ulong address)
         {
             if (!Is32Bit())
@@ -2289,6 +3166,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetDABR", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetDABRX64(int target, uint processId, out ulong address);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public static SNRESULT GetDABR(int target, uint processID, out ulong address)
         {
             if (!Is32Bit())
@@ -2302,6 +3186,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetRSXProfilingFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetRSXProfilingFlagsX64(int target, ulong rsxFlags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="rsxFlags"></param>
+        /// <returns></returns>
         public static SNRESULT SetRSXProfilingFlags(int target, RSXProfilingFlag rsxFlags)
         {
             if (!Is32Bit())
@@ -2315,10 +3205,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetRSXProfilingFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetRSXProfilingFlagsX64(int target, out ulong rsxFlags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="rsxFlags"></param>
+        /// <returns></returns>
         public static SNRESULT GetRSXProfilingFlags(int target, out RSXProfilingFlag rsxFlags)
         {
-            ulong rsxFlags1;
-            SNRESULT snresult = Is32Bit() ? GetRSXProfilingFlagsX86(target, out rsxFlags1) : GetRSXProfilingFlagsX64(target, out rsxFlags1);
+            SNRESULT snresult = Is32Bit() ? GetRSXProfilingFlagsX86(target, out ulong rsxFlags1) : GetRSXProfilingFlagsX64(target, out rsxFlags1);
             rsxFlags = (RSXProfilingFlag)rsxFlags1;
             return snresult;
         }
@@ -2329,6 +3224,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetCustomParamSFOMappingDirectory", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetCustomParamSFOMappingDirectoryX64(int target, IntPtr paramSfoDir);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="paramSFODir"></param>
+        /// <returns></returns>
         public static SNRESULT SetCustomParamSFOMappingDirectory(int target, string paramSFODir)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(paramSFODir));
@@ -2343,6 +3244,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3EnableXMBSettings", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT EnableXMBSettingsX64(int target, int enable);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="bEnable"></param>
+        /// <returns></returns>
         public static SNRESULT EnableXMBSettings(int target, bool bEnable)
         {
             int enable = bEnable ? 1 : 0;
@@ -2357,6 +3264,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetXMBSettings", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetXMBSettingsX64(int target, IntPtr buffer, ref uint bufferSize, bool bUpdateCache);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="xmbSettings"></param>
+        /// <param name="bUpdateCache"></param>
+        /// <returns></returns>
         public static SNRESULT GetXMBSettings(int target, out string xmbSettings, bool bUpdateCache)
         {
             xmbSettings = null;
@@ -2377,6 +3291,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetXMBSettings", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetXMBSettingsX64(int target, string xmbSettings, bool bUpdateCache);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="xmbSettings"></param>
+        /// <param name="bUpdateCache"></param>
+        /// <returns></returns>
         public static SNRESULT SetXMBSettings(int target, string xmbSettings, bool bUpdateCache)
         {
             return Is32Bit() ? SetXMBSettingsX86(target, xmbSettings, bUpdateCache) : SetXMBSettingsX64(target, xmbSettings, bUpdateCache);
@@ -2388,6 +3309,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3FootswitchControl", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT FootswitchControlX64(int target, uint enabled);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="bEnabled"></param>
+        /// <returns></returns>
         public static SNRESULT FootswitchControl(int target, bool bEnabled)
         {
             uint enabled = bEnabled ? 1U : 0U;
@@ -2402,6 +3329,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3TriggerCoreDump", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT TriggerCoreDumpX64(int target, uint processId, ulong userData1, ulong userData2, ulong userData3);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="userData1"></param>
+        /// <param name="userData2"></param>
+        /// <param name="userData3"></param>
+        /// <returns></returns>
         public static SNRESULT TriggerCoreDump(int target, uint processID, ulong userData1, ulong userData2, ulong userData3)
         {
             if (!Is32Bit())
@@ -2415,10 +3351,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetCoreDumpFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetCoreDumpFlagsX64(int target, out ulong flags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
         public static SNRESULT GetCoreDumpFlags(int target, out CoreDumpFlag flags)
         {
-            ulong flags1;
-            SNRESULT snresult = Is32Bit() ? GetCoreDumpFlagsX86(target, out flags1) : GetCoreDumpFlagsX64(target, out flags1);
+            SNRESULT snresult = Is32Bit() ? GetCoreDumpFlagsX86(target, out ulong flags1) : GetCoreDumpFlagsX64(target, out flags1);
             flags = (CoreDumpFlag)flags1;
             return snresult;
         }
@@ -2429,6 +3370,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetCoreDumpFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetCoreDumpFlagsX64(int tarSet, ulong flags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tarSet"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
         public static SNRESULT SetCoreDumpFlags(int tarSet, CoreDumpFlag flags)
         {
             if (!Is32Bit())
@@ -2442,6 +3389,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessAttach", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ProcessAttachX64(int target, uint unitId, uint processId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="unit"></param>
+        /// <param name="processID"></param>
+        /// <returns></returns>
         public static SNRESULT ProcessAttach(int target, UnitType unit, uint processID)
         {
             if (!Is32Bit())
@@ -2455,6 +3409,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3FlashTarget", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT FlashTargetX64(int target, IntPtr updaterToolPath, IntPtr flashImagePath);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="updaterToolPath"></param>
+        /// <param name="flashImagePath"></param>
+        /// <returns></returns>
         public static SNRESULT FlashTarget(int target, string updaterToolPath, string flashImagePath)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr1 = new ScopedGlobalHeapPtr(AllocUtf8FromString(updaterToolPath));
@@ -2470,10 +3431,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetMacAddress", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetMacAddressX64(int target, out IntPtr stringPtr);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="macAddress"></param>
+        /// <returns></returns>
         public static SNRESULT GetMACAddress(int target, out string macAddress)
         {
-            IntPtr stringPtr;
-            SNRESULT snresult = Is32Bit() ? GetMacAddressX86(target, out stringPtr) : GetMacAddressX64(target, out stringPtr);
+            SNRESULT snresult = Is32Bit() ? GetMacAddressX86(target, out IntPtr stringPtr) : GetMacAddressX64(target, out stringPtr);
             macAddress = Marshal.PtrToStringAnsi(stringPtr);
             return snresult;
         }
@@ -2484,6 +3450,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessScatteredSetMemory", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ProcessScatteredSetMemoryX64(int target, uint processId, uint numWrites, uint writeSize, IntPtr writeData, out uint errorCode, out uint failedAddress);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="writeData"></param>
+        /// <param name="errorCode"></param>
+        /// <param name="failedAddress"></param>
+        /// <returns></returns>
         public static SNRESULT ProcessScatteredSetMemory(int target, uint processID, ScatteredWrite[] writeData, out uint errorCode, out uint failedAddress)
         {
             errorCode = 0U;
@@ -2515,6 +3490,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetMATRanges", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetMATRangesX64(int target, uint processId, ref uint rangeCount, IntPtr matRanges);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="matRanges"></param>
+        /// <returns></returns>
         public static SNRESULT GetMATRanges(int target, uint processID, out MATRange[] matRanges)
         {
             matRanges = null;
@@ -2544,6 +3526,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetMATConditions", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetMATConditionsX64(int target, uint processId, ref uint rangeCount, IntPtr ranges, ref uint bufSize, IntPtr outputBuf);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="matRanges"></param>
+        /// <returns></returns>
         public static SNRESULT GetMATConditions(int target, uint processID, ref MATRange[] matRanges)
         {
             if (matRanges == null || matRanges.Length < 1)
@@ -2589,6 +3578,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetMATConditions", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetMATConditionsX64(int target, uint processId, uint rangeCount, uint bufSize, IntPtr buffer);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="matRanges"></param>
+        /// <returns></returns>
         public static SNRESULT SetMATConditions(int target, uint processID, MATRange[] matRanges)
         {
             if (matRanges == null || matRanges.Length < 1)
@@ -2622,6 +3618,10 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SaveSettings", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SaveSettingsX64();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SNRESULT SaveSettings()
         {
             if (!Is32Bit())
@@ -2635,6 +3635,10 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3Exit", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ExitX64();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SNRESULT Exit()
         {
             if (!Is32Bit())
@@ -2648,6 +3652,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ExitEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ExitExX64(uint millisecondTimeout);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="millisecondTimeout"></param>
+        /// <returns></returns>
         public static SNRESULT ExitEx(uint millisecondTimeout)
         {
             if (!Is32Bit())
@@ -2661,6 +3670,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RegisterPadPlaybackNotificationHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RegisterPadPlaybackNotificationHandlerX64(int target, HandleEventCallbackPriv callback, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT RegisterPadPlaybackHandler(int target, PadPlaybackCallback callback, ref object userData)
         {
             if (callback == null)
@@ -2668,9 +3684,11 @@ namespace IgrisLib.NET
             SNRESULT res = Is32Bit() ? RegisterPadPlaybackNotificationHandlerX86(target, ms_eventHandlerWrapper, IntPtr.Zero) : RegisterPadPlaybackNotificationHandlerX64(target, ms_eventHandlerWrapper, IntPtr.Zero);
             if (SUCCEEDED(res))
             {
-                PadPlaybackCallbackAndUserData callbackAndUserData = new PadPlaybackCallbackAndUserData();
-                callbackAndUserData.m_callback = callback;
-                callbackAndUserData.m_userData = userData;
+                PadPlaybackCallbackAndUserData callbackAndUserData = new PadPlaybackCallbackAndUserData
+                {
+                    m_callback = callback,
+                    m_userData = userData
+                };
                 if (ms_userPadPlaybackCallbacks == null)
                     ms_userPadPlaybackCallbacks = new Dictionary<int, PadPlaybackCallbackAndUserData>(1);
                 ms_userPadPlaybackCallbacks[target] = callbackAndUserData;
@@ -2684,6 +3702,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UnRegisterPadPlaybackNotificationHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT UnregisterPadPlaybackHandlerX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT UnregisterPadPlaybackHandler(int target)
         {
             SNRESULT res = Is32Bit() ? UnregisterPadPlaybackHandlerX86(target) : UnregisterPadPlaybackHandlerX64(target);
@@ -2702,6 +3725,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3StartPadPlayback", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT StartPadPlaybackX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT StartPadPlayback(int target)
         {
             if (!Is32Bit())
@@ -2715,6 +3743,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3StopPadPlayback", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT StopPadPlaybackX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT StopPadPlayback(int target)
         {
             if (!Is32Bit())
@@ -2728,6 +3761,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SendPadPlaybackData", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SendPadPlaybackDataX64(int target, ref PadData data);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="padData"></param>
+        /// <returns></returns>
         public static SNRESULT SendPadPlaybackData(int target, PadData padData)
         {
             if (padData.buttons == null || padData.buttons.Length != 24)
@@ -2743,6 +3782,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RegisterPadCaptureHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RegisterPadCaptureHandlerX64(int target, HandleEventCallbackPriv callback, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT RegisterPadCaptureHandler(int target, PadCaptureCallback callback, ref object userData)
         {
             if (callback == null)
@@ -2750,9 +3796,11 @@ namespace IgrisLib.NET
             SNRESULT res = Is32Bit() ? RegisterPadCaptureHandlerX86(target, ms_eventHandlerWrapper, IntPtr.Zero) : RegisterPadCaptureHandlerX64(target, ms_eventHandlerWrapper, IntPtr.Zero);
             if (SUCCEEDED(res))
             {
-                PadCaptureCallbackAndUserData callbackAndUserData = new PadCaptureCallbackAndUserData();
-                callbackAndUserData.m_callback = callback;
-                callbackAndUserData.m_userData = userData;
+                PadCaptureCallbackAndUserData callbackAndUserData = new PadCaptureCallbackAndUserData
+                {
+                    m_callback = callback,
+                    m_userData = userData
+                };
                 if (ms_userPadCaptureCallbacks == null)
                     ms_userPadCaptureCallbacks = new Dictionary<int, PadCaptureCallbackAndUserData>(1);
                 ms_userPadCaptureCallbacks[target] = callbackAndUserData;
@@ -2766,6 +3814,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UnRegisterPadCaptureHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT UnregisterPadCaptureHandlerX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT UnregisterPadCaptureHandler(int target)
         {
             SNRESULT res = Is32Bit() ? UnregisterPadCaptureHandlerX86(target) : UnregisterPadCaptureHandlerX64(target);
@@ -2784,6 +3837,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3StartPadCapture", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT StartPadCaptureX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT StartPadCapture(int target)
         {
             if (!Is32Bit())
@@ -2797,6 +3855,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3StopPadCapture", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT StopPadCaptureX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT StopPadCapture(int target)
         {
             if (!Is32Bit())
@@ -2821,7 +3884,7 @@ namespace IgrisLib.NET
             if ((int)length != 1)
                 return;
             uint storage = 0;
-            ReadDataFromUnmanagedIncPtr<uint>(data, ref storage);
+            ReadDataFromUnmanagedIncPtr(data, ref storage);
             if (ms_userPadPlaybackCallbacks == null)
                 return;
             ms_userPadPlaybackCallbacks[target].m_callback(target, result, (PadPlaybackResponse)storage, ms_userPadPlaybackCallbacks[target].m_userData);
@@ -2833,10 +3896,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetVRAMCaptureFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetVRAMCaptureFlagsX64(int target, out ulong vramFlags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="vramFlags"></param>
+        /// <returns></returns>
         public static SNRESULT GetVRAMCaptureFlags(int target, out VRAMCaptureFlag vramFlags)
         {
-            ulong vramFlags1;
-            SNRESULT snresult = Is32Bit() ? GetVRAMCaptureFlagsX86(target, out vramFlags1) : GetVRAMCaptureFlagsX64(target, out vramFlags1);
+            SNRESULT snresult = Is32Bit() ? GetVRAMCaptureFlagsX86(target, out ulong vramFlags1) : GetVRAMCaptureFlagsX64(target, out vramFlags1);
             vramFlags = (VRAMCaptureFlag)vramFlags1;
             return snresult;
         }
@@ -2847,6 +3915,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetVRAMCaptureFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetVRAMCaptureFlagsX64(int target, ulong vramFlags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="vramFlags"></param>
+        /// <returns></returns>
         public static SNRESULT SetVRAMCaptureFlags(int target, VRAMCaptureFlag vramFlags)
         {
             if (!Is32Bit())
@@ -2860,6 +3934,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3EnableVRAMCapture", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT EnableVRAMCaptureX864(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT EnableVRAMCapture(int target)
         {
             if (!Is32Bit())
@@ -2873,29 +3952,39 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetVRAMInformation", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetVRAMInformationX64(int target, uint processId, out VramInfoPriv primaryVRAMInfo, out VramInfoPriv secondaryVRAMInfo);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="primaryVRAMInfo"></param>
+        /// <param name="secondaryVRAMInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetVRAMInformation(int target, uint processID, out VRAMInfo primaryVRAMInfo, out VRAMInfo secondaryVRAMInfo)
         {
             primaryVRAMInfo = null;
             secondaryVRAMInfo = null;
-            VramInfoPriv primaryVRAMInfo1 = new VramInfoPriv();
-            VramInfoPriv secondaryVRAMInfo1 = new VramInfoPriv();
-            SNRESULT res = Is32Bit() ? GetVRAMInformationX86(target, processID, out primaryVRAMInfo1, out secondaryVRAMInfo1) : GetVRAMInformationX64(target, processID, out primaryVRAMInfo1, out secondaryVRAMInfo1);
+            SNRESULT res = Is32Bit() ? GetVRAMInformationX86(target, processID, out VramInfoPriv primaryVRAMInfo1, out VramInfoPriv secondaryVRAMInfo1) : GetVRAMInformationX64(target, processID, out primaryVRAMInfo1, out secondaryVRAMInfo1);
             if (FAILED(res))
                 return res;
-            primaryVRAMInfo = new VRAMInfo();
-            primaryVRAMInfo.BPAddress = primaryVRAMInfo1.BpAddress;
-            primaryVRAMInfo.TopAddressPointer = primaryVRAMInfo1.TopAddressPointer;
-            primaryVRAMInfo.Width = primaryVRAMInfo1.Width;
-            primaryVRAMInfo.Height = primaryVRAMInfo1.Height;
-            primaryVRAMInfo.Pitch = primaryVRAMInfo1.Pitch;
-            primaryVRAMInfo.Colour = primaryVRAMInfo1.Colour;
-            secondaryVRAMInfo = new VRAMInfo();
-            secondaryVRAMInfo.BPAddress = secondaryVRAMInfo1.BpAddress;
-            secondaryVRAMInfo.TopAddressPointer = secondaryVRAMInfo1.TopAddressPointer;
-            secondaryVRAMInfo.Width = secondaryVRAMInfo1.Width;
-            secondaryVRAMInfo.Height = secondaryVRAMInfo1.Height;
-            secondaryVRAMInfo.Pitch = secondaryVRAMInfo1.Pitch;
-            secondaryVRAMInfo.Colour = secondaryVRAMInfo1.Colour;
+            primaryVRAMInfo = new VRAMInfo
+            {
+                BPAddress = primaryVRAMInfo1.BpAddress,
+                TopAddressPointer = primaryVRAMInfo1.TopAddressPointer,
+                Width = primaryVRAMInfo1.Width,
+                Height = primaryVRAMInfo1.Height,
+                Pitch = primaryVRAMInfo1.Pitch,
+                Colour = primaryVRAMInfo1.Colour
+            };
+            secondaryVRAMInfo = new VRAMInfo
+            {
+                BPAddress = secondaryVRAMInfo1.BpAddress,
+                TopAddressPointer = secondaryVRAMInfo1.TopAddressPointer,
+                Width = secondaryVRAMInfo1.Width,
+                Height = secondaryVRAMInfo1.Height,
+                Pitch = secondaryVRAMInfo1.Pitch,
+                Colour = secondaryVRAMInfo1.Colour
+            };
             return res;
         }
 
@@ -2905,18 +3994,28 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3VRAMCapture", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT VRAMCaptureX64(int target, uint processId, IntPtr vramInfo, IntPtr fileName);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="vramInfo"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static SNRESULT VRAMCapture(int target, uint processID, VRAMInfo vramInfo, string fileName)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr1 = new ScopedGlobalHeapPtr(IntPtr.Zero);
             if (vramInfo != null)
             {
-                VramInfoPriv vramInfoPriv = new VramInfoPriv();
-                vramInfoPriv.BpAddress = vramInfo.BPAddress;
-                vramInfoPriv.TopAddressPointer = vramInfo.TopAddressPointer;
-                vramInfoPriv.Width = vramInfo.Width;
-                vramInfoPriv.Height = vramInfo.Height;
-                vramInfoPriv.Pitch = vramInfo.Pitch;
-                vramInfoPriv.Colour = vramInfo.Colour;
+                VramInfoPriv vramInfoPriv = new VramInfoPriv
+                {
+                    BpAddress = vramInfo.BPAddress,
+                    TopAddressPointer = vramInfo.TopAddressPointer,
+                    Width = vramInfo.Width,
+                    Height = vramInfo.Height,
+                    Pitch = vramInfo.Pitch,
+                    Colour = vramInfo.Colour
+                };
                 scopedGlobalHeapPtr1 = new ScopedGlobalHeapPtr(Marshal.AllocHGlobal(Marshal.SizeOf((object)vramInfoPriv)));
                 Marshal.StructureToPtr((object)vramInfoPriv, scopedGlobalHeapPtr1.Get(), false);
             }
@@ -2930,8 +4029,7 @@ namespace IgrisLib.NET
         {
             PS3ProtocolPriv protocol = new PS3ProtocolPriv(ps3Protocol.Protocol, ps3Protocol.Port);
             CustomProtocolId key = new CustomProtocolId(target, protocol);
-            CusProtoCallbackAndUserData callbackAndUserData;
-            if (ms_userCustomProtoCallbacks == null || !ms_userCustomProtoCallbacks.TryGetValue(key, out callbackAndUserData))
+            if (ms_userCustomProtoCallbacks == null || !ms_userCustomProtoCallbacks.TryGetValue(key, out CusProtoCallbackAndUserData callbackAndUserData))
                 return;
             byte[] numArray = new byte[(int)length];
             Marshal.Copy(unmanagedBuf, numArray, 0, numArray.Length);
@@ -2944,6 +4042,18 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RegisterCustomProtocolEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RegisterCustomProtocolExX64(int target, uint protocol, uint port, string lparDesc, uint priority, out PS3Protocol ps3Protocol, CustomProtocolCallbackPriv callback, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="protocol"></param>
+        /// <param name="port"></param>
+        /// <param name="lparDesc"></param>
+        /// <param name="priority"></param>
+        /// <param name="ps3Protocol"></param>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT RegisterCustomProtocol(int target, uint protocol, uint port, string lparDesc, uint priority, out PS3Protocol ps3Protocol, CustomProtocolCallback callback, ref object userData)
         {
             ps3Protocol = new PS3Protocol();
@@ -2954,9 +4064,11 @@ namespace IgrisLib.NET
             {
                 PS3ProtocolPriv protocol1 = new PS3ProtocolPriv(ps3Protocol.Protocol, ps3Protocol.Port);
                 CustomProtocolId index = new CustomProtocolId(target, protocol1);
-                CusProtoCallbackAndUserData callbackAndUserData = new CusProtoCallbackAndUserData();
-                callbackAndUserData.m_callback = callback;
-                callbackAndUserData.m_userData = userData;
+                CusProtoCallbackAndUserData callbackAndUserData = new CusProtoCallbackAndUserData
+                {
+                    m_callback = callback,
+                    m_userData = userData
+                };
                 if (ms_userCustomProtoCallbacks == null)
                     ms_userCustomProtoCallbacks = new Dictionary<CustomProtocolId, CusProtoCallbackAndUserData>(1);
                 ms_userCustomProtoCallbacks[index] = callbackAndUserData;
@@ -2970,6 +4082,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UnRegisterCustomProtocol", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT UnregisterCustomProtocolX64(int target, ref PS3Protocol protocol);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="ps3Protocol"></param>
+        /// <returns></returns>
         public static SNRESULT UnregisterCustomProtocol(int target, PS3Protocol ps3Protocol)
         {
             SNRESULT res = Is32Bit() ? UnregisterCustomProtocolX86(target, ref ps3Protocol) : UnregisterCustomProtocolX64(target, ref ps3Protocol);
@@ -2990,6 +4108,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ForceUnRegisterCustomProtocol", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ForceUnregisterCustomProtocolX64(int target, ref PS3Protocol protocol);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="ps3Protocol"></param>
+        /// <returns></returns>
         public static SNRESULT ForceUnregisterCustomProtocol(int target, PS3Protocol ps3Protocol)
         {
             SNRESULT res = Is32Bit() ? ForceUnregisterCustomProtocolX86(target, ref ps3Protocol) : ForceUnregisterCustomProtocolX64(target, ref ps3Protocol);
@@ -3010,6 +4134,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SendCustomProtocolData", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SendCustomProtocolDataX64(int target, ref PS3Protocol protocol, byte[] data, int length);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="ps3Protocol"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static SNRESULT SendCustomProtocolData(int target, PS3Protocol ps3Protocol, byte[] data)
         {
             if (data == null || data.Length < 1)
@@ -3025,6 +4156,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetFileServingEventFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetFileServingEventFlagsX64(int target, ulong eventFlags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="eventFlags"></param>
+        /// <returns></returns>
         public static SNRESULT SetFileServingEventFlags(int target, FileServingEventFlag eventFlags)
         {
             if (!Is32Bit())
@@ -3038,6 +4175,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetFileServingEventFlags", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetFileServingEventFlagsX64(int target, ref ulong eventFlags);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="eventFlags"></param>
+        /// <returns></returns>
         public static SNRESULT GetFileServingEventFlags(int target, out FileServingEventFlag eventFlags)
         {
             ulong eventFlags1 = 0;
@@ -3052,6 +4195,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetCaseSensitiveFileServing", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetCaseSensitiveFileServingX64(int target, bool bOn, out bool bOldSetting);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="bOn"></param>
+        /// <param name="bOldSetting"></param>
+        /// <returns></returns>
         public static SNRESULT SetCaseSensitiveFileServing(int target, bool bOn, out bool bOldSetting)
         {
             if (!Is32Bit())
@@ -3065,6 +4215,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RegisterFTPEventHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RegisterFTPEventHandlerX64(int target, HandleEventCallbackPriv callback, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT RegisterFTPEventHandler(int target, FTPEventCallback callback, ref object userData)
         {
             if (callback == null)
@@ -3072,9 +4229,11 @@ namespace IgrisLib.NET
             SNRESULT res = Is32Bit() ? RegisterFTPEventHandlerX86(target, ms_eventHandlerWrapper, IntPtr.Zero) : RegisterFTPEventHandlerX64(target, ms_eventHandlerWrapper, IntPtr.Zero);
             if (SUCCEEDED(res))
             {
-                FtpCallbackAndUserData callbackAndUserData = new FtpCallbackAndUserData();
-                callbackAndUserData.m_callback = callback;
-                callbackAndUserData.m_userData = userData;
+                FtpCallbackAndUserData callbackAndUserData = new FtpCallbackAndUserData
+                {
+                    m_callback = callback,
+                    m_userData = userData
+                };
                 if (ms_userFtpCallbacks == null)
                     ms_userFtpCallbacks = new Dictionary<int, FtpCallbackAndUserData>(1);
                 ms_userFtpCallbacks[target] = callbackAndUserData;
@@ -3088,6 +4247,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3CancelFTPEvents", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT CancelFTPEventsX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT CancelFTPEvents(int target)
         {
             SNRESULT res = Is32Bit() ? CancelFTPEventsX86(target) : CancelFTPEventsX64(target);
@@ -3121,6 +4285,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RegisterFileTraceHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RegisterFileTraceHandlerX64(int target, HandleEventCallbackPriv callback, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT RegisterFileTraceHandler(int target, FileTraceCallback callback, ref object userData)
         {
             if (callback == null)
@@ -3128,9 +4299,11 @@ namespace IgrisLib.NET
             SNRESULT res = Is32Bit() ? RegisterFileTraceHandlerX86(target, ms_eventHandlerWrapper, IntPtr.Zero) : RegisterFileTraceHandlerX64(target, ms_eventHandlerWrapper, IntPtr.Zero);
             if (SUCCEEDED(res))
             {
-                FileTraceCallbackAndUserData callbackAndUserData = new FileTraceCallbackAndUserData();
-                callbackAndUserData.m_callback = callback;
-                callbackAndUserData.m_userData = userData;
+                FileTraceCallbackAndUserData callbackAndUserData = new FileTraceCallbackAndUserData
+                {
+                    m_callback = callback,
+                    m_userData = userData
+                };
                 if (ms_userFileTraceCallbacks == null)
                     ms_userFileTraceCallbacks = new Dictionary<int, FileTraceCallbackAndUserData>(1);
                 ms_userFileTraceCallbacks[target] = callbackAndUserData;
@@ -3144,6 +4317,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UnRegisterFileTraceHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT UnregisterFileTraceHandlerX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT UnregisterFileTraceHandler(int target)
         {
             SNRESULT res = Is32Bit() ? UnregisterFileTraceHandlerX86(target) : UnregisterFileTraceHandlerX64(target);
@@ -3317,6 +4495,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3StartFileTrace", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT StartFileTraceX64(int target, uint processId, uint size, IntPtr filename);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <param name="size"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public static SNRESULT StartFileTrace(int target, uint processID, uint size, string filename)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(filename));
@@ -3331,6 +4517,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3StopFileTrace", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT StopFileTraceX64(int target, uint processId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="processID"></param>
+        /// <returns></returns>
         public static SNRESULT StopFileTrace(int target, uint processID)
         {
             if (!Is32Bit())
@@ -3344,6 +4536,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3InstallPackage", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT InstallPackageX64(int target, IntPtr packagePath);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="packagePath"></param>
+        /// <returns></returns>
         public static SNRESULT InstallPackage(int target, string packagePath)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(packagePath));
@@ -3358,6 +4556,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UploadFile", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT UploadFileX64(int target, IntPtr source, IntPtr dest, out uint transactionId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        /// <param name="txID"></param>
+        /// <returns></returns>
         public static SNRESULT UploadFile(int target, string source, string dest, out uint txID)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr1 = new ScopedGlobalHeapPtr(AllocUtf8FromString(source));
@@ -3386,6 +4592,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetFileTransferList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetFileTransferListX64(int target, ref uint count, IntPtr fileTransferInfo);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="fileTransfers"></param>
+        /// <returns></returns>
         public static SNRESULT GetFileTransferList(int target, out FileTransferInfo[] fileTransfers)
         {
             fileTransfers = null;
@@ -3410,6 +4622,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetFileTransferInfo", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetFileTransferInfoX64(int target, uint txId, IntPtr fileTransferInfoPtr);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="txID"></param>
+        /// <param name="fileTransferInfo"></param>
+        /// <returns></returns>
         public static SNRESULT GetFileTransferInfo(int target, uint txID, out FileTransferInfo fileTransferInfo)
         {
             fileTransferInfo = new FileTransferInfo();
@@ -3426,6 +4645,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3CancelFileTransfer", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT CancelFileTransferX64(int target, uint txID);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="txID"></param>
+        /// <returns></returns>
         public static SNRESULT CancelFileTransfer(int target, uint txID)
         {
             if (!Is32Bit())
@@ -3439,6 +4664,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RetryFileTransfer", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RetryFileTransferX64(int target, uint txID, bool bForce);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="txID"></param>
+        /// <param name="bForce"></param>
+        /// <returns></returns>
         public static SNRESULT RetryFileTransfer(int target, uint txID, bool bForce)
         {
             if (!Is32Bit())
@@ -3452,6 +4684,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RemoveTransferItemsByStatus", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SNPS3RemoveTransferItemsByStatusX64(int target, uint filter);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public static SNRESULT RemoveTransferItemsByStatus(int target, uint filter)
         {
             if (!Is32Bit())
@@ -3479,6 +4717,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetDirectoryList", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetDirectoryListX64(int target, IntPtr directory, ref uint numDirEntries, IntPtr dirEntryList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="directory"></param>
+        /// <param name="dirEntries"></param>
+        /// <returns></returns>
         public static SNRESULT GetDirectoryList(int target, string directory, out DirEntry[] dirEntries)
         {
             dirEntries = null;
@@ -3519,6 +4764,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetDirectoryListEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetDirectoryListExX64(int target, IntPtr dirPtr, ref uint numDirEntries, IntPtr dirEntryListEx, ref TargetTimezone timeZone);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="directory"></param>
+        /// <param name="dirEntries"></param>
+        /// <param name="timeZone"></param>
+        /// <returns></returns>
         public static SNRESULT GetDirectoryListEx(int target, string directory, out DirEntryEx[] dirEntries, out TargetTimezone timeZone)
         {
             dirEntries = null;
@@ -3546,6 +4799,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3MakeDirectory", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT MakeDirectoryX64(int target, IntPtr directory, uint mode);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="directory"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
         public static SNRESULT MakeDirectory(int target, string directory, uint mode)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(directory));
@@ -3560,6 +4820,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3Delete", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT DeleteFileX64(int target, IntPtr path);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static SNRESULT DeleteFile(int target, string path)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(path));
@@ -3574,6 +4840,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3DeleteEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT DeleteFileExX64(int target, IntPtr path, uint msTimeout);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="path"></param>
+        /// <param name="msTimeout"></param>
+        /// <returns></returns>
         public static SNRESULT DeleteFileEx(int target, string path, uint msTimeout)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(path));
@@ -3588,6 +4861,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3Rename", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RenameFileX64(int target, IntPtr source, IntPtr dest);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        /// <returns></returns>
         public static SNRESULT RenameFile(int target, string source, string dest)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr1 = new ScopedGlobalHeapPtr(AllocUtf8FromString(source));
@@ -3603,6 +4883,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3DownloadFile", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT DownloadFileX64(int target, IntPtr source, IntPtr dest, out uint transactionId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        /// <param name="txID"></param>
+        /// <returns></returns>
         public static SNRESULT DownloadFile(int target, string source, string dest, out uint txID)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr1 = new ScopedGlobalHeapPtr(AllocUtf8FromString(source));
@@ -3618,6 +4906,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3DownloadDirectory", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT DownloadDirectoryX64(int target, IntPtr source, IntPtr dest, out uint lastTransactionId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        /// <param name="lastTxID"></param>
+        /// <returns></returns>
         public static SNRESULT DownloadDirectory(int target, string source, string dest, out uint lastTxID)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr1 = new ScopedGlobalHeapPtr(AllocUtf8FromString(source));
@@ -3633,6 +4929,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UploadDirectory", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT UploadDirectoryX64(int target, IntPtr source, IntPtr dest, out uint lastTransactionId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        /// <param name="lastTxID"></param>
+        /// <returns></returns>
         public static SNRESULT UploadDirectory(int target, string source, string dest, out uint lastTxID)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr1 = new ScopedGlobalHeapPtr(AllocUtf8FromString(source));
@@ -3648,6 +4952,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3StatTargetFile", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT StatTargetFileX64(int target, IntPtr file, IntPtr dirEntry);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="file"></param>
+        /// <param name="dirEntry"></param>
+        /// <returns></returns>
         public static SNRESULT StatTargetFile(int target, string file, out DirEntry dirEntry)
         {
             dirEntry = new DirEntry();
@@ -3664,6 +4975,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3StatTargetFileEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT StatTargetFileExX64(int target, IntPtr file, IntPtr dirEntry, out TargetTimezone timeZone);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="file"></param>
+        /// <param name="dirEntryEx"></param>
+        /// <param name="timeZone"></param>
+        /// <returns></returns>
         public static SNRESULT StatTargetFileEx(int target, string file, out DirEntryEx dirEntryEx, out TargetTimezone timeZone)
         {
             dirEntryEx = new DirEntryEx();
@@ -3680,6 +4999,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3CHMod", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT CHModX64(int target, IntPtr filePath, uint mode);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="filePath"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
         public static SNRESULT ChMod(int target, string filePath, ChModFilePermission mode)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(filePath));
@@ -3694,6 +5020,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetFileTime", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetFileTimeX64(int target, IntPtr filePath, ulong accessTime, ulong modifiedTime);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="filePath"></param>
+        /// <param name="accessTime"></param>
+        /// <param name="modifiedTime"></param>
+        /// <returns></returns>
         public static SNRESULT SetFileTime(int target, string filePath, ulong accessTime, ulong modifiedTime)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(filePath));
@@ -3708,12 +5042,19 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3InstallGameEx", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT InstallGameExX64(int target, IntPtr paramSfoPath, out IntPtr titleId, out IntPtr targetPath, out uint txId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="paramSFOPath"></param>
+        /// <param name="titleID"></param>
+        /// <param name="targetPath"></param>
+        /// <param name="txID"></param>
+        /// <returns></returns>
         public static SNRESULT InstallGameEx(int target, string paramSFOPath, out string titleID, out string targetPath, out uint txID)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(paramSFOPath));
-            IntPtr titleId;
-            IntPtr targetPath1;
-            SNRESULT snresult = Is32Bit() ? InstallGameExX86(target, scopedGlobalHeapPtr.Get(), out titleId, out targetPath1, out txID) : InstallGameExX64(target, scopedGlobalHeapPtr.Get(), out titleId, out targetPath1, out txID);
+            SNRESULT snresult = Is32Bit() ? InstallGameExX86(target, scopedGlobalHeapPtr.Get(), out IntPtr titleId, out IntPtr targetPath1, out txID) : InstallGameExX64(target, scopedGlobalHeapPtr.Get(), out titleId, out targetPath1, out txID);
             titleID = Utf8ToString(titleId, uint.MaxValue);
             targetPath = Utf8ToString(targetPath1, uint.MaxValue);
             return snresult;
@@ -3725,6 +5066,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3FormatHDD", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT FormatHDDX64(int target, uint initRegistry);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="initRegistry"></param>
+        /// <returns></returns>
         public static SNRESULT FormatHDD(int target, uint initRegistry)
         {
             if (!Is32Bit())
@@ -3738,6 +5085,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UninstallGame", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT UninstallGameX64(int target, IntPtr gameDirectory);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="gameDirectory"></param>
+        /// <returns></returns>
         public static SNRESULT UninstallGame(int target, string gameDirectory)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(gameDirectory));
@@ -3752,6 +5105,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3WaitForFileTransfer", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT WaitForFileTransferX64(int target, uint txId, out FileTransferNotificationType notificationType, uint msTimeout);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="txID"></param>
+        /// <param name="notificationType"></param>
+        /// <param name="msTimeout"></param>
+        /// <returns></returns>
         public static SNRESULT WaitForFileTransfer(int target, uint txID, out FileTransferNotificationType notificationType, uint msTimeout)
         {
             return Is32Bit() ? WaitForFileTransferX86(target, txID, out notificationType, msTimeout) : WaitForFileTransferX64(target, txID, out notificationType, msTimeout);
@@ -3763,6 +5124,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3FSGetFreeSize", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT FSGetFreeSizeX64(int target, IntPtr fsDir, out uint blockSize, out ulong freeBlockCount);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="fsDir"></param>
+        /// <param name="blockSize"></param>
+        /// <param name="freeBlockCount"></param>
+        /// <returns></returns>
         public static SNRESULT FSGetFreeSize(int target, string fsDir, out uint blockSize, out ulong freeBlockCount)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(fsDir));
@@ -3777,6 +5146,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3GetLogOptions", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT GetLogOptionsX64(out LogCategory category);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         public static SNRESULT GetLogOptions(out LogCategory category)
         {
             return Is32Bit() ? GetLogOptionsX86(out category) : GetLogOptionsX64(out category);
@@ -3788,6 +5162,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetLogOptions", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetLogOptionsX64(LogCategory category);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         public static SNRESULT SetLogOptions(LogCategory category)
         {
             return Is32Bit() ? SetLogOptionsX86(category) : SetLogOptionsX64(category);
@@ -3799,6 +5178,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3EnableInternalKick", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT EnableInternalKickX64(bool enable);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bEnable"></param>
+        /// <returns></returns>
         public static SNRESULT EnableInternalKick(bool bEnable)
         {
             if (!Is32Bit())
@@ -3812,6 +5196,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ProcessOfflineFileTrace", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ProcessOfflineFileTraceX64(int target, IntPtr path);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static SNRESULT ProcessOfflineFileTrace(int target, string path)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(path));
@@ -3826,6 +5216,14 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3BDTransferImage", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT BDTransferImageX64(int target, IntPtr sourceFileName, string destinationDevice, out uint transactionId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="sourceFileName"></param>
+        /// <param name="destinationDevice"></param>
+        /// <param name="transactionId"></param>
+        /// <returns></returns>
         public static SNRESULT BDTransferImage(int target, string sourceFileName, string destinationDevice, out uint transactionId)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(sourceFileName));
@@ -3840,6 +5238,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3BDInsert", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT BDInsertX64(int target, string deviceName);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="deviceName"></param>
+        /// <returns></returns>
         public static SNRESULT BDInsert(int target, string deviceName)
         {
             if (!Is32Bit())
@@ -3853,6 +5257,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3BDEject", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT BDEjectX64(int target, string deviceName);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="deviceName"></param>
+        /// <returns></returns>
         public static SNRESULT BDEject(int target, string deviceName)
         {
             if (!Is32Bit())
@@ -3866,6 +5276,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3BDFormat", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT BDFormatX64(int target, string deviceName, uint formatMode);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="deviceName"></param>
+        /// <param name="formatMode"></param>
+        /// <returns></returns>
         public static SNRESULT BDFormat(int target, string deviceName, uint formatMode)
         {
             if (!Is32Bit())
@@ -3879,6 +5296,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3BDQuery", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT BDQueryX64(int target, string deviceName, ref BDInfoPriv infoPriv);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="deviceName"></param>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public static SNRESULT BDQuery(int target, string deviceName, ref BDInfo info)
         {
             BDInfoPriv infoPriv = new BDInfoPriv();
@@ -3909,6 +5333,13 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3RegisterTargetEventHandler", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT RegisterTargetEventHandlerX64(int target, HandleEventCallbackPriv callback, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static SNRESULT RegisterTargetEventHandler(int target, TargetEventCallback callback, ref object userData)
         {
             if (callback == null)
@@ -3916,9 +5347,11 @@ namespace IgrisLib.NET
             SNRESULT res = Is32Bit() ? RegisterTargetEventHandlerX86(target, ms_eventHandlerWrapper, IntPtr.Zero) : RegisterTargetEventHandlerX64(target, ms_eventHandlerWrapper, IntPtr.Zero);
             if (SUCCEEDED(res))
             {
-                TargetCallbackAndUserData callbackAndUserData = new TargetCallbackAndUserData();
-                callbackAndUserData.m_callback = callback;
-                callbackAndUserData.m_userData = userData;
+                TargetCallbackAndUserData callbackAndUserData = new TargetCallbackAndUserData
+                {
+                    m_callback = callback,
+                    m_userData = userData
+                };
                 if (ms_userTargetCallbacks == null)
                     ms_userTargetCallbacks = new Dictionary<int, TargetCallbackAndUserData>(1);
                 ms_userTargetCallbacks[target] = callbackAndUserData;
@@ -3932,6 +5365,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3CancelTargetEvents", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT CancelTargetEventsX64(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static SNRESULT CancelTargetEvents(int target)
         {
             SNRESULT res = Is32Bit() ? CancelTargetEventsX86(target) : CancelTargetEventsX64(target);
@@ -4190,6 +5628,15 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SearchForTargets", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SearchForTargetsX64(string ipAddressFrom, string ipAddressTo, SearchTargetsCallbackPriv callback, IntPtr userData, int port);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ipAddressFrom"></param>
+        /// <param name="ipAddressTo"></param>
+        /// <param name="callback"></param>
+        /// <param name="userData"></param>
+        /// <param name="port"></param>
+        /// <returns></returns>
         public static SNRESULT SearchForTargets(string ipAddressFrom, string ipAddressTo, SearchTargetsCallback callback, object userData, int port)
         {
             SearchForTargetsCallbackHandler targetsCallbackHandler = new SearchForTargetsCallbackHandler(callback, userData);
@@ -4206,6 +5653,10 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3StopSearchForTargets", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT StopSearchForTargetsX64();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SNRESULT StopSearchForTargets()
         {
             if (!Is32Bit())
@@ -4219,6 +5670,10 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3IsScanning", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT IsScanningX64();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SNRESULT IsScanning()
         {
             if (!Is32Bit())
@@ -4232,6 +5687,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3IsValidResolution", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT IsValidResolutionX64(uint monitorType, uint startupResolution);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="monitorType"></param>
+        /// <param name="startupResolution"></param>
+        /// <returns></returns>
         public static SNRESULT IsValidResolution(uint monitorType, uint startupResolution)
         {
             if (!Is32Bit())
@@ -4245,6 +5706,17 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3SetDisplaySettings", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT SetDisplaySettingsX64(int target, IntPtr executable, uint monitorType, uint connectorType, uint startupResolution, bool HDCP, bool resetAfter);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="executable"></param>
+        /// <param name="monitorType"></param>
+        /// <param name="connectorType"></param>
+        /// <param name="startupResolution"></param>
+        /// <param name="HDCP"></param>
+        /// <param name="resetAfter"></param>
+        /// <returns></returns>
         public static SNRESULT SetDisplaySettings(int target, string executable, uint monitorType, uint connectorType, uint startupResolution, bool HDCP, bool resetAfter)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(executable));
@@ -4259,6 +5731,11 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3MapFileSystem", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT MapFileSystemX64(char driveLetter);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="driveLetter"></param>
+        /// <returns></returns>
         public static SNRESULT MapFileSystem(char driveLetter)
         {
             if (!Is32Bit())
@@ -4272,6 +5749,10 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3UnmapFileSystem", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT UnmapFileSystemX64();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SNRESULT UnmapFileSystem()
         {
             if (!Is32Bit())
@@ -4285,6 +5766,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ImportTargetSettings", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ImportTargetSettingsX64(int target, IntPtr szFileName);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static SNRESULT ImportTargetSettings(int target, string fileName)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(fileName));
@@ -4299,6 +5786,12 @@ namespace IgrisLib.NET
         [DllImport("PS3TMAPIX64.dll", EntryPoint = "SNPS3ExportTargetSettings", CallingConvention = CallingConvention.Cdecl)]
         private static extern SNRESULT ExportTargetSettingsX64(int target, IntPtr szFileName);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static SNRESULT ExportTargetSettings(int target, string fileName)
         {
             ScopedGlobalHeapPtr scopedGlobalHeapPtr = new ScopedGlobalHeapPtr(AllocUtf8FromString(fileName));
@@ -4363,150 +5856,471 @@ namespace IgrisLib.NET
             return Encoding.UTF8.GetString(bytes);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum SNRESULT
         {
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_ERROR = -2147483648,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_COMMS_EVENT_MISMATCHED_ERR = -39,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_CONNECTED = -38,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_PROTOCOL_ALREADY_REGISTERED = -37,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_COMMAND_CANCELLED = -36,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_CONNECT_TO_GAMEPORT_FAILED = -35,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_MODULE_NOT_FOUND = -34,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_CHECK_TARGET_CONFIGURATION = -33,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_LICENSE_ERROR = -32,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_LOAD_MODULE_FAILED = -31,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_NOT_SUPPORTED_IN_SDK_VERSION = -30,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_FILE_ERROR = -29,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_BAD_ALIGN = -28,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_DEPRECATED = -27,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_DATA_TOO_LONG = -26,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_INSUFFICIENT_DATA = -25,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_EXISTING_CALLBACK = -24,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_DECI_ERROR = -23,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_BUSY = -22,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_BAD_PARAM = -21,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_NO_SEL = -20,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_NO_TARGETS = -19,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_BAD_MEMSPACE = -18,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_TARGET_RUNNING = -17,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_DLL_NOT_INITIALISED = -15,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_TM_VERSION = -14,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_NOT_LISTED = -13,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_OUT_OF_MEM = -12,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_BAD_UNIT = -11,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_LOAD_ELF_FAILED = -10,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_TARGET_IN_USE = -9,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_HOST_NOT_FOUND = -8,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_TIMEOUT = -7,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_TM_COMMS_ERR = -6,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_COMMS_ERR = -5,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_NOT_CONNECTED = -4,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_BAD_TARGET = -3,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_TM_NOT_RUNNING = -2,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_E_NOT_IMPL = -1,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_S_OK = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_S_PENDING = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_S_NO_MSG = 3,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_S_TM_VERSION = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_S_REPLACED = 5,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_S_NO_ACTION = 6,
+            /// <summary>
+            /// 
+            /// </summary>
             SN_S_TARGET_STILL_REGISTERED = 7,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ConnectStatus
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Connected,
+            /// <summary>
+            /// 
+            /// </summary>
             Connecting,
+            /// <summary>
+            /// 
+            /// </summary>
             NotConnected,
+            /// <summary>
+            /// 
+            /// </summary>
             InUse,
+            /// <summary>
+            /// 
+            /// </summary>
             Unavailable,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate int EnumerateTargetsCallback(int target);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate int EnumerateTargetsExCallback(int target, object userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
         private delegate int EnumerateTargetsExCallbackPriv(int target, IntPtr unused);
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum BootParameter : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Default = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             SystemMode = 17,
+            /// <summary>
+            /// 
+            /// </summary>
             ReleaseMode = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             DebugMode = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             MemSizeConsole = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             BluRayEmuOff = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             HDDSpeedBluRayEmu = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             BluRayEmuUSB = 32,
+            /// <summary>
+            /// 
+            /// </summary>
             HostFSTarget = 64,
+            /// <summary>
+            /// 
+            /// </summary>
             DualNIC = 128,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum BootParameterMask : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             BootMode = 17,
+            /// <summary>
+            /// 
+            /// </summary>
             Memsize = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             BlurayEmulation = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             HDDSpeed = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             BlurayEmuSelect = 32,
+            /// <summary>
+            /// 
+            /// </summary>
             HostFS = 64,
+            /// <summary>
+            /// 
+            /// </summary>
             NIC = 128,
+            /// <summary>
+            /// 
+            /// </summary>
             All = NIC | HostFS | BlurayEmuSelect | HDDSpeed | BlurayEmulation | Memsize | BootMode,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum ResetParameter : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Soft = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             Hard = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Quick = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             ResetEx = 9223372036854775808,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum ResetParameterMask : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             All = 9223372036854775811,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum SystemParameter : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             TargetModel60GB = 281474976710656,
+            /// <summary>
+            /// 
+            /// </summary>
             TargetModel20GB = 562949953421312,
+            /// <summary>
+            /// 
+            /// </summary>
             ReleaseCheckMode = 140737488355328,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum SystemParameterMask : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             TargetModel = 71776119061217280,
+            /// <summary>
+            /// 
+            /// </summary>
             ReleaseCheck = 140737488355328,
+            /// <summary>
+            /// 
+            /// </summary>
             All = ReleaseCheck | TargetModel,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum TargetInfoFlag : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             TargetID = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Name = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             Info = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             HomeDir = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             FileServingDir = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             Boot = 32,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TargetInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public TargetInfoFlag Flags;
+            /// <summary>
+            /// 
+            /// </summary>
             public int Target;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Name;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Type;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Info;
+            /// <summary>
+            /// 
+            /// </summary>
             public string HomeDir;
+            /// <summary>
+            /// 
+            /// </summary>
             public string FSDir;
+            /// <summary>
+            /// 
+            /// </summary>
             public BootParameter Boot;
         }
 
@@ -4522,29 +6336,62 @@ namespace IgrisLib.NET
             public BootParameter Boot;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TargetType
         {
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
             public string Type;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
             public string Description;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         public class TCPIPConnectProperties
         {
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 255)]
             public string IPAddress;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Port;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ServerEventType : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             TargetAdded,
+            /// <summary>
+            /// 
+            /// </summary>
             TargetDeleted,
+            /// <summary>
+            /// 
+            /// </summary>
             DefaultTargetChanged,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void ServerEventCallback(int target, SNRESULT res, ServerEventType eventType, object userData);
 
         private struct ServerEventHeader
@@ -4554,55 +6401,157 @@ namespace IgrisLib.NET
             public ServerEventType eventType;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum SystemInfoFlag : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             SDKVersion = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             TimebaseFreq = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             RTSDKVersion = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             TotalSystemMem = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             AvailableSysMem = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             DCMBufferSize = 32,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SystemInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint CellSDKVersion;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong TimebaseFrequency;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint CellRuntimeSDKVersion;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint TotalSystemMemory;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint AvailableSystemMemory;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint DCMBufferSize;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum ExtraLoadFlag : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             EnableLv2ExceptionHandler = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             EnableRemotePlay = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             EnableGCMDebug = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             LoadLibprofSPRXAutomatically = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             EnableCoreDump = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             EnableAccForRemotePlay = 32,
+            /// <summary>
+            /// 
+            /// </summary>
             EnableHUDRSXTools = 64,
+            /// <summary>
+            /// 
+            /// </summary>
             EnableMAT = 128,
+            /// <summary>
+            /// 
+            /// </summary>
             EnableMiscSettings = 9223372036854775808,
+            /// <summary>
+            /// 
+            /// </summary>
             GameAttributeInviteMessage = 256,
+            /// <summary>
+            /// 
+            /// </summary>
             GameAttributeCustomMessage = 512,
+            /// <summary>
+            /// 
+            /// </summary>
             LoadingPatch = 4096,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum ExtraLoadFlagMask : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             GameAttributeMessageMask = 3840,
+            /// <summary>
+            /// 
+            /// </summary>
             All = 9223372036854783999,
+            /// <summary>
+            /// 
+            /// </summary>
             OverrideTVGUIMask = 9223372036854775808,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TTYStream
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Index;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
             public string Name;
         }
@@ -4619,20 +6568,53 @@ namespace IgrisLib.NET
             GAMEEXIT_TIMEOUT,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum TimeoutType
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Default,
+            /// <summary>
+            /// 
+            /// </summary>
             Reset,
+            /// <summary>
+            /// 
+            /// </summary>
             Connect,
+            /// <summary>
+            /// 
+            /// </summary>
             Load,
+            /// <summary>
+            /// 
+            /// </summary>
             GetStatus,
+            /// <summary>
+            /// 
+            /// </summary>
             Reconnect,
+            /// <summary>
+            /// 
+            /// </summary>
             GamePort,
+            /// <summary>
+            /// 
+            /// </summary>
             GameExit,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void TTYCallback(int target, uint streamID, SNRESULT res, string data, object userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void TTYCallbackRaw(int target, uint streamID, SNRESULT res, byte[] data, object userData);
 
         private class TTYCallbackAndUserData
@@ -4655,95 +6637,263 @@ namespace IgrisLib.NET
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum UnitType
         {
+            /// <summary>
+            /// 
+            /// </summary>
             PPU,
+            /// <summary>
+            /// 
+            /// </summary>
             SPU,
+            /// <summary>
+            /// 
+            /// </summary>
             SPURAW,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum UnitStatus : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Unknown,
+            /// <summary>
+            /// 
+            /// </summary>
             Running,
+            /// <summary>
+            /// 
+            /// </summary>
             Stopped,
+            /// <summary>
+            /// 
+            /// </summary>
             Signalled,
+            /// <summary>
+            /// 
+            /// </summary>
             Resetting,
+            /// <summary>
+            /// 
+            /// </summary>
             Missing,
+            /// <summary>
+            /// 
+            /// </summary>
             Reset,
+            /// <summary>
+            /// 
+            /// </summary>
             NotConnected,
+            /// <summary>
+            /// 
+            /// </summary>
             Connected,
+            /// <summary>
+            /// 
+            /// </summary>
             StatusChange,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum LoadFlag : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             EnableDebugging = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             UseELFPriority = 256,
+            /// <summary>
+            /// 
+            /// </summary>
             UseELFStackSize = 512,
+            /// <summary>
+            /// 
+            /// </summary>
             WaitBDMounted = 8192,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUNotDebug = 65536,
+            /// <summary>
+            /// 
+            /// </summary>
             SPUNotDebug = 131072,
+            /// <summary>
+            /// 
+            /// </summary>
             IgnoreDefaults = 2147483648,
+            /// <summary>
+            /// 
+            /// </summary>
             ParamSFOUseELFDir = 1048576,
+            /// <summary>
+            /// 
+            /// </summary>
             ParamSFOUseCustomDir = 2097152,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ProcessStatus : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Creating = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Ready = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             Exited = 3,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ProcessInfoHdr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ProcessStatus Status;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumPPUThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumSPUThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ParentProcessID;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong MaxMemorySize;
+            /// <summary>
+            /// 
+            /// </summary>
             public string ELFPath;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ProcessInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ProcessInfoHdr Hdr;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong[] ThreadIDs;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ExtraProcessInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
             public uint[] PPUGUIDs;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ProcessLoadParams
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Version;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
             public ulong[] Data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ProcessLoadInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint InfoValid;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint DebugFlags;
+            /// <summary>
+            /// 
+            /// </summary>
             public ProcessLoadParams LoadInfo;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ModuleInfoHdr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Name;
+            /// <summary>
+            /// 
+            /// </summary>
             public sbyte[] Version;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Attribute;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint StartEntry;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint StopEntry;
+            /// <summary>
+            /// 
+            /// </summary>
             public string ELFName;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumSegments;
         }
 
@@ -4761,61 +6911,166 @@ namespace IgrisLib.NET
             public uint NumSegments;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PRXSegment
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Base;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong FileSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong MemSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Index;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ELFType;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ModuleInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ModuleInfoHdr Hdr;
+            /// <summary>
+            /// 
+            /// </summary>
             public PRXSegment[] Segments;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PRXSegmentEx
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Base;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong FileSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong MemSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Index;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ELFType;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Flags;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Align;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ModuleInfoEx
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ModuleInfoHdr Hdr;
+            /// <summary>
+            /// 
+            /// </summary>
             public PRXSegmentEx[] Segments;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct MSELFInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong MSELFFileOffset;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
             public byte[] Reserved;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ExtraModuleInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
             public uint[] PPUGUIDs;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum PPUThreadState
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Idle,
+            /// <summary>
+            /// 
+            /// </summary>
             Runnable,
+            /// <summary>
+            /// 
+            /// </summary>
             OnProc,
+            /// <summary>
+            /// 
+            /// </summary>
             Sleep,
+            /// <summary>
+            /// 
+            /// </summary>
             Suspended,
+            /// <summary>
+            /// 
+            /// </summary>
             SleepSuspended,
+            /// <summary>
+            /// 
+            /// </summary>
             Stop,
+            /// <summary>
+            /// 
+            /// </summary>
             Zombie,
+            /// <summary>
+            /// 
+            /// </summary>
             Deleted,
         }
 
@@ -4830,13 +7085,34 @@ namespace IgrisLib.NET
             public uint ThreadNameLen;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PPUThreadInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Priority;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUThreadState State;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong StackAddress;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong StackSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public string ThreadName;
         }
 
@@ -4852,14 +7128,38 @@ namespace IgrisLib.NET
             public uint ThreadNameLen;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PPUThreadInfoEx
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Priority;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint BasePriority;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUThreadState State;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong StackAddress;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong StackSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public string ThreadName;
         }
 
@@ -4872,24 +7172,66 @@ namespace IgrisLib.NET
             public uint ThreadNameLen;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SPUThreadInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadGroupID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Filename;
+            /// <summary>
+            /// 
+            /// </summary>
             public string ThreadName;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum ELFStackSize : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Stack32k = 32,
+            /// <summary>
+            /// 
+            /// </summary>
             Stack64k = 64,
+            /// <summary>
+            /// 
+            /// </summary>
             Stack96k = Stack64k | Stack32k,
+            /// <summary>
+            /// 
+            /// </summary>
             Stack128k = 128,
+            /// <summary>
+            /// 
+            /// </summary>
             Stack256k = 256,
+            /// <summary>
+            /// 
+            /// </summary>
             Stack512k = 512,
+            /// <summary>
+            /// 
+            /// </summary>
             Stack1024k = 1024,
+            /// <summary>
+            /// 
+            /// </summary>
             StackDefault = Stack64k,
         }
 
@@ -4900,15 +7242,33 @@ namespace IgrisLib.NET
             public uint NumEntries;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ControlKeywordEntry
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint MatchConditionFlags;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Keyword;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct DebugThreadControlInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ControlFlags;
+            /// <summary>
+            /// 
+            /// </summary>
             public ControlKeywordEntry[] ControlKeywords;
         }
 
@@ -4925,27 +7285,66 @@ namespace IgrisLib.NET
             public IntPtr SpuThreadGroupStatuses;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct PPUThreadStatus
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUThreadState ThreadState;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct SPUThreadGroupStatus
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadGroupID;
+            /// <summary>
+            /// 
+            /// </summary>
             public SPUThreadGroupState ThreadGroupState;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ProcessTreeBranch
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ProcessID;
+            /// <summary>
+            /// 
+            /// </summary>
             public ProcessStatus ProcessState;
+            /// <summary>
+            /// 
+            /// </summary>
             public ushort ProcessFlags;
+            /// <summary>
+            /// 
+            /// </summary>
             public ushort RawSPU;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUThreadStatus[] PPUThreadStatuses;
+            /// <summary>
+            /// 
+            /// </summary>
             public SPUThreadGroupStatus[] SPUThreadGroupStatuses;
         }
 
@@ -4959,84 +7358,261 @@ namespace IgrisLib.NET
             public uint ThreadGroupNameLen;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum SPUThreadGroupState : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             NotConfigured,
+            /// <summary>
+            /// 
+            /// </summary>
             Configured,
+            /// <summary>
+            /// 
+            /// </summary>
             Ready,
+            /// <summary>
+            /// 
+            /// </summary>
             Waiting,
+            /// <summary>
+            /// 
+            /// </summary>
             Suspended,
+            /// <summary>
+            /// 
+            /// </summary>
             WaitingSuspended,
+            /// <summary>
+            /// 
+            /// </summary>
             Running,
+            /// <summary>
+            /// 
+            /// </summary>
             Stopped,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SPUThreadGroupInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadGroupID;
+            /// <summary>
+            /// 
+            /// </summary>
             public SPUThreadGroupState State;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Priority;
+            /// <summary>
+            /// 
+            /// </summary>
             public string GroupName;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint[] ThreadIDs;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum MemoryCompressionLevel : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             None = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             BestSpeed = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             BestCompression = 9,
+            /// <summary>
+            /// 
+            /// </summary>
             Default = 4294967295,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct VirtualMemoryArea
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Address;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Flags;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong VSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Options;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PageFaultPPU;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PageFaultSPU;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PageIn;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PageOut;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PMemTotal;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PMemUsed;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Time;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong[] Pages;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SyncPrimitiveCounts
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumMutexes;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumConditionVariables;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumRWLocks;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumLWMutexes;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumEventQueues;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumSemaphores;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumLWConditionVariables;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumEventFlag;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct MutexAttr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Protocol;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Recursive;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PShared;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Adaptive;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Key;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Flags;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct MutexInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ID;
+            /// <summary>
+            /// 
+            /// </summary>
             public MutexAttr Attribute;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong OwnerThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint LockCounter;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ConditionRefCounter;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ConditionVarID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitAllThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong[] WaitingThreads;
         }
 
@@ -5051,22 +7627,55 @@ namespace IgrisLib.NET
             public uint NumWaitAllThreads;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct LWMutexAttr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Protocol;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Recursive;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
             public string Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct LWMutexInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ID;
+            /// <summary>
+            /// 
+            /// </summary>
             public LWMutexAttr Attribute;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong OwnerThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint LockCounter;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitAllThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong[] WaitingThreads;
         }
 
@@ -5080,22 +7689,55 @@ namespace IgrisLib.NET
             public uint NumWaitAllThreads;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ConditionVarAttr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PShared;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Key;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Flags;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
             public string Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct ConditionVarInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ID;
+            /// <summary>
+            /// 
+            /// </summary>
             public ConditionVarAttr Attribute;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint MutexID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitAllThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong[] WaitingThreads;
         }
 
@@ -5108,18 +7750,42 @@ namespace IgrisLib.NET
             public uint NumWaitAllThreads;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct LWConditionVarAttr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
             public string Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct LWConditionVarInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ID;
+            /// <summary>
+            /// 
+            /// </summary>
             public LWConditionVarAttr Attribute;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint LWMutexID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitAllThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong[] WaitingThreads;
         }
 
@@ -5135,26 +7801,71 @@ namespace IgrisLib.NET
             public uint NumWaitAllWriteThreads;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct RWLockAttr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Protocol;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PShared;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Key;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Flags;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
             public string Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct RWLockInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ID;
+            /// <summary>
+            /// 
+            /// </summary>
             public RWLockAttr Attribute;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong OwnerThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitingReadThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitAllReadThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitingWriteThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitAllWriteThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong[] WaitingThreads;
         }
 
@@ -5169,24 +7880,63 @@ namespace IgrisLib.NET
             public uint NumWaitAllThreads;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct SemaphoreAttr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Protocol;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PShared;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Key;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Flags;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
             public string Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SemaphoreInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ID;
+            /// <summary>
+            /// 
+            /// </summary>
             public SemaphoreAttr Attribute;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint MaxValue;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint CurrentValue;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitAllThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong[] WaitingThreads;
         }
 
@@ -5205,146 +7955,410 @@ namespace IgrisLib.NET
             public IntPtr QueueEntries;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct EventQueueAttr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Protocol;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Type;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
             public string Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SystemEvent
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Source;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Data1;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Data2;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Data3;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct EventQueueInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ID;
+            /// <summary>
+            /// 
+            /// </summary>
             public EventQueueAttr Attribute;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Key;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Size;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitAllThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumReadableAllEvQueue;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong[] WaitingThreadIDs;
+            /// <summary>
+            /// 
+            /// </summary>
             public SystemEvent[] QueueEntries;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct EventFlagWaitThread
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ID;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong BitPattern;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Mode;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct EventFlagAttr
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Protocol;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PShared;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Key;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Flags;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Type;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
             public string Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct EventFlagInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ID;
+            /// <summary>
+            /// 
+            /// </summary>
             public EventFlagAttr Attribute;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong BitPattern;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint NumWaitAllThreads;
+            /// <summary>
+            /// 
+            /// </summary>
             public EventFlagWaitThread[] WaitingThreads;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum PowerStatus
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Off,
+            /// <summary>
+            /// 
+            /// </summary>
             On,
+            /// <summary>
+            /// 
+            /// </summary>
             Suspended,
+            /// <summary>
+            /// 
+            /// </summary>
             Unknown,
+            /// <summary>
+            /// 
+            /// </summary>
             SwitchingOn,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct UserMemoryStats
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint CreatedSharedMemorySize;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint AttachedSharedMemorySize;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ProcessLocalMemorySize;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ProcessLocalTextSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PRXTextSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PRXDataSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint MiscMemorySize;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct GamePortIPAddressData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ReturnValue;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint IPAddress;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint SubnetMask;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint BroadcastAddress;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum RSXProfilingFlag : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             UseRSXProfilingTools = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             UseFullHUDFeatures = 2,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum CoreDumpFlag : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             ToDevMS = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             ToAppHome = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             ToDevUSB = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             ToDevHDD0 = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             DisablePPUExceptionDetection = 36028797018963968,
+            /// <summary>
+            /// 
+            /// </summary>
             DisableSPUExceptionDetection = 18014398509481984,
+            /// <summary>
+            /// 
+            /// </summary>
             DisableRSXExceptionDetection = 9007199254740992,
+            /// <summary>
+            /// 
+            /// </summary>
             DisableFootSwitchDetection = 4503599627370496,
+            /// <summary>
+            /// 
+            /// </summary>
             DisableMemoryDump = 3489660928,
+            /// <summary>
+            /// 
+            /// </summary>
             EnableRestartProcess = 32768,
+            /// <summary>
+            /// 
+            /// </summary>
             EnableKeepRunningHandler = 8192,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ScatteredWrite
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Address;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte[] Data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum MATCondition : byte
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Transparent,
+            /// <summary>
+            /// 
+            /// </summary>
             Write,
+            /// <summary>
+            /// 
+            /// </summary>
             ReadWrite,
+            /// <summary>
+            /// 
+            /// </summary>
             Error,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct MATRange
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint StartAddress;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Size;
+            /// <summary>
+            /// 
+            /// </summary>
             public MATCondition[] PageConditions;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum PadPlaybackResponse : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Ok = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             InvalidPacket = 2147549186,
+            /// <summary>
+            /// 
+            /// </summary>
             InsufficientMemory = 2147549188,
+            /// <summary>
+            /// 
+            /// </summary>
             Busy = 2147549194,
+            /// <summary>
+            /// 
+            /// </summary>
             NoDev = 2147549229,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void PadPlaybackCallback(int target, SNRESULT res, PadPlaybackResponse playbackResult, object userData);
 
         private class PadPlaybackCallbackAndUserData
@@ -5353,22 +8367,58 @@ namespace IgrisLib.NET
             public object m_userData;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct PadData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint TimeHi;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint TimeLo;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Reserved0;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Reserved1;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte Port;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte PortStatus;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte Length;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte Reserved2;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Reserved3;
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
             public short[] buttons;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void PadCaptureCallback(int target, SNRESULT res, PadData[] padData, object userData);
 
         private class PadCaptureCallbackAndUserData
@@ -5377,20 +8427,50 @@ namespace IgrisLib.NET
             public object m_userData;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum VRAMCaptureFlag : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Enabled = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Disabled = 0,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class VRAMInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong BPAddress;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong TopAddressPointer;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Width;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Height;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Pitch;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte Colour;
         }
 
@@ -5405,11 +8485,23 @@ namespace IgrisLib.NET
             public byte Colour;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct PS3Protocol
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Protocol;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Port;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint LPARDesc;
         }
 
@@ -5439,6 +8531,9 @@ namespace IgrisLib.NET
 
         private delegate void CustomProtocolCallbackPriv(int target, PS3Protocol protocol, IntPtr unmanagedBuf, uint length, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void CustomProtocolCallback(int target, PS3Protocol protocol, byte[] data, object userData);
 
         private class CusProtoCallbackAndUserData
@@ -5447,49 +8542,151 @@ namespace IgrisLib.NET
             public object m_userData;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum FileServingEventFlag : ulong
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Create = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Close = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             Read = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             Write = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             Seek = 32,
+            /// <summary>
+            /// 
+            /// </summary>
             Delete = 64,
+            /// <summary>
+            /// 
+            /// </summary>
             Rename = 128,
+            /// <summary>
+            /// 
+            /// </summary>
             SetAttr = 256,
+            /// <summary>
+            /// 
+            /// </summary>
             GetAttr = 512,
+            /// <summary>
+            /// 
+            /// </summary>
             SetTime = 1024,
+            /// <summary>
+            /// 
+            /// </summary>
             MKDir = 2048,
+            /// <summary>
+            /// 
+            /// </summary>
             RMDir = 4096,
+            /// <summary>
+            /// 
+            /// </summary>
             OpenDir = 8192,
+            /// <summary>
+            /// 
+            /// </summary>
             CloseDir = 16384,
+            /// <summary>
+            /// 
+            /// </summary>
             ReadDir = 32768,
+            /// <summary>
+            /// 
+            /// </summary>
             Truncate = 65536,
+            /// <summary>
+            /// 
+            /// </summary>
             FGetAttr64 = 131072,
+            /// <summary>
+            /// 
+            /// </summary>
             GetAttr64 = 262144,
+            /// <summary>
+            /// 
+            /// </summary>
             All = GetAttr64 | FGetAttr64 | Truncate | ReadDir | CloseDir | OpenDir | RMDir | MKDir | SetTime | GetAttr | SetAttr | Rename | Delete | Seek | Write | Read | Close | Create,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum FileTransferNotificationType : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Progress = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             Finish = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Skipped = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             Cancelled = 3,
+            /// <summary>
+            /// 
+            /// </summary>
             Error = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             Pending = 5,
+            /// <summary>
+            /// 
+            /// </summary>
             Unknown = 6,
+            /// <summary>
+            /// 
+            /// </summary>
             RefreshList = 2147483648,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct FTPNotification
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTransferNotificationType Type;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint TransferID;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong BytesTransferred;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void FTPEventCallback(int target, SNRESULT res, FTPNotification[] ftpNotifications, object userData);
 
         private class FtpCallbackAndUserData
@@ -5498,190 +8695,550 @@ namespace IgrisLib.NET
             public object m_userData;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum FileTraceType
         {
+            /// <summary>
+            /// 
+            /// </summary>
             GetBlockSize = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Stat = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             WidgetStat = 3,
+            /// <summary>
+            /// 
+            /// </summary>
             Unlink = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             WidgetUnlink = 5,
+            /// <summary>
+            /// 
+            /// </summary>
             RMDir = 6,
+            /// <summary>
+            /// 
+            /// </summary>
             WidgetRMDir = 7,
+            /// <summary>
+            /// 
+            /// </summary>
             Rename = 14,
+            /// <summary>
+            /// 
+            /// </summary>
             WidgetRename = 15,
+            /// <summary>
+            /// 
+            /// </summary>
             Truncate = 18,
+            /// <summary>
+            /// 
+            /// </summary>
             TruncateNoAlloc = 19,
+            /// <summary>
+            /// 
+            /// </summary>
             Truncate2 = 20,
+            /// <summary>
+            /// 
+            /// </summary>
             Truncate2NoInit = 21,
+            /// <summary>
+            /// 
+            /// </summary>
             OpenDir = 24,
+            /// <summary>
+            /// 
+            /// </summary>
             WidgetOpenDir = 25,
+            /// <summary>
+            /// 
+            /// </summary>
             CHMod = 26,
+            /// <summary>
+            /// 
+            /// </summary>
             MkDir = 27,
+            /// <summary>
+            /// 
+            /// </summary>
             UTime = 29,
+            /// <summary>
+            /// 
+            /// </summary>
             Open = 33,
+            /// <summary>
+            /// 
+            /// </summary>
             WidgetOpen = 34,
+            /// <summary>
+            /// 
+            /// </summary>
             Close = 35,
+            /// <summary>
+            /// 
+            /// </summary>
             CloseDir = 36,
+            /// <summary>
+            /// 
+            /// </summary>
             FSync = 37,
+            /// <summary>
+            /// 
+            /// </summary>
             ReadDir = 38,
+            /// <summary>
+            /// 
+            /// </summary>
             FStat = 39,
+            /// <summary>
+            /// 
+            /// </summary>
             FGetBlockSize = 40,
+            /// <summary>
+            /// 
+            /// </summary>
             Read = 47,
+            /// <summary>
+            /// 
+            /// </summary>
             Write = 48,
+            /// <summary>
+            /// 
+            /// </summary>
             GetDirEntries = 49,
+            /// <summary>
+            /// 
+            /// </summary>
             ReadOffset = 50,
+            /// <summary>
+            /// 
+            /// </summary>
             WriteOffset = 51,
+            /// <summary>
+            /// 
+            /// </summary>
             FTruncate = 52,
+            /// <summary>
+            /// 
+            /// </summary>
             FTruncateNoAlloc = 53,
+            /// <summary>
+            /// 
+            /// </summary>
             LSeek = 56,
+            /// <summary>
+            /// 
+            /// </summary>
             SetIOBuffer = 57,
+            /// <summary>
+            /// 
+            /// </summary>
             OfflineEnd = 9999,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum FileTraceNotificationStatus
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Processed,
+            /// <summary>
+            /// 
+            /// </summary>
             Received,
+            /// <summary>
+            /// 
+            /// </summary>
             Waiting,
+            /// <summary>
+            /// 
+            /// </summary>
             Processing,
+            /// <summary>
+            /// 
+            /// </summary>
             Suspended,
+            /// <summary>
+            /// 
+            /// </summary>
             Finished,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct FileTraceLogData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType1 LogType1;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType2 LogType2;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType3 LogType3;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType4 LogType4;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType6 LogType6;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType8 LogType8;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType9 LogType9;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType10 LogType10;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType11 LogType11;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType12 LogType12;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType13 LogType13;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogType14 LogType14;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType1
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Path;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType2
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Path1;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Path2;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType3
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Arg;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Path;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType4
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Mode;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Path;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType6
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Arg1;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Arg2;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Path;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceProcessInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong VFSID;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong FD;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType8
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceProcessInfo ProcessInfo;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Arg1;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Arg2;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Arg3;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Arg4;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte[] VArg;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Path;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType9
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceProcessInfo ProcessInfo;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType10
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceProcessInfo ProcessInfo;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Size;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Address;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint TxSize;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType11
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceProcessInfo ProcessInfo;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Size;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Address;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Offset;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint TxSize;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType12
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceProcessInfo ProcessInfo;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong TargetSize;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType13
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceProcessInfo ProcessInfo;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Size;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Offset;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong CurPos;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceLogType14
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceProcessInfo ProcessInfo;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint MaxSize;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Page;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ContainerID;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct FileTraceEvent
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong SerialID;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceType TraceType;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceNotificationStatus Status;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ProcessID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong TimeBaseStartOfTrace;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong TimeBase;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte[] BackTraceData;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTraceLogData LogData;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void FileTraceCallback(int target, SNRESULT res, FileTraceEvent fileTraceEvent, object userData);
 
         private class FileTraceCallbackAndUserData
@@ -5690,23 +9247,65 @@ namespace IgrisLib.NET
             public object m_userData;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum FileTransferStatus : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Pending = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             Failed = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             Succeeded = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             Skipped = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             InProgress = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             Cancelled = 32,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct FileTransferInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint TransferID;
+            /// <summary>
+            /// 
+            /// </summary>
             public FileTransferStatus Status;
+            /// <summary>
+            /// 
+            /// </summary>
             public string SourcePath;
+            /// <summary>
+            /// 
+            /// </summary>
             public string DestinationPath;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Size;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong BytesRead;
         }
 
@@ -5722,6 +9321,9 @@ namespace IgrisLib.NET
             public ulong BytesRead;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct Time
         {
             private int Sec;
@@ -5735,22 +9337,61 @@ namespace IgrisLib.NET
             private int IsDST;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum DirEntryType : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Unknown,
+            /// <summary>
+            /// 
+            /// </summary>
             Directory,
+            /// <summary>
+            /// 
+            /// </summary>
             Regular,
+            /// <summary>
+            /// 
+            /// </summary>
             Symlink,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct DirEntry
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public DirEntryType Type;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Mode;
+            /// <summary>
+            /// 
+            /// </summary>
             public Time AccessTime;
+            /// <summary>
+            /// 
+            /// </summary>
             public Time ModifiedTime;
+            /// <summary>
+            /// 
+            /// </summary>
             public Time CreateTime;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Size;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Name;
         }
 
@@ -5766,14 +9407,38 @@ namespace IgrisLib.NET
             public byte[] Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct DirEntryEx
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public DirEntryType Type;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Mode;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong AccessTimeUTC;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ModifiedTimeUTC;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong CreateTimeUTC;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Size;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Name;
         }
 
@@ -5789,39 +9454,111 @@ namespace IgrisLib.NET
             public byte[] Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TargetTimezone
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public int Timezone;
+            /// <summary>
+            /// 
+            /// </summary>
             public int DST;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ChModFilePermission : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             ReadOnly = 256,
+            /// <summary>
+            /// 
+            /// </summary>
             ReadWrite = 384,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum LogCategory : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Off = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             All = 4294967295,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct BDInfo
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint bdemu_data_size;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte bdemu_total_entry;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte bdemu_selected_index;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte image_index;
+            /// <summary>
+            /// 
+            /// </summary>
             public byte image_type;
+            /// <summary>
+            /// 
+            /// </summary>
             public string image_file_name;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong image_file_size;
+            /// <summary>
+            /// 
+            /// </summary>
             public string image_product_code;
+            /// <summary>
+            /// 
+            /// </summary>
             public string image_producer;
+            /// <summary>
+            /// 
+            /// </summary>
             public string image_author;
+            /// <summary>
+            /// 
+            /// </summary>
             public string image_date;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint image_sector_layer0;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint image_sector_layer1;
+            /// <summary>
+            /// 
+            /// </summary>
             public string image_memorandum;
         }
 
@@ -5850,35 +9587,113 @@ namespace IgrisLib.NET
             public byte[] image_memorandum;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum TargetEventType : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             UnitStatusChange = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             ResetStarted = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             ResetEnd = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             Details = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             ModuleLoad = 5,
+            /// <summary>
+            /// 
+            /// </summary>
             ModuleRunning = 6,
+            /// <summary>
+            /// 
+            /// </summary>
             ModuleDoneRemove = 7,
+            /// <summary>
+            /// 
+            /// </summary>
             ModuleDoneResident = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             ModuleStopped = 9,
+            /// <summary>
+            /// 
+            /// </summary>
             ModuleStoppedRemove = 10,
+            /// <summary>
+            /// 
+            /// </summary>
             PowerStatusChange = 11,
+            /// <summary>
+            /// 
+            /// </summary>
             TTYStreamAdded = 12,
+            /// <summary>
+            /// 
+            /// </summary>
             TTYStreamDeleted = 13,
+            /// <summary>
+            /// 
+            /// </summary>
             BDIsotransferStarted = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             BDIsotransferFinished = 17,
+            /// <summary>
+            /// 
+            /// </summary>
             BDFormatStarted = 18,
+            /// <summary>
+            /// 
+            /// </summary>
             BDFormatFinished = 19,
+            /// <summary>
+            /// 
+            /// </summary>
             BDMountStarted = 20,
+            /// <summary>
+            /// 
+            /// </summary>
             BDMountFinished = 21,
+            /// <summary>
+            /// 
+            /// </summary>
             BDUnmountStarted = 22,
+            /// <summary>
+            /// 
+            /// </summary>
             BDUnmountFinished = 23,
+            /// <summary>
+            /// 
+            /// </summary>
             TargetSpecific = 2147483648,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TGTEventUnitStatusChangeData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public UnitType Unit;
+            /// <summary>
+            /// 
+            /// </summary>
             public UnitStatus Status;
         }
 
@@ -5888,21 +9703,48 @@ namespace IgrisLib.NET
             public uint Status;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TGTEventDetailsData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Flags;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TGTEventModuleEventData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Unit;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ModuleID;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TGTEventBDData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Result;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Source;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Destination;
         }
 
@@ -5915,22 +9757,55 @@ namespace IgrisLib.NET
             public byte[] Destination;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TargetEventData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public TGTEventUnitStatusChangeData UnitStatusChangeData;
+            /// <summary>
+            /// 
+            /// </summary>
             public TGTEventDetailsData DetailsData;
+            /// <summary>
+            /// 
+            /// </summary>
             public TGTEventModuleEventData ModuleEventData;
+            /// <summary>
+            /// 
+            /// </summary>
             public TGTEventBDData BdData;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TargetEvent
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint TargetID;
+            /// <summary>
+            /// 
+            /// </summary>
             public TargetEventType Type;
+            /// <summary>
+            /// 
+            /// </summary>
             public TargetEventData EventData;
+            /// <summary>
+            /// 
+            /// </summary>
             public TargetSpecificEvent TargetSpecific;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void TargetEventCallback(int target, SNRESULT res, TargetEvent[] targetEventList, object userData);
 
         private class TargetCallbackAndUserData
@@ -5946,212 +9821,644 @@ namespace IgrisLib.NET
             public uint EventType;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum TargetSpecificEventType : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             ProcessCreate = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             ProcessExit = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             ProcessKill = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             ProcessExitSpawn = 3,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcTrap = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcPrevInt = 17,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcAlignment = 18,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcIllInst = 19,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcTextHtabMiss = 20,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcTextSlbMiss = 21,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcDataHtabMiss = 22,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcFloat = 23,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcDataSlbMiss = 24,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcDabrMatch = 25,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcStop = 26,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcStopInit = 27,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUExcDataMAT = 28,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUThreadCreate = 32,
+            /// <summary>
+            /// 
+            /// </summary>
             PPUThreadExit = 33,
+            /// <summary>
+            /// 
+            /// </summary>
             SPUThreadStart = 48,
+            /// <summary>
+            /// 
+            /// </summary>
             SPUThreadStop = 49,
+            /// <summary>
+            /// 
+            /// </summary>
             SPUThreadStopInit = 50,
+            /// <summary>
+            /// 
+            /// </summary>
             SPUThreadGroupDestroy = 51,
+            /// <summary>
+            /// 
+            /// </summary>
             SPUThreadStopEx = 52,
+            /// <summary>
+            /// 
+            /// </summary>
             PRXLoad = 64,
+            /// <summary>
+            /// 
+            /// </summary>
             PRXUnload = 65,
+            /// <summary>
+            /// 
+            /// </summary>
             DAInitialised = 96,
+            /// <summary>
+            /// 
+            /// </summary>
             Footswitch = 112,
+            /// <summary>
+            /// 
+            /// </summary>
             InstallPackageProgress = 128,
+            /// <summary>
+            /// 
+            /// </summary>
             InstallPackagePath = 129,
+            /// <summary>
+            /// 
+            /// </summary>
             CoreDumpComplete = 256,
+            /// <summary>
+            /// 
+            /// </summary>
             CoreDumpStart = 257,
+            /// <summary>
+            /// 
+            /// </summary>
             RawNotify = 4026531855,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PPUProcessCreateData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ParentProcessID;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Filename;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PPUProcessExitData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ExitCode;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PPUExceptionData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint HWThreadNumber;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PC;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong SP;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PPUAlignmentExceptionData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint HWThreadNumber;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong DSISR;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong DAR;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PC;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong SP;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PPUDataMatExceptionData
         {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint HWThreadNumber;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong DSISR;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong DAR;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PC;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong SP;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PPUThreadCreateData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ThreadID;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct PPUThreadExitData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong ThreadID;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SPUThreadStartData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadGroupID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public string ElfFilename;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum SPUThreadStopReason : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             NoException = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             DMAAlignment = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             DMACommand = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             Error = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             MFCFIR = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             MFCSegment = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             MFCStorage = 32,
+            /// <summary>
+            /// 
+            /// </summary>
             NoValue = 64,
+            /// <summary>
+            /// 
+            /// </summary>
             StopCall = 256,
+            /// <summary>
+            /// 
+            /// </summary>
             StopDCall = 512,
+            /// <summary>
+            /// 
+            /// </summary>
             Halt = 1024,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SPUThreadStopData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadGroupID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PC;
+            /// <summary>
+            /// 
+            /// </summary>
             public SPUThreadStopReason Reason;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint SP;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SPUThreadStopExData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadGroupID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PC;
+            /// <summary>
+            /// 
+            /// </summary>
             public SPUThreadStopReason Reason;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint SP;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong MFCDSISR;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong MFCDSIPR;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong MFCDAR;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct SPUThreadGroupDestroyData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ThreadGroupID;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct NotifyPRXLoadData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PPUThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PRXID;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Timestamp;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct NotifyPRXUnloadData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong PPUThreadID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint PRXID;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Timestamp;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct FootswitchData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong EventSource;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong EventData1;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong EventData2;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong EventData3;
+            /// <summary>
+            /// 
+            /// </summary>
             public ulong Reserved;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct InstallPackageProgress
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Percent;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct InstallPackagePath
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Path;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct CoreDumpComplete
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Filename;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct CoreDumpStart
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Filename;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TargetSpecificData
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public TargetSpecificEventType Type;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUProcessCreateData PPUProcessCreate;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUProcessExitData PPUProcessExit;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUExceptionData PPUException;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUAlignmentExceptionData PPUAlignmentException;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUDataMatExceptionData PPUDataMatException;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUThreadCreateData PPUThreadCreate;
+            /// <summary>
+            /// 
+            /// </summary>
             public PPUThreadExitData PPUThreadExit;
+            /// <summary>
+            /// 
+            /// </summary>
             public SPUThreadStartData SPUThreadStart;
+            /// <summary>
+            /// 
+            /// </summary>
             public SPUThreadStopData SPUThreadStop;
+            /// <summary>
+            /// 
+            /// </summary>
             public SPUThreadStopExData SPUThreadStopEx;
+            /// <summary>
+            /// 
+            /// </summary>
             public SPUThreadGroupDestroyData SPUThreadGroupDestroyData;
+            /// <summary>
+            /// 
+            /// </summary>
             public NotifyPRXLoadData PRXLoad;
+            /// <summary>
+            /// 
+            /// </summary>
             public NotifyPRXUnloadData PRXUnload;
+            /// <summary>
+            /// 
+            /// </summary>
             public FootswitchData Footswitch;
+            /// <summary>
+            /// 
+            /// </summary>
             public InstallPackageProgress InstallPackageProgress;
+            /// <summary>
+            /// 
+            /// </summary>
             public InstallPackagePath InstallPackagePath;
+            /// <summary>
+            /// 
+            /// </summary>
             public CoreDumpStart CoreDumpStart;
+            /// <summary>
+            /// 
+            /// </summary>
             public CoreDumpComplete CoreDumpComplete;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public struct TargetSpecificEvent
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public uint CommandID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint RequestID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint ProcessID;
+            /// <summary>
+            /// 
+            /// </summary>
             public uint Result;
+            /// <summary>
+            /// 
+            /// </summary>
             public TargetSpecificData Data;
         }
 
@@ -6169,6 +10476,9 @@ namespace IgrisLib.NET
 
         private delegate void HandleEventCallbackPriv(int target, EventType type, uint param, SNRESULT result, uint length, IntPtr data, IntPtr userData);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void SearchTargetsCallback(string name, string type, TCPIPConnectProperties ConnectInfo, object userData);
 
         private delegate void SearchTargetsCallbackPriv(IntPtr name, IntPtr type, IntPtr connectInfo, IntPtr userData);
@@ -6203,7 +10513,7 @@ namespace IgrisLib.NET
 
         private class ScopedGlobalHeapPtr
         {
-            private IntPtr m_intPtr = IntPtr.Zero;
+            private readonly IntPtr m_intPtr = IntPtr.Zero;
 
             public ScopedGlobalHeapPtr(IntPtr intPtr)
             {
