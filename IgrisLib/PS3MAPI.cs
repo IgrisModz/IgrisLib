@@ -27,7 +27,7 @@ namespace IgrisLib
         public PS3MAPI()
         {
             ConsoleRegistry.Create();
-            resources = Language.SetLanguageDictionary();
+            resources = Language.Get;
             Core = new CORE_CMD();
             Server = new SERVER_CMD();
             PS3 = new PS3_CMD();

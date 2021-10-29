@@ -108,7 +108,7 @@ namespace IgrisLib
 
         public CCAPI()
         {
-            resources = Language.SetLanguageDictionary();
+            resources = Language.Get;
             ProcessId = 0xFFFFFFFF;
             LibHandle = IntPtr.Zero;
             LibLoaded = false;
