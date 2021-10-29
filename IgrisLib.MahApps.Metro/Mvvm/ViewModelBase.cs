@@ -7,70 +7,125 @@ using System.Runtime.CompilerServices;
 
 namespace IgrisLib.Mvvm
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         private readonly Dictionary<string, object> _propertyValueStorage;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected ViewModelBase()
         {
-            this._propertyValueStorage = new Dictionary<string, object>();
+            _propertyValueStorage = new Dictionary<string, object>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         ~ViewModelBase()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
+            Dispose(true);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
+            if (disposing)
+            {
+                GC.SuppressFinalize(this);
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="storage"></param>
+        /// <param name="value"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
-            if (Equals(storage, value))
+            if (!Equals(storage, value))
             {
-                return false;
+                storage = value;
+                OnPropertyChanged(propertyName);
+                return true;
             }
-            storage = value;
-            OnPropertyChanged(propertyName);
-            return true;
+            return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="propertyName"></param>
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            this.EnsureProperty(propertyName);
+            EnsureProperty(propertyName);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="selectorExpression"></param>
         protected virtual void OnPropertyChanged<T>(Expression<Func<T>> selectorExpression)
         {
-            if (selectorExpression == null)
+            if (selectorExpression is null)
+            {
                 throw new ArgumentNullException("selectorExpression");
+            }
+
             if (!(selectorExpression.Body is MemberExpression body))
+            {
                 throw new ArgumentException("The body must be a member expression");
+            }
+
             OnPropertyChanged(body.Member.Name);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="field"></param>
+        /// <param name="value"></param>
+        /// <param name="selectorExpression"></param>
+        /// <returns></returns>
         protected bool SetField<T>(ref T field, T value, Expression<Func<T>> selectorExpression)
         {
-            if (EqualityComparer<T>.Default.Equals(field, value))
-                return false;
-            field = value;
-            OnPropertyChanged(selectorExpression);
-            return true;
+            if (!EqualityComparer<T>.Default.Equals(field, value))
+            {
+                field = value;
+                OnPropertyChanged(selectorExpression);
+                return true;
+            }
+            return false;
         }
 
 
         [Conditional("DEBUG")]
-        private void EnsureProperty(string propertyName)
+        private void EnsureProperty([CallerMemberName] string propertyName = null)
         {
             if (TypeDescriptor.GetProperties(this)[propertyName] == null)
             {
@@ -78,6 +133,12 @@ namespace IgrisLib.Mvvm
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="property"></param>
+        /// <param name="value"></param>
         protected void SetValue<T>(Expression<Func<T>> property, T value)
         {
             if (!(property is LambdaExpression lambdaExpression))
@@ -85,15 +146,24 @@ namespace IgrisLib.Mvvm
                 throw new ArgumentException("Invalid lambda expression", "Lambda expression return value can't be null");
             }
 
-            var propertyName = this.getPropertyName(lambdaExpression);
-            var storedValue = this.getValue<T>(propertyName);
+            string propertyName = GetPropertyName(lambdaExpression);
+            T storedValue = GetValue<T>(propertyName);
 
-            if (object.Equals(storedValue, value)) return;
+            if (Equals(storedValue, value))
+            {
+                return;
+            }
 
-            this._propertyValueStorage[propertyName] = value;
-            this.OnPropertyChanged(propertyName);
+            _propertyValueStorage[propertyName] = value;
+            OnPropertyChanged(propertyName);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="property"></param>
+        /// <returns></returns>
         protected T GetValue<T>(Expression<Func<T>> property)
         {
             if (!(property is LambdaExpression lambdaExpression))
@@ -101,28 +171,27 @@ namespace IgrisLib.Mvvm
                 throw new ArgumentException("Invalid lambda expression", "Lambda expression return value can't be null");
             }
 
-            var propertyName = this.getPropertyName(lambdaExpression);
-            return getValue<T>(propertyName);
+            return GetValue<T>(GetPropertyName(lambdaExpression));
         }
 
-        private T getValue<T>(string propertyName)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        protected T GetValue<T>([CallerMemberName] string propertyName = null)
         {
-            if (_propertyValueStorage.TryGetValue(propertyName, out object value))
-            {
-                return (T)value;
-            }
-            return default;
-
+            return _propertyValueStorage.TryGetValue(propertyName, out object value) ? (T)value : default;
         }
 
-        private string getPropertyName(LambdaExpression lambdaExpression)
+        private string GetPropertyName(LambdaExpression lambdaExpression)
         {
             MemberExpression memberExpression;
 
             if (lambdaExpression.Body is UnaryExpression)
             {
-                var unaryExpression = lambdaExpression.Body as UnaryExpression;
-                memberExpression = unaryExpression.Operand as MemberExpression;
+                memberExpression = (lambdaExpression.Body as UnaryExpression).Operand as MemberExpression;
             }
             else
             {
