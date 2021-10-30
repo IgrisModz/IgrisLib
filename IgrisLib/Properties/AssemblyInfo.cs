@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // Les informations générales relatives à un assembly dépendent de
@@ -30,6 +31,7 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.5.0.0")]
 [assembly: AssemblyFileVersion("1.5.0.0")]
-[assembly: AssemblyCompany("Igris Production")]
+[assembly: AssemblyCompany("Igris Productions")]
 [assembly: AssemblyCopyright("Igris Modz Copyright © 2020")]
 [assembly: AssemblyTrademark("Igris Prod.")]
+[assembly: NeutralResourcesLanguage("en-US")]
