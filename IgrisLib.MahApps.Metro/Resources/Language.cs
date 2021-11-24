@@ -4,12 +4,18 @@ using System.Windows;
 
 namespace IgrisLib.Resources
 {
-    internal class Language
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Language
     {
         private static ResourceDictionary get = null;
         private static object _lock = new object();
 
-        internal static ResourceDictionary Get
+        /// <summary>
+        /// Return the resources from the current language
+        /// </summary>
+        public static ResourceDictionary Get
         {
             get
             {
@@ -21,28 +27,13 @@ namespace IgrisLib.Resources
                         ResourceDictionary dict = new ResourceDictionary();
                         switch (Thread.CurrentThread.CurrentCulture.ToString())
                         {
-                            case "en-US":
-                            case "en-GB":
-                            case "en-AU":
-                            case "en-CA":
-                            case "en-ZN":
-                            case "en-IE":
-                            case "en-ZA":
-                            case "en-JM":
-                            case "en-029":
-                            case "en-BZ":
-                            case "en-TT":
-                            case "en-ZW":
-                            case "en-PH":
-                                break;
-                                get.Source = new Uri("pack://application:,,,/IgrisLib;Component/Resources/en-US.xaml", UriKind.Absolute);
                             case "fr-FR":
                             case "fr-BE":
                             case "fr-CA":
                             case "fr-CH":
                             case "fr-LU":
                             case "fr-MC":
-                                get.Source = new Uri("pack://application:,,,/IgrisLib;Component/Resources/fr-FR.xaml", UriKind.Absolute);
+                                get.Source = new Uri("pack://application:,,,/IgrisLib.MahApps.Metro;Component/Resources/fr-FR.xaml", UriKind.Absolute);
                                 break;
                             case "es-ES":
                             case "es-MX":
@@ -63,17 +54,17 @@ namespace IgrisLib.Resources
                             case "es-HN":
                             case "es-NI":
                             case "es-PR":
-                                get.Source = new Uri("pack://application:,,,/IgrisLib;Component/Resources/es-ES.xaml", UriKind.Absolute);
+                                get.Source = new Uri("pack://application:,,,/IgrisLib.MahApps.Metro;Component/Resources/es-ES.xaml", UriKind.Absolute);
                                 break;
                             case "de-DE":
                             case "de-CH":
                             case "de-HK":
                             case "de-LU":
                             case "de-LI":
-                                get.Source = new Uri("pack://application:,,,/IgrisLib;Component/Resources/de-DE.xaml", UriKind.Absolute);
+                                get.Source = new Uri("pack://application:,,,/IgrisLib.MahApps.Metro;Component/Resources/de-DE.xaml", UriKind.Absolute);
                                 break;
                             default:
-                                get.Source = new Uri("pack://application:,,,/IgrisLib;Component/Resources/en-US.xaml", UriKind.Absolute);
+                                get.Source = new Uri("pack://application:,,,/IgrisLib.MahApps.Metro;Component/Resources/en-US.xaml", UriKind.Absolute);
                                 break;
                         }
                         get.MergedDictionaries.Add(dict);
