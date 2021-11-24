@@ -4,12 +4,12 @@ using System.Windows;
 
 namespace IgrisLib.Resources
 {
-    internal class Language
+    public class Language
     {
         private static ResourceDictionary get = null;
         private static object _lock = new object();
 
-        internal static ResourceDictionary Get
+        public static ResourceDictionary Get
         {
             get
             {
