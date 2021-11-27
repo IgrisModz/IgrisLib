@@ -30,7 +30,7 @@ namespace IgrisLibTest
         {
             PS3 = new PS3API(SelectAPI.CCAPI);
             ConnectionCommand = new DelegateCommand(Connection);
-            ApiList = PS3.GetAllApi();
+            ApiList = PS3.GetAllApiName();
             SelectedApi = Settings.Default.API;
         }
 
