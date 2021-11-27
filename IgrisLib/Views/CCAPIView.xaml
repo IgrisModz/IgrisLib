@@ -20,15 +20,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Menu x:Name="mainMenu" IsMainMenu="True" Grid.ColumnSpan="2">
-            <MenuItem x:Name="itemFile" Header="{DynamicResource file}">
-                <MenuItem.Icon>
-                    <iconPacks:PackIconMaterial x:Name="iconFile" HorizontalAlignment="Center" Kind="File"/>
-                </MenuItem.Icon>
-                <MenuItem x:Name="itemAddConsole" Header="{DynamicResource addConsole}" Command="{Binding AddConsoleCommand}">
-                    <MenuItem.Icon>
-                        <iconPacks:PackIconMaterial x:Name="iconAddConsole" HorizontalAlignment="Center" Kind="PlusBoxMultiple"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+            <MenuItem x:Name="itemFile"
+                      Icon="{iconPacks:Material Kind=File}"
+                      Header="{DynamicResource file}">
+                <MenuItem x:Name="itemAddConsole"
+                          Icon="{iconPacks:Material Kind=PlusBoxMultiple}"
+                          Header="{DynamicResource addConsole}"
+                          Command="{Binding AddConsoleCommand}"/>
             </MenuItem>
         </Menu>
         <ListBox x:Name="listView" SelectionMode="Single" Grid.Row="1" Grid.ColumnSpan="2" Margin="3"
@@ -52,13 +50,9 @@
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="itemDeleteConsole"
+                              Icon="{iconPacks:Material Kind=Delete}"
                               Header="{DynamicResource delete}"
-                              Command="{Binding DeleteConsoleCommand}">
-                        <MenuItem.Icon>
-                            <iconPacks:PackIconMaterial x:Name="iconDeleteConsole"
-                                                        Kind="Delete"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
+                              Command="{Binding DeleteConsoleCommand}"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
