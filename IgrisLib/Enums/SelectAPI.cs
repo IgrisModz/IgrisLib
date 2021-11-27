@@ -6,10 +6,6 @@
     public enum SelectAPI
     {
         /// <summary>
-        /// No API select 
-        /// </summary>
-        Null,
-        /// <summary>
         /// Api control console work for DEX and CEX
         /// </summary>
         CCAPI,
