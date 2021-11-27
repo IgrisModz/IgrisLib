@@ -23,11 +23,13 @@
                Margin="3"
                VerticalContentAlignment="Center"/>
         <TextBox x:Name="txtConsoleIp"
-                 Margin="3"/>
+                 Margin="3"
+                 TextChanged="TxtConsoleIp_TextChanged"/>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button x:Name="btnAddConsole"
                     Margin="3"
+                    IsEnabled="False"
                     IsDefault="True"
                     Click="BtnAddConsole_Click">
                 <StackPanel Orientation="Horizontal">
