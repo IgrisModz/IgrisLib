@@ -82,6 +82,14 @@ namespace IgrisLib.ViewModels
             add.ShowDialog();
             if (add.Result == MessageBoxResult.OK)
             {
+                foreach (CCAPI.ConsoleInfo console in Consoles)
+                {
+                    if (console.Name == add.ConsoleName)
+                    {
+                        MessageBox.Show(Resources["consoleNameExist"].ToString(), Resources["failed"].ToString(), MessageBoxButton.OK, MessageBoxImage.Hand);
+                        return;
+                    }
+                }
                 ConsoleRegistry.Add(add.ConsoleName, add.ConsoleIp);
                 Refresh();
             }

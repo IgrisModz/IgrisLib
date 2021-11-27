@@ -79,12 +79,20 @@ namespace IgrisLib.ViewModels
             return Api != null;
         }
 
-        private void AddConsole()
+        private async void AddConsole()
         {
             AddConsoleView add = new AddConsoleView(Resources);
             add.ShowDialog();
             if (add.Result == MessageBoxResult.OK)
             {
+                foreach (CCAPI.ConsoleInfo console in Consoles)
+                {
+                    if (console.Name == add.ConsoleName)
+                    {
+                        await Dialog.ShowMessageAsync(this, Resources["failed"].ToString(), Resources["consoleNameExist"].ToString());
+                        return;
+                    }
+                }
                 ConsoleRegistry.Add(add.ConsoleName, add.ConsoleIp);
                 Refresh();
             }
