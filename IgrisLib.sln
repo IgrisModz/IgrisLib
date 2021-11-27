@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IgrisLibTest", "IgrisLibTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IgrisLib.MahApps.Metro", "IgrisLib.MahApps.Metro\IgrisLib.MahApps.Metro.csproj", "{B71636FD-35B3-4748-8F39-6669EB343C31}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IgrisLib.Mvvm", "..\IgrisLib.Mvvm\IgrisLib.Mvvm\IgrisLib.Mvvm.csproj", "{C9D2E8FD-75A8-41D3-AE61-C0493B56807F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IgrisLib.Mvvm", "IgrisLib.Mvvm\IgrisLib.Mvvm.csproj", "{AF282EF0-4309-488F-9272-A4A040337283}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{B71636FD-35B3-4748-8F39-6669EB343C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B71636FD-35B3-4748-8F39-6669EB343C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B71636FD-35B3-4748-8F39-6669EB343C31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9D2E8FD-75A8-41D3-AE61-C0493B56807F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9D2E8FD-75A8-41D3-AE61-C0493B56807F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9D2E8FD-75A8-41D3-AE61-C0493B56807F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9D2E8FD-75A8-41D3-AE61-C0493B56807F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF282EF0-4309-488F-9272-A4A040337283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF282EF0-4309-488F-9272-A4A040337283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF282EF0-4309-488F-9272-A4A040337283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF282EF0-4309-488F-9272-A4A040337283}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

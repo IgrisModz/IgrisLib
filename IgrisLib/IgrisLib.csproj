@@ -109,8 +109,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\IgrisLib.Mvvm\IgrisLib.Mvvm\IgrisLib.Mvvm.csproj">
-      <Project>{c9d2e8fd-75a8-41d3-ae61-c0493b56807f}</Project>
+    <ProjectReference Include="..\IgrisLib.Mvvm\IgrisLib.Mvvm.csproj">
+      <Project>{af282ef0-4309-488f-9272-a4a040337283}</Project>
       <Name>IgrisLib.Mvvm</Name>
     </ProjectReference>
   </ItemGroup>
