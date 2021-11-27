@@ -24,5 +24,7 @@
     <system:String x:Key="addFormTitle">Agregar una consola a la lista...</system:String>
     <system:String x:Key="consoleNameText">Nombre de la consola:</system:String>
     <system:String x:Key="consoleIpText">Ip de la consola:</system:String>
-    <system:String x:Key="add">Añadir</system:String>
+    <system:String x:Key="add">Agregar</system:String>
+    <system:String x:Key="failed">Fallida...</system:String>
+    <system:String x:Key="consoleNameExist">Este nombre ya existe</system:String>
 </ResourceDictionary>

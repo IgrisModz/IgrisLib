@@ -25,4 +25,6 @@
     <system:String x:Key="consoleNameText">Nom de la console:</system:String>
     <system:String x:Key="consoleIpText">Ip de la console:</system:String>
     <system:String x:Key="add">Ajouter</system:String>
+    <system:String x:Key="failed">Échoué...</system:String>
+    <system:String x:Key="consoleNameExist">Ce nom existe déjà</system:String>
 </ResourceDictionary>
