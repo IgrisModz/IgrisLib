@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Net;
+using System.Net.Sockets;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace IgrisLib.Views
 {
@@ -34,13 +37,26 @@ namespace IgrisLib.Views
         private void BtnAddConsole_Click(object sender, RoutedEventArgs e)
         {
             Result = MessageBoxResult.OK;
-            base.Close();
+            Close();
         }
 
         private void BtncCancel_Click(object sender, RoutedEventArgs e)
         {
             Result = MessageBoxResult.Cancel;
-            base.Close();
+            Close();
+        }
+
+        private void TxtConsoleIp_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (IPAddress.TryParse((sender as TextBox).Text, out IPAddress address))
+            {
+                if (address.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    btnAddConsole.IsEnabled = true;
+                    return;
+                }
+            }
+            btnAddConsole.IsEnabled = false;
         }
     }
 }
