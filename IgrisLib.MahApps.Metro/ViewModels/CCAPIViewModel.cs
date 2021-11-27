@@ -26,12 +26,12 @@ namespace IgrisLib.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public ObservableCollection<CCAPI.ConsoleInfo> Consoles { get => GetValue(() => Consoles); set => SetValue(() => Consoles, value); }
+        public ObservableCollection<CCAPI.ConsoleInfo> Consoles { get => GetProperty(() => Consoles); set => SetProperty(() => Consoles, value); }
 
         /// <summary>
         /// 
         /// </summary>
-        public CCAPI.ConsoleInfo SelectedConsole { get => GetValue(() => SelectedConsole); set => SetValue(() => SelectedConsole, value); }
+        public CCAPI.ConsoleInfo SelectedConsole { get => GetProperty(() => SelectedConsole); set => SetProperty(() => SelectedConsole, value); }
 
         /// <summary>
         /// 

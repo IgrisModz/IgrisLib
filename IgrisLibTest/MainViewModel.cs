@@ -10,17 +10,17 @@ namespace IgrisLibTest
     {
         public PS3API PS3 { get; private set; }
 
-        public List<string> ApiList { get => GetValue(() => ApiList); set => SetValue(() => ApiList, value); }
+        public List<string> ApiList { get => GetProperty(() => ApiList); set => SetProperty(() => ApiList, value); }
 
         public string SelectedApi
         {
-            get => GetValue(() => SelectedApi);
+            get => GetProperty(() => SelectedApi);
             set
             {
                 PS3.ChangeAPI(value);
                 Settings.Default.API = value;
                 Settings.Default.Save();
-                SetValue(() => SelectedApi, value);
+                SetProperty(() => SelectedApi, value);
             }
         }
 

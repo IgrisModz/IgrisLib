@@ -63,8 +63,6 @@
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Apis\IApi.cs" />
     <Compile Include="Apis\IConnectAPI.cs" />
-    <Compile Include="Mvvm\DelegateCommand.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="NET\PS3RPC.cs" />
     <Compile Include="NET\PS3TMAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,6 +107,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\IgrisLib.Mvvm\IgrisLib.Mvvm\IgrisLib.Mvvm.csproj">
+      <Project>{c9d2e8fd-75a8-41d3-ae61-c0493b56807f}</Project>
+      <Name>IgrisLib.Mvvm</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

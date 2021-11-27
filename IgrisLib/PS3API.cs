@@ -25,14 +25,14 @@ namespace IgrisLib
         /// </summary>
         /// <value>Return true if you are connected to ps3.</value>
         /// <remarks>You have to use <see cref="Connect"/> <see cref="ConnectTarget(int)"/>, <see cref="DisconnectTarget"/> or <see cref="GetConnected"/> for update this property</remarks>
-        public bool IsConnected { get => GetValue(() => IsConnected); private set => SetValue(() => IsConnected, value); }
+        public bool IsConnected { get => GetProperty(() => IsConnected); private set => SetProperty(() => IsConnected, value); }
 
         /// <summary>
         /// Property to find out if you are attached to a process.
         /// </summary>
         /// <value>Return true if you are connected to ps3.</value>
         /// <remarks>You have to use <see cref="AttachProcess"/>, <see cref="DetachProcess"/> or <see cref="GetAttached"/> for update this property</remarks>
-        public bool IsAttached { get => GetValue(() => IsAttached); private set => SetValue(() => IsAttached, value); }
+        public bool IsAttached { get => GetProperty(() => IsAttached); private set => SetProperty(() => IsAttached, value); }
 
         /// <summary>
         /// Property to know the name of the game currently attached.

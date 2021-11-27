@@ -48,7 +48,15 @@ namespace IgrisLib.Views
 
         private void TxtConsoleIp_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (IPAddress.TryParse((sender as TextBox).Text, out IPAddress address))
+            //string str = string.Format("{0}|{1}|{2}|{3}|{4}|{5}",
+            //    "(^127(\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}$)",
+            //    "(^10(\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}$)",
+            //    "(^172\\.1[6-9]{1}[0-9]{0,1}(\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){2}$)",
+            //    "(^172\\.2[0-9]{1}[0-9]{0,1}(\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){2}$)",
+            //    "(^172\\.3[0-1]{1}[0-9]{0,1}(\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){2}$)",
+            //    "(^192\\.168(\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){2}$)");
+            string[] str = (sender as TextBox).Text.Split('.');
+            if (str.Length == 4 && IPAddress.TryParse((sender as TextBox).Text, out IPAddress address))
             {
                 if (address.AddressFamily == AddressFamily.InterNetwork)
                 {
