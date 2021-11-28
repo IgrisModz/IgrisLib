@@ -13,11 +13,11 @@ namespace IgrisLib.Mvvm
     /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
-        Dictionary<string, object> _propertyBag;
+        private Dictionary<string, object> _propertyBag;
 #if NETFRAMEWORK || NETCOREAPP2_0
-        Dictionary<string, object> PropertyBag => _propertyBag ?? (_propertyBag = new Dictionary<string, object>());
+        private Dictionary<string, object> PropertyBag => _propertyBag ?? (_propertyBag = new Dictionary<string, object>());
 #else
-        Dictionary<string, object> PropertyBag => _propertyBag ??= new Dictionary<string, object>();
+        private Dictionary<string, object> PropertyBag => _propertyBag ??= new Dictionary<string, object>();
 #endif
 
         #region Events
@@ -48,15 +48,17 @@ namespace IgrisLib.Mvvm
         {
         }
 
-        static bool CompareValues<T>(T storage, T value)
+        private static bool CompareValues<T>(T storage, T value)
         {
             return EqualityComparer<T>.Default.Equals(storage, value);
         }
 
-        static void GuardPropertyName(string propertyName)
+        private static void GuardPropertyName(string propertyName)
         {
             if (string.IsNullOrEmpty(propertyName))
+            {
                 throw new ArgumentNullException(nameof(propertyName));
+            }
         }
 
         [Conditional("DEBUG")]
@@ -72,17 +74,9 @@ namespace IgrisLib.Mvvm
 
         internal static string GetPropertyName(LambdaExpression lambdaExpression)
         {
-            MemberExpression memberExpression;
-
-            if (lambdaExpression.Body is UnaryExpression)
-            {
-                memberExpression = (lambdaExpression.Body as UnaryExpression).Operand as MemberExpression;
-            }
-            else
-            {
-                memberExpression = lambdaExpression.Body as MemberExpression;
-            }
-
+            MemberExpression memberExpression = lambdaExpression.Body is UnaryExpression
+                ? (lambdaExpression.Body as UnaryExpression).Operand as MemberExpression
+                : lambdaExpression.Body as MemberExpression;
             return memberExpression.Member.Name;
         }
 
@@ -278,7 +272,7 @@ namespace IgrisLib.Mvvm
         /// <returns></returns>
         protected bool SetProperty<T>(ref T storage, T value, Expression<Func<T>> expression)
         {
-            return SetProperty<T>(ref storage, value, expression, null);
+            return SetProperty(ref storage, value, expression, null);
         }
 
         /// <summary>
@@ -333,8 +327,11 @@ namespace IgrisLib.Mvvm
         protected virtual bool SetProperty<T>(ref T storage, T value, string propertyName, Action changedCallback)
         {
             VerifyAccess();
-            if (CompareValues<T>(storage, value))
+            if (CompareValues(storage, value))
+            {
                 return false;
+            }
+
             storage = value;
             RaisePropertyChanged(propertyName);
             changedCallback?.Invoke();
@@ -439,16 +436,15 @@ namespace IgrisLib.Mvvm
         #endregion Value Methods
 
         #region PropertyCore Methods
-        T GetPropertyCore<T>(string propertyName)
+
+        private T GetPropertyCore<T>(string propertyName)
         {
-            if (PropertyBag.TryGetValue(propertyName, out object val))
-                return (T)val;
-            return default;
+            return PropertyBag.TryGetValue(propertyName, out object val) ? (T)val : default;
         }
 
-        bool SetPropertyCore<T>(string propertyName, T value, Action changedCallback)
+        private bool SetPropertyCore<T>(string propertyName, T value, Action changedCallback)
         {
-            var res = SetPropertyCore(propertyName, value, out T oldValue);
+            bool res = SetPropertyCore(propertyName, value, out T oldValue);
             if (res)
             {
                 changedCallback?.Invoke();
@@ -456,9 +452,9 @@ namespace IgrisLib.Mvvm
             return res;
         }
 
-        bool SetPropertyCore<T>(string propertyName, T value, Action<T> changedCallback)
+        private bool SetPropertyCore<T>(string propertyName, T value, Action<T> changedCallback)
         {
-            var res = SetPropertyCore(propertyName, value, out T oldValue);
+            bool res = SetPropertyCore(propertyName, value, out T oldValue);
             if (res)
             {
                 changedCallback?.Invoke(oldValue);
@@ -479,9 +475,15 @@ namespace IgrisLib.Mvvm
             VerifyAccess();
             oldValue = default;
             if (PropertyBag.TryGetValue(propertyName, out object val))
+            {
                 oldValue = (T)val;
-            if (CompareValues<T>(oldValue, value))
+            }
+
+            if (CompareValues(oldValue, value))
+            {
                 return false;
+            }
+
             lock (PropertyBag)
             {
                 PropertyBag[propertyName] = value;
@@ -489,6 +491,7 @@ namespace IgrisLib.Mvvm
             RaisePropertyChanged(propertyName);
             return true;
         }
+
         #endregion
     }
 }
