@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net48</TargetFrameworks>
+    <TargetFramework>net48</TargetFramework>
     <UseWPF>true</UseWPF>
     <AssemblyVersion>1.8.0.0</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -12,6 +12,11 @@
     <Description>Tool for test IgrisLib</Description>
     <FileVersion>1.8.0.0</FileVersion>
     <PackageTags>Wpf, Mvvm, Binding, Wpf Mvvm, IgrisModz, IgrisLib, IgrisLib.Mvvm, Test, ps3, tool, ps3tool, ps3 tool, lib, ps3lib</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   
   <ItemGroup>
